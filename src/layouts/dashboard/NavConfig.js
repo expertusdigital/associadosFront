@@ -1,11 +1,34 @@
 // component
 import Iconify from '../../components/Iconify';
-
+import {getTenant_id} from '../../utils/services/auth'
 // ----------------------------------------------------------------------
 
 const getIcon = (name) => <Iconify icon={name} width={22} height={22} />;
 
-const navConfig = [
+
+
+var getTenantid = getTenant_id();
+
+const AdminConfig = [
+  {
+    title: 'teste',
+    path: '/dashboard/app',
+    icon: getIcon('eva:pie-chart-2-fill'),
+  },
+  {
+    title: 'teste',
+    path: '/dashboard/user',
+    icon: getIcon('eva:people-fill'),
+  },
+  {
+    title: 'teste',
+    path: '/dashboard/clientes',
+    icon: getIcon('eva:people-fill'),
+  },
+
+];
+
+const TenantConfig = [
   {
     title: 'dashboard',
     path: '/dashboard/app',
@@ -17,26 +40,20 @@ const navConfig = [
     icon: getIcon('eva:people-fill'),
   },
   {
-    title: 'Peças',
-    path: '/dashboard/pecas',
-    icon: getIcon('eva:shopping-bag-fill'),
-  },
-  {
-    title: 'Carros',
-    path: '/dashboard/products',
-    icon: getIcon('eva:shopping-bag-fill'),
-  },
-  {
-    title: 'Clientes',
+    title: 'Associados',
     path: '/dashboard/clientes',
-    icon: getIcon('eva:people-fill'),
-  },
-  {
-    title: 'Orçamentos',
-    path: '/dashboard/orcamento',
     icon: getIcon('eva:people-fill'),
   },
 
 ];
 
-export default navConfig;
+if(getTenantid != null && getTenantid != undefined ){
+
+  var teste = AdminConfig;
+
+}else{
+  var teste = TenantConfig;
+
+}
+
+export default teste;

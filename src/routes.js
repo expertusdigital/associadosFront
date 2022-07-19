@@ -7,10 +7,9 @@ import User from './pages/User';
 import Login from './pages/LoginRegister/Login';
 import NotFound from './pages/PageErro';
 import Register from './pages/LoginRegister/Register';
-import Pecas from './pages/Pecas';
 import Clientes from './pages/Client';
 import DashboardApp from './pages/Dashboard';
-import Orcamento from './pages/Orcamento';
+
 
 // ----------------------------------------------------------------------
 
@@ -23,8 +22,6 @@ export default function Router() {
         { path: 'app', element: <DashboardApp /> },
         { path: 'user', element: <User /> },
         { path: 'clientes', element: <Clientes /> },
-        { path: 'pecas', element: <Pecas /> },
-        { path: 'orcamento', element: <Orcamento /> },
       ],
     },
     {
