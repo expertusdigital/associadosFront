@@ -13,3 +13,14 @@ export const getTenant_id = () =>{
     return tenant_id
 }
 
+
+
+export const setAcessToken = (access_token) => {
+    localStorage.setItem("access_token", access_token)
+
+}
+
+export const getAcessToken = () =>{
+    const access_token = localStorage.getItem("access_token");
+    return access_token
+}

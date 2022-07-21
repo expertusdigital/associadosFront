@@ -3,40 +3,80 @@ import { useEffect, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 // material
-import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel, FormControl, FormGroup } from '@mui/material';
+import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel, FormControl, FormGroup, Alert } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
-import api from '../../../utils/api'
-
+import {setAcessToken} from '../../../utils/services/auth'
 // ----------------------------------------------------------------------
+async function tenantLogin(credentials) {
+  return fetch('http://localhost:8000/api/dashboard/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(credentials)
+  })
+    .then(data => data.json())
+ }
+
+ async function adminLogin(credentials) {
+  return fetch('http://localhost:8000/api/admin/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(credentials)
+  })
+    .then(data => data.json())
+ }
+
+
+
 
 export default function LoginForm() {
-  const [username, setUserName] = useState();
+  const [email, setUserName] = useState();
   const [password, setPassword] = useState();
+  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
   };
 
-  const handleSubmit =  e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    alert("tyest??:  " + username +"   :   " +password)
-
-    /*
-      try{  
-
-        var 
-
-      }catch(e){
-        console.log(e)
-      }
-
-
-
-    */
+    const token = await tenantLogin({
+      email,
+      password
+    });
     
+    if(token != 'Unauthorized' && token != null   ){
+      if(token.access_token){
+        setAcessToken(token)
+
+        navigate("/dashboard", { replace: true });
+
+      }else if(token.error){
+        try {
+          const token = await adminLogin({
+            email,
+            password
+          });
+          if(token.access_token){
+            setAcessToken(token)
+
+            navigate("/dashboard", { replace: true });
+          }else{
+            alert("Login ou senha invalido")
+          }
+          
+        } catch (error) {
+        }
+      }
+    }
+
+    setAcessToken(token);
   }
 
   return (
