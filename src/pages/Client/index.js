@@ -1,6 +1,6 @@
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import {
@@ -26,17 +26,26 @@ import Iconify from '../../components/Iconify';
 import SearchNotFound from '../../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../../sections/@dashboard/user';
 // mock
-import USERLIST from '../../_mock/clientes';
+import {users} from '../../_mock/clientes';
+import api from '../../utils/api';
+import {getAcessToken , getTenant_id} from '../../utils/services/auth'
+
 
 // ----------------------------------------------------------------------
-
+var tenantId = getTenant_id()
+var access_token = getAcessToken()
+// ----------------------------------------------------------------------
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name', alignRight: false },
-  { id: 'company', label: 'Company', alignRight: false },
-  { id: 'role', label: 'Role', alignRight: false },
-  { id: 'isVerified', label: 'Verified', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
-  { id: '' },
+  { id: 'name', label: 'Nome', alignRight: false },
+  { id: 'company', label: 'Nome artístico', alignRight: false },
+  { id: 'datanasc', label: 'Data Nascimento', alignRight: false },
+  { id: 'cpf', label: 'CPf', alignRight: false },
+  { id: 'telefone', label: 'Telefone', alignRight: false },
+  { id: 'telefone2', label: 'Telefone opcional', alignRight: false },
+  { id: 'email1', label: 'Email', alignRight: false },
+  { id: 'email2', label: 'Email opcional', alignRight: false },
+  { id: 'endereco', label: 'Endereco', alignRight: false },
+  { id: 'datacriacao', label: 'Data de Registro', alignRight: false },
 ];
 
 // ----------------------------------------------------------------------
@@ -71,6 +80,26 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function Clientes() {
+  const [fetchedData, setFetchedData] = useState([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await api.get(`dashboard/${tenantId}/associados`, {
+        headers: {
+          'Authorization': `Bearer ${access_token}`
+        }
+        })
+      
+      setFetchedData(data.data);
+    };
+    getData();
+  }, []);
+
+
+  const teste = Array(fetchedData)
+  
+
+
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -91,7 +120,7 @@ export default function Clientes() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = USERLIST.map((n) => n.name);
+      const newSelecteds = teste.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -126,10 +155,10 @@ export default function Clientes() {
     setFilterName(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - teste.length) : 0;
 
-  const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
-
+  const filteredUsers = applySortFilter(teste[0], getComparator(order, orderBy), filterName);      
+    console.log(filteredUsers)
   const isUserNotFound = filteredUsers.length === 0;
 
   return (
@@ -154,17 +183,17 @@ export default function Clientes() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={USERLIST.length}
+                  rowCount={teste.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, role, status, company, avatarUrl, isVerified } = row;
-                    const isItemSelected = selected.indexOf(name) !== -1;
+                    const { id , empresa, cnpf_cnpj , fantasia, created_at,telefone1 } = row;
+                    const isItemSelected = selected.indexOf(empresa) !== -1;
 
-                    return (
+                    return (  
                       <TableRow
                         hover
                         key={id}
@@ -174,28 +203,31 @@ export default function Clientes() {
                         aria-checked={isItemSelected}
                       >
                         <TableCell padding="checkbox">
-                          <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, name)} />
+                          <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, empresa)} />
                         </TableCell>
-                        <TableCell component="th" scope="row" padding="none">
+                          <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt={name} src={avatarUrl} />
+                            <Avatar alt={empresa}  />
                             <Typography variant="subtitle2" noWrap>
-                              {name}
+                              {fantasia}
                             </Typography>
                           </Stack>
                         </TableCell>
-                        <TableCell align="left">{company}</TableCell>
-                        <TableCell align="left">{role}</TableCell>
-                        <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
-                        <TableCell align="left">
-                          <Label variant="ghost" color={(status === 'banned' && 'error') || 'success'}>
-                            {sentenceCase(status)}
-                          </Label>
-                        </TableCell>
+                        <TableCell align="left"></TableCell>
+                        <TableCell align="left"></TableCell>
 
-                        <TableCell align="right">
-                          <UserMoreMenu />
-                        </TableCell>
+                          <TableCell align="left">{cnpf_cnpj}</TableCell>
+
+                          <TableCell align="left">{telefone1}</TableCell>
+                          <TableCell align="left"></TableCell>
+                          <TableCell align="left"></TableCell>
+                          <TableCell align="left"></TableCell>
+                          <TableCell align="left"></TableCell>
+
+                          <TableCell align="left">{created_at}</TableCell>
+
+
+                  
                       </TableRow>
                     );
                   })}
@@ -222,7 +254,7 @@ export default function Clientes() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={USERLIST.length}
+            count={teste.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

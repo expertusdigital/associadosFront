@@ -7,7 +7,7 @@ import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormContr
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
-import {setAcessToken} from '../../../utils/services/auth'
+import {setAcessToken, setTenant_id , getAcessToken , getTenant_id} from '../../../utils/services/auth'
 // ----------------------------------------------------------------------
 async function tenantLogin(credentials) {
   return fetch('http://localhost:8000/api/dashboard/login', {
@@ -46,25 +46,24 @@ export default function LoginForm() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const token = await tenantLogin({
+    const login = await tenantLogin({
       email,
       password
     });
     
-    if(token != 'Unauthorized' && token != null   ){
-      if(token.access_token){
-        setAcessToken(token)
-
+    if(login != 'Unauthorized' && login != null   ){
+      if(login.access_token){
+       
         navigate("/dashboard", { replace: true });
 
-      }else if(token.error){
+      }else if(login.error){
         try {
-          const token = await adminLogin({
+          const login = await adminLogin({
             email,
             password
           });
-          if(token.access_token){
-            setAcessToken(token)
+          if(login.access_token){
+            setAcessToken(login)
 
             navigate("/dashboard", { replace: true });
           }else{
@@ -75,9 +74,10 @@ export default function LoginForm() {
         }
       }
     }
-
-    setAcessToken(token);
+    setAcessToken(login.access_token)
+    setTenant_id(login.tenant_id)
   }
+
 
   return (
     <FormControl >
