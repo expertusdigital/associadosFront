@@ -1,21 +1,19 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
-import { useFormik, Form, FormikProvider } from 'formik';
+
 import { useNavigate } from 'react-router-dom';
 // material
-import { Stack, TextField, IconButton, InputAdornment , FormControl} from '@mui/material';
+import { Stack, TextField, FormControl} from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
-import Iconify from '../../../components/Iconify';
 import axios from 'axios'
 // ----------------------------------------------------------------------
 
-export default function RegisterForm() {
+export default function NewwAssociados() {
   const navigate = useNavigate();
 
   const [nome, setNome] = useState();
   const [empresa, setEmpresa] = useState();
-  const [fantasia, setEmpresaFantasia] = useState();
   const [tenant_id, setTenant_id] = useState(empresa);
   const [cnpf_cnpj, setCpfCnpj] = useState();
   const [logradouro, setLogradouro] = useState();
@@ -25,23 +23,17 @@ export default function RegisterForm() {
   const [uf, setUf] = useState();
   const [cep, setCep] = useState();
   const [telefone1, setTelefone1] = useState();
+  const [telefone2, setTelefone2] = useState();
   const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [password_confirmation, setPassword_confirmation] = useState();
+const [dateCobranca,setdateCobranca] = useState();
 
-
-  const [showPassword, setShowPassword] = useState(false);
-  const handleShowPassword = () => {
-    setShowPassword((show) => !show);
-  };
 
 
 
   async function adminLogin() {
     await axios.post("http://localhost:8000/api/dashboard/registrar",{
           email,
-          password,
-          password_confirmation,
+          email2,
           tenant_id,
 
           nome,
@@ -57,6 +49,9 @@ export default function RegisterForm() {
           cep,
 
           telefone1,
+          telefone2,
+          dateCobranca
+
       
       }).then((response) =>{
         console.log(response.data)
@@ -80,60 +75,73 @@ export default function RegisterForm() {
       <form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
 
-          <TextField
-            fullWidth
-            required
-            autoComplete="username"
-            type="text"
-            label="Nome Completo"
-            onChange={e => setNome(e.target.value)}
-          />
-
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <TextField
               fullWidth
               required
               autoComplete="username"
               type="text"
-              label="Nome da Empresa"
-              onChange={e => setEmpresa(e.target.value)}
+              label="Nome Completo"
+              onChange={e => setNome(e.target.value)}
             />
-
             <TextField
               fullWidth
               required
               autoComplete="username"
               type="text"
-              label="Nome Fantasia"
-              onChange={e => setEmpresaFantasia(e.target.value)}
+              label="Nome Artistico"
+              onChange={e => setEmpresa(e.target.value)}
             />
           </Stack>
 
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+            <TextField
+                  fullWidth
+                  required
+                  autoComplete="username"
+                  type="text"
+                  label="CPF/CNPJ"
+                  onChange={e => setCpfCnpj(e.target.value)}
+            />
+             <TextField
+                  fullWidth
+                  required
+                  autoComplete="username"
+                  type="text"
+                  label="Data de Nascimento"
+                 
+            />
 
+          </Stack>
+      
           <TextField
                 fullWidth
                 required
                 autoComplete="username"
-                type="text"
-                label="Nome para registro da Empresa"
-                onChange={e => setTenant_id(e.target.value)}
-              />
+                type="email"
+                label="Email address"
+                onChange={e => setEmail(e.target.value)}
 
+            
+              
+          />
             <TextField
                 fullWidth
-                required
                 autoComplete="username"
-                type="text"
-                label="CPF/CNPJ"
-                onChange={e => setCpfCnpj(e.target.value)}
-              />
+                type="email"
+                label="Email address (opcional)"
+                onChange={e => setEmail2(e.target.value)}
+
+            
+              
+          />
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
               <TextField
                 fullWidth
                 autoComplete="username"
                 type="text"
-                label="Logradouro (Opcional)"
+                label="Rua"
                 onChange={e => setLogradouro(e.target.value)}
 
               />
@@ -142,7 +150,7 @@ export default function RegisterForm() {
                 fullWidth
                 autoComplete="username"
                 type="number"
-                label="Numero (Opcional)"
+                label="Numero "
                 onChange={e => setNumero(e.target.value)}
 
               />
@@ -151,7 +159,7 @@ export default function RegisterForm() {
                 fullWidth
                 autoComplete="username"
                 type="text"
-                label="Bairro (Opcional)"
+                label="Cep "
                 onChange={e => setBairro(e.target.value)}
 
               />
@@ -177,7 +185,7 @@ export default function RegisterForm() {
                 fullWidth
                 autoComplete="username"
                 type="text"
-                label="Cep (Opcional)"
+                label="Pais (Opcional)"
                 onChange={e => setCep(e.target.value)}
               />
           </Stack>
@@ -190,70 +198,34 @@ export default function RegisterForm() {
                 label="Telefone"
                 onChange={e => setTelefone1(e.target.value)}
               />
+                 <TextField
+                fullWidth
+                required
+                autoComplete="username"
+                type="text"
+                label="Telefone (Opcional)"
+                onChange={e => setTelefone1(e.target.value)}
+              />
 
           </Stack>
 
 
-          <Stack spacing={3}>
-          <TextField
-            fullWidth
-            required
-            autoComplete="username"
-            type="email"
-            label="Email address"
-            onChange={e => setEmail(e.target.value)}
+       
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+              <TextField
+                fullWidth
+                required
+                autoComplete="username"
+                type="text"
+                label="Data de cobrança"
+                onChange={e => setdateCobranca(e.target.value)}
+              />
+          </Stack>
 
-         
-          
-          />
-
-          <TextField
-            fullWidth
-            required
-            autoComplete="current-password"
-            type={showPassword ? 'text' : 'password'}
-            label="Senha"
-            onChange={e => setPassword(e.target.value)}
-        
-            InputProps={{
-              endAdornment: (
-                <InputAdornment  position="end">
-                  <IconButton edge="end" onClick={handleShowPassword}  >
-                    <Iconify  icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          
-          />
-
-
-          <TextField
-            fullWidth
-            required
-            autoComplete="current-password"
-            type={showPassword ? 'text' : 'password'}
-            label="Confirmar senha "
-            onChange={e => setPassword_confirmation(e.target.value)}
-        
-            InputProps={{
-              endAdornment: (
-                <InputAdornment  position="end">
-                  <IconButton edge="end" onClick={handleShowPassword}  >
-                    <Iconify  icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          
-          />
-        </Stack>
-
-      
    
 
           <LoadingButton fullWidth size="large" type="submit" variant="contained" >
-            Register
+            Registrar
           </LoadingButton>
         </Stack>
       </form>

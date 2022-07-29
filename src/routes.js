@@ -3,11 +3,10 @@ import { Navigate, useRoutes } from 'react-router-dom';
 import DashboardLayout from './layouts/dashboard';
 import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 //
-import User from './pages/User';
 import Login from './pages/LoginRegister/Login';
 import NotFound from './pages/PageErro';
 import Register from './pages/LoginRegister/Register';
-import Clientes from './pages/Client';
+import Associados from './pages/Associados';
 import DashboardApp from './pages/Dashboard';
 
 
@@ -20,8 +19,7 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { path: 'app', element: <DashboardApp /> },
-        { path: 'user', element: <User /> },
-        { path: 'clientes', element: <Clientes /> },
+        { path: 'associados', element: <Associados /> },
       ],
     },
     {

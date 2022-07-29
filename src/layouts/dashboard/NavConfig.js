@@ -11,18 +11,14 @@ var getTenantid = getTenant_id();
 
 const AdminConfig = [
   {
-    title: 'teste',
+    title: 'Home',
     path: '/dashboard/app',
     icon: getIcon('eva:pie-chart-2-fill'),
   },
+
   {
-    title: 'teste',
-    path: '/dashboard/user',
-    icon: getIcon('eva:people-fill'),
-  },
-  {
-    title: 'teste',
-    path: '/dashboard/clientes',
+    title: 'Associados',
+    path: '/dashboard/associados',
     icon: getIcon('eva:people-fill'),
   },
 
@@ -34,14 +30,10 @@ const TenantConfig = [
     path: '/dashboard/app',
     icon: getIcon('eva:pie-chart-2-fill'),
   },
-  {
-    title: 'Usuarios',
-    path: '/dashboard/user',
-    icon: getIcon('eva:people-fill'),
-  },
+
   {
     title: 'Associados',
-    path: '/dashboard/clientes',
+    path: '/dashboard/associados',
     icon: getIcon('eva:people-fill'),
   },
 
