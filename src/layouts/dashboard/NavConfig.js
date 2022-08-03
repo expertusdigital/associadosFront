@@ -9,13 +9,8 @@ const getIcon = (name) => <Iconify icon={name} width={22} height={22} />;
 
 var getTenantid = getTenant_id();
 
-const AdminConfig = [
-  {
-    title: 'Home',
-    path: '/dashboard/app',
-    icon: getIcon('eva:pie-chart-2-fill'),
-  },
-
+const TenantConfig = [
+ 
   {
     title: 'Associados',
     path: '/dashboard/associados',
@@ -24,10 +19,15 @@ const AdminConfig = [
 
 ];
 
-const TenantConfig = [
+const AdminConfig = [
   {
     title: 'dashboard',
     path: '/dashboard/app',
+    icon: getIcon('eva:pie-chart-2-fill'),
+  },
+  {
+    title: 'Clientes',
+   
     icon: getIcon('eva:pie-chart-2-fill'),
   },
 
@@ -41,10 +41,10 @@ const TenantConfig = [
 
 if(getTenantid != null && getTenantid != undefined ){
 
-  var teste = AdminConfig;
+  var teste = TenantConfig;
 
 }else{
-  var teste = TenantConfig;
+  var teste = AdminConfig;
 
 }
 

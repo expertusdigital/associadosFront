@@ -27,12 +27,15 @@ import Label from '../../components/Label';
 import Scrollbar from '../../components/Scrollbar';
 import Iconify from '../../components/Iconify';
 import SearchNotFound from '../../components/SearchNotFound';
-import { UserListHead, UserListToolbar } from '../../sections/@dashboard/user';
+import { UserListHead, UserListToolbar,UserMoreMenu } from '../../sections/@dashboard/user';
 // mock
+import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@mui/material';
+
 import {users} from '../../_mock/clientes';
 import api from '../../utils/api';
 import {getAcessToken , getTenant_id} from '../../utils/services/auth'
 import NewwAssociados from '../../sections/associados'
+import { Edit } from '@mui/icons-material';
 
 // ----------------------------------------------------------------------
 var tenantId = getTenant_id()
@@ -40,14 +43,20 @@ var access_token = getAcessToken()
 // ----------------------------------------------------------------------
 const TABLE_HEAD = [
   { id: 'name', label: 'Nome Completo', alignRight: false },
-  { id: 'company', label: 'Nome artístico', alignRight: false },
+  { id: 'nameartistico', label: 'Nome artístico', alignRight: false },
   { id: 'datanasc', label: 'Data Nascimento', alignRight: false },
   { id: 'cpf', label: 'CPf', alignRight: false },
   { id: 'telefone', label: 'Telefone', alignRight: false },
-  { id: 'telefone2', label: 'Telefone opcional', alignRight: false },
+  { id: 'telefone2', label: 'Telefone Securandario', alignRight: false },
   { id: 'email1', label: 'Email', alignRight: false },
-  { id: 'endereco', label: 'Endereco', alignRight: false },
+  { id: 'email2', label: 'Email Securandario', alignRight: false },
+  { id: 'endereco', label: 'Endereço', alignRight: false },
+  { id: 'cep', label: 'Cep', alignRight: false },
+  { id: 'localidade', label: 'Localidade', alignRight: false },
+
   { id: 'datacriacao', label: 'Data de Registro', alignRight: false },
+  { id: 'opcoes', label: 'Opções', alignRight: false },
+
 ];
 
 // ----------------------------------------------------------------------
@@ -97,7 +106,6 @@ export default function Associados() {
     };
     getData();
   }, []);
-
 
   const teste = Array(fetchedData)
   
@@ -170,6 +178,13 @@ export default function Associados() {
   const handleClose = () => {
     setOpen(false);
   };
+  const Edit = (id) =>{
+    console.log("edit: " + id)
+  }
+  const Delet = (id) =>{
+    console.log("Delet: " + id)
+  }
+
 
   return (
     <Page title="Clientes">
@@ -200,17 +215,11 @@ export default function Associados() {
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
                 <UserListHead
-                  order={order}
-                  orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={teste.length}
-                  numSelected={selected.length}
-                  onRequestSort={handleRequestSort}
-                  onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id , nome , data_cobranca,telefone1,telefone2,cnpf_cnpj,nome_artistico,data_nascimento,email } = row;
+                    const { id , nome , data_cobranca,telefone1,telefone2,cnpf_cnpj,nome_artistico,data_nascimento,email,rua,numero,pais,uf,cep,email2 } = row;
                     const isItemSelected = selected.indexOf(nome) !== -1;
 
                     return (  
@@ -227,14 +236,33 @@ export default function Associados() {
                           </TableCell>
                           <TableCell align="left">{nome}</TableCell>
                           <TableCell align="left">{nome_artistico}</TableCell>
-                          <TableCell align="left">{data_nascimento}}</TableCell>
+                          <TableCell align="left">{data_nascimento}</TableCell>
                           <TableCell align="left">{cnpf_cnpj}</TableCell>
                           <TableCell align="left">{telefone1}</TableCell>
                           <TableCell align="left">{telefone2}</TableCell>
                           <TableCell align="left">{email}</TableCell>
-                          <TableCell align="left"></TableCell>
+                          <TableCell align="left">{email2}</TableCell>
+                          <TableCell align="left">{rua} - {numero}</TableCell>
+                          <TableCell align="left">{cep} </TableCell>
+                          <TableCell align="left">{uf} - {pais}</TableCell>
                           <TableCell align="left">{data_cobranca}</TableCell>
+                          <TableCell align="left">
 
+                            <MenuItem sx={{ color: 'text.secondary' }} onClick={() => Delet(id)}>
+                              <ListItemIcon>
+                                <Iconify icon="eva:trash-2-outline" width={24} height={24} />
+                              </ListItemIcon>
+                              <ListItemText primary="Delete" primaryTypographyProps={{ variant: 'body2' }} />
+                            </MenuItem>
+                            
+                            <MenuItem onClick={() => Edit(id)} to="#" sx={{ color: 'text.secondary' }}>
+                              <ListItemIcon>
+                                <Iconify icon="eva:edit-fill" width={24} height={24} />
+                              </ListItemIcon>
+                              <ListItemText primary="Edit" primaryTypographyProps={{ variant: 'body2' }} />
+                            </MenuItem>
+
+                          </TableCell>
                       </TableRow>
                     );
                   })}

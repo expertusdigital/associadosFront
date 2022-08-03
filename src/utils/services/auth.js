@@ -24,3 +24,13 @@ export const getAcessToken = () =>{
     const access_token = localStorage.getItem("access_token");
     return JSON.parse(access_token);
 }
+
+export const setIdUser = (id_user) => {
+    localStorage.setItem("id_user", JSON.stringify(id_user))
+
+}
+
+export const getIduser = () =>{
+    const id_user = localStorage.getItem("id_user");
+    return JSON.parse(id_user);
+}
