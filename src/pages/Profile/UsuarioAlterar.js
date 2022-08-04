@@ -1,47 +1,41 @@
 import * as Yup from 'yup';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import InputMask from 'react-input-mask';
 import { useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
+import {getTenant_id,getAcessToken} from '../../utils/services/auth'
 // material
 import { Stack, TextField, FormControl} from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
 import axios from 'axios'
-import {getTenant_id,getAcessToken} from '../../utils/services/auth'
+// ----------------------------------------------------------------------
 
-export default function NewwAssociados(associado) {
-
- 
-  
+export default function NewwAssociados() {
   const navigate = useNavigate();
 
-  const [nome, setNome] = useState(associado.associado.nome);
-  const [nome_artistico, setFantasia] = useState(associado.associado.nome_artistico);
-  const [cnpf_cnpj, setCpfCnpj] = useState(associado.associado.cnpf_cnpj);
-  const [rua, setLogradouro] = useState(associado.associado.rua);
-  const [numero, setNumero] = useState(associado.associado.numero);
-  const [cidade, setCidade] = useState(associado.associado.cidade);
-  const [uf, setUf] = useState(associado.associado.uf);
-  const [cep, setCep] = useState(associado.associado.cep);
-  const [telefone1, setTelefone1] = useState(associado.associado.telefone1);
-  const [telefone2, setTelefone2] = useState(associado.associado.telefone2);
-  const [email, setEmail] = useState(associado.associado.email);
-  const [email2, setEmail2] = useState(associado.associado.email2);
-  const [data_nascimento,setData_nascimento] = useState(associado.associado.data_nascimento);
-  const [pais, setPais] = useState(associado.associado.pais);
-  const [data_cobranca,setdateCobranca] = useState(associado.associado.data_cobranca);
+  const [nome, setNome] = useState();
+  const [nome_artistico, setFantasia] = useState();
+  const [cnpf_cnpj, setCpfCnpj] = useState();
+  const [rua, setLogradouro] = useState();
+  const [numero, setNumero] = useState();
+  const [cidade, setCidade] = useState();
+  const [uf, setUf] = useState();
+  const [cep, setCep] = useState();
+  const [telefone1, setTelefone1] = useState();
+  const [telefone2, setTelefone2] = useState();
+  const [email, setEmail] = useState();
+  const [email2, setEmail2] = useState();
+  const [data_nascimento,setData_nascimento] = useState();
+  const [pais, setPais] = useState();
+  const [data_cobranca,setdateCobranca] = useState();
 
-
-
-
-  const tenant_id = getTenant_id()
+  const tenantId = getTenant_id()
   var access_token = getAcessToken()
 
-  
 
   async function formAssociados() {
-    await axios.post(`http://localhost:8000/api/dashboard/${tenant_id}/associados/atualizar/${associado.associado.id}`,{
+    await axios.post(`http://localhost:8000/api/dashboard/${tenantId}/associados/add`,{
  
 
           nome,
@@ -61,8 +55,7 @@ export default function NewwAssociados(associado) {
           telefone1,
           telefone2,
 
-          data_cobranca,
-          tenant_id
+          data_cobranca
 
       
       },{
@@ -74,15 +67,17 @@ export default function NewwAssociados(associado) {
         console.log(response.data)
     })
  }
+
  
-   const handleSubmit = async e => {
-    formAssociados()
-    e.preventDefault();
+
    
+
+   const handleSubmit = async e => {
+    e.preventDefault();
+    formAssociados();
   }
  
 
-  
 
 
   return (
@@ -92,16 +87,19 @@ export default function NewwAssociados(associado) {
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <TextField
-                fullWidth
-                type="text"
-             
-                value={nome}
-                onChange={e => setNome(e.target.value)}
+              fullWidth
+              required
+              autoComplete="username"
+              type="text"
+              label="Nome Completo"
+              onChange={e => setNome(e.target.value)}
             />
             <TextField
               fullWidth
+              required
+              autoComplete="username"
               type="text"
-              value={nome_artistico}
+              label="Nome Artistico"
               onChange={e => setFantasia(e.target.value)}
             />
           </Stack>
@@ -112,7 +110,7 @@ export default function NewwAssociados(associado) {
                   required
                   autoComplete="username"
                   type="text"
-                  value={cnpf_cnpj}
+                  label="CPF/CNPJ"
                   onChange={e => setCpfCnpj(e.target.value)}
             />
              <TextField
@@ -120,8 +118,7 @@ export default function NewwAssociados(associado) {
                   required
                   autoComplete="username"
                   type="data"
-                  value={data_nascimento}
-
+                  label="Data de Nascimento"
                   onChange={e => setData_nascimento(e.target.value)}
 
 
@@ -135,8 +132,7 @@ export default function NewwAssociados(associado) {
                 required
                 autoComplete="username"
                 type="email"
-                value={email}
-
+                label="Email address"
                 onChange={e => setEmail(e.target.value)}
 
             
@@ -146,7 +142,7 @@ export default function NewwAssociados(associado) {
                 fullWidth
                 autoComplete="username"
                 type="email"
-                value={email2}
+                label="Email address (opcional)"
                 onChange={e => setEmail2(e.target.value)}
 
             
@@ -158,8 +154,7 @@ export default function NewwAssociados(associado) {
                 fullWidth
                 autoComplete="username"
                 type="text"
-                value={rua}
-
+                label="Rua"
                 onChange={e => setLogradouro(e.target.value)}
 
               />
@@ -168,8 +163,7 @@ export default function NewwAssociados(associado) {
                 fullWidth
                 autoComplete="username"
                 type="number"
-                value={numero}
-
+                label="Numero"
                 onChange={e => setNumero(e.target.value)}
 
               />
@@ -178,8 +172,7 @@ export default function NewwAssociados(associado) {
                 fullWidth
                 autoComplete="username"
                 type="number"
-                value={cep}
-
+                label="cep"
                 onChange={e => setCep(e.target.value)}
 
               />
@@ -191,8 +184,7 @@ export default function NewwAssociados(associado) {
                 fullWidth
                 autoComplete="username"
                 type="text"
-                value={cidade}
-
+                label="Cidade (Opcional)"
                 onChange={e => setCidade(e.target.value)}
               />
 
@@ -200,8 +192,7 @@ export default function NewwAssociados(associado) {
                 fullWidth
                 autoComplete="username"
                 type="text"
-                value={uf}
-
+                label="Uf (Opcional)"
                 onChange={e => setUf(e.target.value)}
               />
 
@@ -209,8 +200,7 @@ export default function NewwAssociados(associado) {
                 fullWidth
                 autoComplete="username"
                 type="text"
-                value={pais}
-
+                label="Pais (Opcional)"
                 onChange={e => setPais(e.target.value)}
               />
           </Stack>
@@ -220,8 +210,7 @@ export default function NewwAssociados(associado) {
                 required
                 autoComplete="username"
                 type="text"
-                value={telefone1}
-
+                label="Telefone"
                 onChange={e => setTelefone1(e.target.value)}
               />
 
@@ -230,8 +219,7 @@ export default function NewwAssociados(associado) {
                 required
                 autoComplete="username"
                 type="text"
-                value={telefone2}
-
+                label="Telefone"
                 onChange={e => setTelefone2(e.target.value)}
               />
                
@@ -245,8 +233,7 @@ export default function NewwAssociados(associado) {
             <Form.Control
               as={InputMask}
               mask="99-99"
-              value={data_cobranca}
-
+              placeholder="Digite se CPF"
               onChange={e => setdateCobranca(e.target.value)}
 
             />

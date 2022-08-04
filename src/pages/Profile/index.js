@@ -43,7 +43,7 @@ export default function Profile() {
        
         })
       
-        setUsuario(data.data);
+        setUsuario(data.data[0]);
     };
     getUsuario()
   }, []);
@@ -101,7 +101,7 @@ export default function Profile() {
               </Paper>
               <Paper style={stylePaper2} elevation={4}>
                 <ListItem  divider>
-                  <Avatar alt="E" src="/static/images/avatar/1.jpg" />
+                  <Avatar alt="Endereço" src="/static/images/avatar/1.jpg" />
                   <ListItem>
                     <ListItemText primary="Endereço" />    
                   </ListItem> 
@@ -135,16 +135,41 @@ export default function Profile() {
                 </ListItem>
 
 
-                <ListItem style={TradeItem}>
+                <ListItem style={ButtonItem}>
                   <Button variant="contained">Alterar</Button>
                 </ListItem>
               </Paper>
             </Grid>
 
             <Grid item xs={12} md={6} lg={7} style={gridStyle}>
-              <Paper style={style2}>
+            <Paper style={style} elevation={4}>
+              <ListItem button divider>
+                <Avatar alt="Usuario" src="/static/images/avatar/1.jpg" />
+                <ListItem>    
+                  <ListItemText primary="Usuario" />                
+                </ListItem> 
 
-               <ListUsuarios />
+              </ListItem>
+
+              <ListItem button divider>
+                <ListItemText primary="Nome do Usuario" />              
+                <ListItemText style={itemText}  primary={usuarios.nome} />
+              </ListItem>
+
+              <ListItem button divider>
+                <ListItemText primary="Email" />              
+                <ListItemText style={itemText}  primary={usuarios.email} />
+              </ListItem>
+
+              <ListItem button divider>
+                <ListItemText primary="password" />              
+                <ListItemText style={itemText}  primary="*********" />
+              </ListItem>
+
+              <ListItem style={ButtonItem}>
+                  <Button variant="contained">Alterar</Button>
+                </ListItem>
+
               </Paper>
             </Grid>
 
@@ -196,7 +221,7 @@ const itemText = {
 
 }
 
-const TradeItem = {
+const ButtonItem = {
   diplay: 'flex',
   justifyContent: 'space-between'
 }

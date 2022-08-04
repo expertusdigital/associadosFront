@@ -9,7 +9,7 @@ const columns = [
   { field: 'Nome', headerName: 'Nome', width: 130 },
   { field: 'Email', headerName: 'Email', width: 130 },
   { field: 'Senha', headerName: 'Senha', width: 130 },
-
+  { field: 'outras'}
 
 ];
 
@@ -33,8 +33,10 @@ export default function ListUsuarios() {
     getUsuario()
   }, []);
 
-  const rows = {}
-  
+  const rows =  [
+    { id: 1 , Nome: usuarios.nome, Email: 'Jon', Senha: 35 }
+
+  ];
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid

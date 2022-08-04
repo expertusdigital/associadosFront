@@ -42,19 +42,18 @@ var tenantId = getTenant_id()
 var access_token = getAcessToken()
 // ----------------------------------------------------------------------
 const TABLE_HEAD = [
-  { id: 'name', label: 'Nome Completo', alignRight: false },
-  { id: 'nameartistico', label: 'Nome artístico', alignRight: false },
-  { id: 'datanasc', label: 'Data Nascimento', alignRight: false },
-  { id: 'cpf', label: 'CPf', alignRight: false },
-  { id: 'telefone', label: 'Telefone', alignRight: false },
+  { id: 'nome', label: 'Nome Completo', alignRight: false },
+  { id: 'nome_artistico', label: 'Nome artístico', alignRight: false },
+  { id: 'data_nascimento', label: 'Data Nascimento', alignRight: false },
+  { id: 'cnpf_cnpj', label: 'CPf', alignRight: false },
+  { id: 'telefone1', label: 'Telefone', alignRight: false },
   { id: 'telefone2', label: 'Telefone Securandario', alignRight: false },
-  { id: 'email1', label: 'Email', alignRight: false },
+  { id: 'email', label: 'Email', alignRight: false },
   { id: 'email2', label: 'Email Securandario', alignRight: false },
-  { id: 'endereco', label: 'Endereço', alignRight: false },
+  { id: 'rua', label: 'Endereço', alignRight: false },
   { id: 'cep', label: 'Cep', alignRight: false },
-  { id: 'localidade', label: 'Localidade', alignRight: false },
-
-  { id: 'datacriacao', label: 'Data de Registro', alignRight: false },
+  { id: 'uf', label: 'Localidade', alignRight: false },
+  { id: 'data_cobranca', label: 'Data de Registro', alignRight: false },
   { id: 'opcoes', label: 'Opções', alignRight: false },
 
 ];
@@ -86,7 +85,12 @@ function applySortFilter(array, comparator, query) {
   });
   if (query) {
     
-    return filter(array, (_user) => _user.nome.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+    return filter(array, (_user) => 
+    _user.data_cobranca.toLowerCase().indexOf(query.toLowerCase()) !== -1 || 
+    _user.nome.toLowerCase().indexOf(query.toLowerCase()) !== -1          || 
+    _user.cnpf_cnpj.toLowerCase().indexOf(query.toLowerCase()) !== -1     ||
+    _user.email.toLowerCase().indexOf(query.toLowerCase()) !== -1    
+     );  
   }
   return stabilizedThis.map((el) => el[0]);
 }
@@ -171,18 +175,50 @@ export default function Associados() {
   const filteredUsers = applySortFilter(teste[0], getComparator(order, orderBy), filterName);      
   
   const isUserNotFound = filteredUsers.length === 0;
-  const [open, setOpen] = React.useState(false);
+
+  const [open, setOpen] = useState(false);
+
+  const [editAssociado, setEditAssociado] = useState(false);
+
+  const [idAssociados, setIdAssociado] = useState(false);
+  const [associado , setAssociado] = useState([]);
+
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
-  const Edit = (id) =>{
-    console.log("edit: " + id)
+
+  async function formGetAssociado(id) {
+    await api.get(`dashboard/${tenantId}/associados/buscar/${id}`,{
+       headers: {
+         'Authorization': `Bearer ${access_token}`
+       },
+ 
+     } ).then((response) =>{
+     
+      setAssociado(response.data)
+   })
+
+
+ }
+ 
+  
+  const EditOpen = (id) =>{
+      try {
+        formGetAssociado(id);
+      } catch (error) {
+        
+      }
+      
+      setEditAssociado(true);
   }
-  const Delet = (id) =>{
-    console.log("Delet: " + id)
+  const EditClose = () =>{
+    setEditAssociado(false);
+}
+  const Delet = () =>{
+    console.log("Delet: " )
   }
 
 
@@ -215,7 +251,12 @@ export default function Associados() {
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
                 <UserListHead
-                  headLabel={TABLE_HEAD}
+                order={order}
+                orderBy={orderBy}
+                headLabel={TABLE_HEAD}
+                numSelected={selected.length}
+                onRequestSort={handleRequestSort}
+                onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
@@ -231,9 +272,7 @@ export default function Associados() {
                         selected={isItemSelected}
                         aria-checked={isItemSelected}
                       >
-                          <TableCell padding="checkbox">
-                            <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, nome)} />
-                          </TableCell>
+                      
                           <TableCell align="left">{nome}</TableCell>
                           <TableCell align="left">{nome_artistico}</TableCell>
                           <TableCell align="left">{data_nascimento}</TableCell>
@@ -255,7 +294,7 @@ export default function Associados() {
                               <ListItemText primary="Delete" primaryTypographyProps={{ variant: 'body2' }} />
                             </MenuItem>
                             
-                            <MenuItem onClick={() => Edit(id)} to="#" sx={{ color: 'text.secondary' }}>
+                            <MenuItem onClick={() => EditOpen(id)} to="#" sx={{ color: 'text.secondary' }}>
                               <ListItemIcon>
                                 <Iconify icon="eva:edit-fill" width={24} height={24} />
                               </ListItemIcon>
@@ -285,7 +324,13 @@ export default function Associados() {
               </Table>
             </TableContainer>
           </Scrollbar>
-
+          <Modal open={editAssociado} onClose={EditClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
+            <Box >
+              <Card style={modalStyle}>
+                <NewwAssociados associado={associado}></NewwAssociados>
+              </Card>
+            </Box>
+          </Modal>
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
