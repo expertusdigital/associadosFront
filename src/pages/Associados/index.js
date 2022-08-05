@@ -35,7 +35,10 @@ import {users} from '../../_mock/clientes';
 import api from '../../utils/api';
 import {getAcessToken , getTenant_id} from '../../utils/services/auth'
 import NewwAssociados from '../../sections/associados'
+import AtuliazarAssociados from '../../sections/associados/AtuliazarAssociados'
+
 import { Edit } from '@mui/icons-material';
+import { width } from '@mui/system';
 
 // ----------------------------------------------------------------------
 var tenantId = getTenant_id()
@@ -96,7 +99,12 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function Associados() {
+  
+
   const [fetchedData, setFetchedData] = useState([]);
+
+  console.log(fetchedData)
+
 
   useEffect(() => {
     const getData = async () => {
@@ -180,7 +188,6 @@ export default function Associados() {
 
   const [editAssociado, setEditAssociado] = useState(false);
 
-  const [idAssociados, setIdAssociado] = useState(false);
   const [associado , setAssociado] = useState([]);
 
   const handleOpen = () => {
@@ -204,8 +211,11 @@ export default function Associados() {
 
  }
  
+ 
+
   
-  const EditOpen = (id) =>{
+    const EditOpen = (id) =>{
+
       try {
         formGetAssociado(id);
       } catch (error) {
@@ -213,13 +223,51 @@ export default function Associados() {
       }
       
       setEditAssociado(true);
-  }
-  const EditClose = () =>{
-    setEditAssociado(false);
-}
-  const Delet = () =>{
-    console.log("Delet: " )
-  }
+
+    }
+
+    const EditClose = (event) =>{
+        event.preventDefault();
+        setEditAssociado(false);
+    }
+
+
+    
+    const [idAssociados, setIdAssociado] = useState(null);
+
+    const [getDelte, setDelete] = useState(false);
+    
+    const DeletOpen = (id) =>{
+        setIdAssociado(id)
+        
+        setDelete(true);
+    }
+
+
+    const DeleteClose = () =>{
+        setDelete(false);
+
+    }
+
+
+    const deleteAssociado = async (id) =>  {
+    
+      console.log("teste: " + id)
+
+    
+      if(id != null & id != '' ){
+        await api.post(`dashboard/${tenantId}/associados/deletar/${id}`,{
+        },{
+          headers: {
+            'Authorization': `Bearer ${access_token}`
+          },
+    
+        } ).then((response) =>{
+    
+      })
+      window.location.reload();
+      }
+    }
 
 
   return (
@@ -287,7 +335,7 @@ export default function Associados() {
                           <TableCell align="left">{data_cobranca}</TableCell>
                           <TableCell align="left">
 
-                            <MenuItem sx={{ color: 'text.secondary' }} onClick={() => Delet(id)}>
+                            <MenuItem sx={{ color: 'text.secondary' }} onClick={() => DeletOpen(id)}>
                               <ListItemIcon>
                                 <Iconify icon="eva:trash-2-outline" width={24} height={24} />
                               </ListItemIcon>
@@ -324,13 +372,8 @@ export default function Associados() {
               </Table>
             </TableContainer>
           </Scrollbar>
-          <Modal open={editAssociado} onClose={EditClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
-            <Box >
-              <Card style={modalStyle}>
-                <NewwAssociados associado={associado}></NewwAssociados>
-              </Card>
-            </Box>
-          </Modal>
+         
+        
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
@@ -342,6 +385,32 @@ export default function Associados() {
           />
         </Card>
       </Container>
+      <Modal open={editAssociado} onClose={EditClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
+            <Box >
+              <Card style={modalStyle}>
+                <AtuliazarAssociados associado={associado}></AtuliazarAssociados>
+              </Card>
+            </Box>
+          </Modal>
+
+
+          <Modal open={getDelte} onClose={DeleteClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
+            <Box >
+              <Card style={modalStyleAlert}>
+                  <Typography> Deseja Realmente excluir?  </Typography>
+
+                  <Box style={boxAlert}>
+                    <Button  onClick={() => deleteAssociado(idAssociados)} color="inherit" size="small" >
+                      Excluir
+                    </Button> 
+                    
+                    <Button  onClick={DeleteClose}  color="inherit" size="small">
+                    Carcelar
+                    </Button>
+                  </Box>
+              </Card>
+            </Box>
+          </Modal>
     </Page>
   );
 }
@@ -355,5 +424,28 @@ const modalStyle = {
   bgcolor: 'background.paper',
   border: '2px solid #f2f2f2',
   boxShadow: 25,
+  padding: '1em',
+
+}
+
+const modalStyleAlert = {
+  position: 'absolute' ,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  bgcolor: 'background.paper',
+  border: '2px solid #f2f2f2',
+  boxShadow: 25,
+  padding: '1em',
+  display: 'flex',
+  flexDirection: 'column',
+  width: '300px'
+
+}
+
+const boxAlert = {
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
   padding: '1em'
 }

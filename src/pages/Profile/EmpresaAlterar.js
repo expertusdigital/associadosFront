@@ -11,51 +11,47 @@ import { LoadingButton } from '@mui/lab';
 import axios from 'axios'
 // ----------------------------------------------------------------------
 
-export default function NewwAssociados() {
+export default function EmpresaAlterar(empresasDados) {
+
+  console.log(empresasDados)
+
   const navigate = useNavigate();
 
-  const [nome, setNome] = useState();
-  const [nome_artistico, setFantasia] = useState();
-  const [cnpf_cnpj, setCpfCnpj] = useState();
-  const [rua, setLogradouro] = useState();
-  const [numero, setNumero] = useState();
-  const [cidade, setCidade] = useState();
-  const [uf, setUf] = useState();
-  const [cep, setCep] = useState();
-  const [telefone1, setTelefone1] = useState();
-  const [telefone2, setTelefone2] = useState();
-  const [email, setEmail] = useState();
-  const [email2, setEmail2] = useState();
-  const [data_nascimento,setData_nascimento] = useState();
-  const [pais, setPais] = useState();
-  const [data_cobranca,setdateCobranca] = useState();
+  const [empresa, setEmpresa] = useState(empresasDados.empresa.empresa);
+  const [fantasia, setFantasia] = useState(empresasDados.empresa.fantasia);
+  const [cnpf_cnpj, setCpfCnpj] = useState(empresasDados.empresa.cnpf_cnpj);
+  const [logradouro, setLogradouro] = useState(empresasDados.empresa.logradouro);
+  const [numero, setNumero] = useState(empresasDados.empresa.numero);
+  const [bairro, setBairro] = useState(empresasDados.empresa.bairro);
+  const [cidade, setCidade] = useState(empresasDados.empresa.cidade);
+  const [uf, setUf] = useState(empresasDados.empresa.uf);
+  const [cep, setCep] = useState(empresasDados.empresa.cep);
+  const [telefone1, setTelefone1] = useState(empresasDados.empresa.telefone1);
+  const [telefone2, setTelefone2] = useState(empresasDados.empresa.telefone2);
+
 
   const tenantId = getTenant_id()
   var access_token = getAcessToken()
 
 
   async function formAssociados() {
-    await axios.post(`http://localhost:8000/api/dashboard/${tenantId}/associados/add`,{
+    await axios.post(`http://localhost:8000/api/dashboard/${tenantId}/usuarios/atualizar/tenant/${empresasDados.empresa.id}`,{
  
 
-          nome,
-          nome_artistico,
+          empresa,
+          fantasia,
           cnpf_cnpj,
-          data_nascimento,
 
-          rua,
-          numero,
+          bairro,
           cep,
           cidade,
+          logradouro,
+          numero,
           uf,
-          pais,
 
-          email,
-          email2,
+
           telefone1,
           telefone2,
-
-          data_cobranca
 
       
       },{
@@ -91,18 +87,29 @@ export default function NewwAssociados() {
               required
               autoComplete="username"
               type="text"
-              label="Nome Completo"
-              onChange={e => setNome(e.target.value)}
+              label="nome empresa"
+              value={empresa}
+              onChange={e => setEmpresa(e.target.value)}
             />
             <TextField
               fullWidth
               required
               autoComplete="username"
               type="text"
-              label="Nome Artistico"
+              label="nome fantasia"
+              value={fantasia}
               onChange={e => setFantasia(e.target.value)}
             />
           </Stack>
+          <TextField
+              fullWidth
+              required
+              autoComplete="username"
+              type="text"
+              label="CNPJ"
+              value={cnpf_cnpj}
+              onChange={e => setCpfCnpj(e.target.value)}
+            />
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <TextField
@@ -110,16 +117,19 @@ export default function NewwAssociados() {
                   required
                   autoComplete="username"
                   type="text"
-                  label="CPF/CNPJ"
-                  onChange={e => setCpfCnpj(e.target.value)}
+                  label="Telefone"
+                  value={telefone1}
+                  onChange={e => setTelefone1(e.target.value)}
             />
              <TextField
                   fullWidth
                   required
                   autoComplete="username"
                   type="data"
-                  label="Data de Nascimento"
-                  onChange={e => setData_nascimento(e.target.value)}
+                  label="Telefone Opcional"
+
+                  value={telefone2}
+                  onChange={e => setTelefone2(e.target.value)}
 
 
                  
@@ -127,27 +137,7 @@ export default function NewwAssociados() {
 
           </Stack>
       
-          <TextField
-                fullWidth
-                required
-                autoComplete="username"
-                type="email"
-                label="Email address"
-                onChange={e => setEmail(e.target.value)}
-
-            
-              
-          />
-            <TextField
-                fullWidth
-                autoComplete="username"
-                type="email"
-                label="Email address (opcional)"
-                onChange={e => setEmail2(e.target.value)}
-
-            
-              
-          />
+  
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
               <TextField
@@ -155,6 +145,9 @@ export default function NewwAssociados() {
                 autoComplete="username"
                 type="text"
                 label="Rua"
+
+                value={logradouro}
+
                 onChange={e => setLogradouro(e.target.value)}
 
               />
@@ -164,6 +157,9 @@ export default function NewwAssociados() {
                 autoComplete="username"
                 type="number"
                 label="Numero"
+
+                value={numero}
+
                 onChange={e => setNumero(e.target.value)}
 
               />
@@ -172,7 +168,10 @@ export default function NewwAssociados() {
                 fullWidth
                 autoComplete="username"
                 type="number"
-                label="cep"
+                label="Cep"
+
+                value={cep}
+
                 onChange={e => setCep(e.target.value)}
 
               />
@@ -180,11 +179,26 @@ export default function NewwAssociados() {
          
           </Stack>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+            <TextField
+                fullWidth
+                autoComplete="username"
+                type="text"
+                label="Bairro"
+
+                value={bairro}
+
+                onChange={e => setBairro(e.target.value)}
+              />
+
+
               <TextField
                 fullWidth
                 autoComplete="username"
                 type="text"
-                label="Cidade (Opcional)"
+                label="Cidade"
+
+                value={cidade}
+
                 onChange={e => setCidade(e.target.value)}
               />
 
@@ -192,53 +206,15 @@ export default function NewwAssociados() {
                 fullWidth
                 autoComplete="username"
                 type="text"
-                label="Uf (Opcional)"
+                label="UF"
+
+                value={uf}
                 onChange={e => setUf(e.target.value)}
               />
 
-              <TextField
-                fullWidth
-                autoComplete="username"
-                type="text"
-                label="Pais (Opcional)"
-                onChange={e => setPais(e.target.value)}
-              />
+            
           </Stack>
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-              <TextField
-                fullWidth
-                required
-                autoComplete="username"
-                type="text"
-                label="Telefone"
-                onChange={e => setTelefone1(e.target.value)}
-              />
-
-            <TextField
-                fullWidth
-                required
-                autoComplete="username"
-                type="text"
-                label="Telefone"
-                onChange={e => setTelefone2(e.target.value)}
-              />
-               
-          </Stack>
-
-
-       
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-      
-
-            <Form.Control
-              as={InputMask}
-              mask="99-99"
-              placeholder="Digite se CPF"
-              onChange={e => setdateCobranca(e.target.value)}
-
-            />
-          </Stack>
-
+    
    
 
           <LoadingButton fullWidth size="large" type="submit" variant="contained" >

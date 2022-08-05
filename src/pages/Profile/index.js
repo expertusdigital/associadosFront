@@ -14,13 +14,16 @@ import {
   Avatar,
   Paper,
   Button,
+  Modal,
+  Box,
 
 } from '@mui/material';
 // components
 import Page from '../../components/Page';
 import  UserListToolbar  from '../../sections/menuUser';
 import { useEffect } from 'react';
-import ListUsuarios from './ListUsuarios'
+import EmpresaAlterar from './EmpresaAlterar'
+import UsuarioAlterar from './UsuarioAlterar'
 
 export default function Profile() {
   const [fetchedData, setFetchedData] = useState([]);
@@ -49,17 +52,34 @@ export default function Profile() {
   }, []);
 
  
-  console.log(usuarios)
 
 
 
   const [open, setOpen] = React.useState(false);
+
   const handleOpen = () => {
     setOpen(true);
   };
+
+
   const handleClose = () => {
     setOpen(false);
   };
+
+
+
+
+  const [openUsuario, setOpenUsuario] = React.useState(false);
+
+  const handleOpenUsuario = () => {
+    setOpenUsuario(true);
+  };
+
+
+  const handleCloseUsuario = () => {
+    setOpenUsuario(false);
+  };
+
 
   return (
     <Page title="User">
@@ -89,6 +109,12 @@ export default function Profile() {
                 </ListItem>
 
                 <ListItem button divider>
+                  <ListItemText primary="CNPJ" />              
+                  <ListItemText style={itemText}  primary={fetchedData.cnpf_cnpj} />
+                </ListItem>
+
+
+                <ListItem button divider>
                   <ListItemText primary="Telefone" />              
                   <ListItemText style={itemText}  primary={fetchedData.telefone1} />
                 </ListItem>
@@ -114,6 +140,17 @@ export default function Profile() {
                 </ListItem>
 
                 <ListItem button divider>
+                  <ListItemText primary="Numero " />              
+                  <ListItemText style={itemText} primary={fetchedData.numero}  />
+                </ListItem>
+
+                <ListItem button divider>
+                  <ListItemText primary="Cep " />              
+                  <ListItemText style={itemText} primary={fetchedData.cep}  />
+                </ListItem>
+
+
+                <ListItem button divider>
                   <ListItemText primary="Bairro" />               
                   <ListItemText style={itemText} primary={fetchedData.bairro}   />
                 </ListItem>
@@ -129,15 +166,21 @@ export default function Profile() {
                 </ListItem>
 
 
-                <ListItem button divider>
-                  <ListItemText primary="Complemento" />               
-                  <ListItemText style={itemText} primary={fetchedData.complemento}   />
-                </ListItem>
+                
 
 
                 <ListItem style={ButtonItem}>
-                  <Button variant="contained">Alterar</Button>
+                  <Button variant="contained"  onClick={() => handleOpen()} >Alterar</Button>
                 </ListItem>
+
+                <Modal open={open} onClose={handleClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
+                  <Box >
+                    <Card style={modalStyleAlert}>
+                        <EmpresaAlterar empresa={fetchedData}></EmpresaAlterar>
+                    </Card>
+                  </Box>
+                </Modal>
+
               </Paper>
             </Grid>
 
@@ -167,9 +210,16 @@ export default function Profile() {
               </ListItem>
 
               <ListItem style={ButtonItem}>
-                  <Button variant="contained">Alterar</Button>
+                  <Button variant="contained"   onClick={() => handleOpenUsuario()}>Alterar</Button>
                 </ListItem>
 
+                <Modal open={openUsuario} onClose={handleCloseUsuario} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
+                  <Box >
+                    <Card style={modalStyleAlert}>
+                        <UsuarioAlterar usuarios={usuarios}></UsuarioAlterar>
+                    </Card>
+                  </Box>
+                </Modal>
               </Paper>
             </Grid>
 
@@ -231,3 +281,20 @@ const paperGrid = {
 
 
 }
+
+
+const modalStyleAlert = {
+  position: 'absolute' ,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  bgcolor: 'background.paper',
+  border: '2px solid #f2f2f2',
+  boxShadow: 25,
+  padding: '1em',
+  display: 'flex',
+  flexDirection: 'column',
+
+
+}
+
