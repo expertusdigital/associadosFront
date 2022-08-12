@@ -54,7 +54,7 @@ export default function LoginForm() {
     if(login != 'Unauthorized' && login != null   ){
       if(login.access_token){
        
-        navigate("/dashboard", { replace: true });
+        navigate("/dashboard/associados", { replace: true });
 
       }else if(login.error){
         try {

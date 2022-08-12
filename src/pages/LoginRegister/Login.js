@@ -10,7 +10,10 @@ import Logo from '../../components/Logo';
 // sections
 import { LoginForm } from '../../sections/auth/login';
 import AuthSocial from '../../sections/auth/AuthSocial';
-
+import React from "react"
+import Particles from 'react-tsparticles'
+import { loadFull } from "tsparticles";
+ 
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
@@ -60,6 +63,18 @@ export default function Login() {
   const smUp = useResponsive('up', 'sm');
 
   const mdUp = useResponsive('up', 'md');
+  const particlesInit = async (main) => {
+    console.log(main);
+ 
+    // you can initialize the tsParticles instance (main) here, adding custom shapes or presets
+    // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
+    // starting from v2 you can add only the features you need reducing the bundle size
+    await loadFull(main);
+  };
+
+  const particlesLoaded = (container) => {
+    console.log(container);
+  };
 
   return (
     <Page title="Login">
@@ -67,11 +82,67 @@ export default function Login() {
         <HeaderStyle>
         
         </HeaderStyle>
-
+        <Particles
+          id="tsparticles"
+          init={particlesInit}
+          loaded={particlesLoaded}
+              options={{
+            background: {
+              color: '#ffffff',
+            },
+            fpsLimit: 40,
+            interactivity: {
+              detectsOn: 'canvas',
+              events: {
+                resize: true
+              },
+            },
+            particles: {
+              color: {
+                value: "#000000"
+              },
+              number: {
+                density: {
+                  enable: true,
+                  area: 1080
+                },
+                limit: 0,
+                value: 500,
+              },
+              opacity: {
+                animation: {
+                  enable: true,
+                  minimumValue: 1,
+                  speed: 3,
+                  sync: false,
+                },
+                random: {
+                  enable: true,
+                  minimumValue: 0.1,
+                },
+                value: 1,
+              },
+              shape: {
+                type: 'circle',
+       
+              },
+              size: {
+                random: {
+                  enable: true,
+                  minimumValue: 1.5
+                },
+                value: 1
+              }
+            }
+          }}
+      /> 
         {mdUp && (
           <SectionStyle>
             <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
               Ola, bem vindo.
+            </Typography>
+            <Typography variant="h3" sx={{ px: 5, mt: 5, mb: 5 }} style={styleComplmento}>
+              Seja bem-vindo ao Associados. O Programa de Associados da Expertus Digital que ajuda agerenciar seus  afiliados e,parcerios e clientes.
             </Typography>
           </SectionStyle>
         )}
@@ -89,4 +160,9 @@ export default function Login() {
       </RootStyle>
     </Page>
   );
+}
+const styleComplmento = {
+  fontSize: '20px',
+  fontWeight: '700',
+  lineHeight: '1.5em'
 }
