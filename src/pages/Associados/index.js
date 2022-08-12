@@ -40,6 +40,8 @@ import AtuliazarAssociados from '../../sections/associados/AtuliazarAssociados'
 import { Edit } from '@mui/icons-material';
 import { width } from '@mui/system';
 
+
+
 // ----------------------------------------------------------------------
 var tenantId = getTenant_id()
 var access_token = getAcessToken()
@@ -102,8 +104,7 @@ export default function Associados() {
   
 
   const [fetchedData, setFetchedData] = useState([]);
-
-  console.log(fetchedData)
+console.log(fetchedData)
 
 
   useEffect(() => {
@@ -252,7 +253,6 @@ export default function Associados() {
 
     const deleteAssociado = async (id) =>  {
     
-      console.log("teste: " + id)
 
     
       if(id != null & id != '' ){
@@ -319,6 +319,7 @@ export default function Associados() {
                         role="checkbox"
                         selected={isItemSelected}
                         aria-checked={isItemSelected}
+                     
                       >
                       
                           <TableCell align="left">{nome}</TableCell>
@@ -349,6 +350,32 @@ export default function Associados() {
                               <ListItemText primary="Edit" primaryTypographyProps={{ variant: 'body2' }} />
                             </MenuItem>
 
+                            <Modal open={editAssociado} onClose={EditClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
+                              <Box >
+                                <Card style={modalStyle}>
+                                  <AtuliazarAssociados associado={associado}></AtuliazarAssociados>
+                                </Card>
+                              </Box>
+                            </Modal>
+
+
+                            <Modal open={getDelte} onClose={DeleteClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
+                              <Box >
+                                <Card style={modalStyleAlert}>
+                                    <Typography> Deseja Realmente excluir?  </Typography>
+
+                                    <Box style={boxAlert}>
+                                      <Button  onClick={() => deleteAssociado(idAssociados)} color="inherit" size="small" >
+                                        Excluir
+                                      </Button> 
+                                      
+                                      <Button  onClick={DeleteClose}  color="inherit" size="small">
+                                      Carcelar
+                                      </Button>
+                                    </Box>
+                                </Card>
+                              </Box>
+                            </Modal>
                           </TableCell>
                       </TableRow>
                     );
@@ -361,9 +388,9 @@ export default function Associados() {
                 </TableBody>
 
                 {isUserNotFound && (
-                  <TableBody>
-                    <TableRow>
-                      <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                  <TableBody >
+                    <TableRow    >
+                      <TableCell align="center" colSpan={12} sx={{ py: 3 }} > 
                         <SearchNotFound searchQuery={filterName} />
                       </TableCell>
                     </TableRow>
@@ -385,32 +412,7 @@ export default function Associados() {
           />
         </Card>
       </Container>
-      <Modal open={editAssociado} onClose={EditClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
-            <Box >
-              <Card style={modalStyle}>
-                <AtuliazarAssociados associado={associado}></AtuliazarAssociados>
-              </Card>
-            </Box>
-          </Modal>
-
-
-          <Modal open={getDelte} onClose={DeleteClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
-            <Box >
-              <Card style={modalStyleAlert}>
-                  <Typography> Deseja Realmente excluir?  </Typography>
-
-                  <Box style={boxAlert}>
-                    <Button  onClick={() => deleteAssociado(idAssociados)} color="inherit" size="small" >
-                      Excluir
-                    </Button> 
-                    
-                    <Button  onClick={DeleteClose}  color="inherit" size="small">
-                    Carcelar
-                    </Button>
-                  </Box>
-              </Card>
-            </Box>
-          </Modal>
+        
     </Page>
   );
 }
@@ -449,3 +451,4 @@ const boxAlert = {
   justifyContent: 'space-between',
   padding: '1em'
 }
+

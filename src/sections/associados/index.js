@@ -64,7 +64,10 @@ export default function NewwAssociados() {
         },
   
       } ).then((response) =>{
-        console.log(response.data)
+        console.log(response)
+        if(response.data = '201'){
+          window.location.reload();
+        }
     })
  }
 
@@ -75,7 +78,7 @@ export default function NewwAssociados() {
    const handleSubmit = async e => {
     e.preventDefault();
     formAssociados();
-    window.location.reload();
+
 
   }
  
