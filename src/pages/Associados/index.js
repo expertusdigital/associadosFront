@@ -46,8 +46,8 @@ import { width } from '@mui/system';
 
 
 // ----------------------------------------------------------------------
-var tenantId = getTenant_id()
-var access_token = getAcessToken()
+var tenantId = JSON.parse(getTenant_id())
+var access_token = JSON.parse(getAcessToken())
 // ----------------------------------------------------------------------
 const TABLE_HEAD = [
   { id: 'nome', label: 'Nome Completo', alignRight: false },
@@ -107,7 +107,7 @@ export default function Associados() {
   
 
   const [fetchedData, setFetchedData] = useState([]);
-console.log(fetchedData)
+
 
 
   useEffect(() => {
@@ -192,7 +192,11 @@ console.log(fetchedData)
 
   const [editAssociado, setEditAssociado] = useState(false);
 
-  const [associado , setAssociado] = useState([]);
+  const [associado , setAssociado] = useState();
+
+
+
+
 
   const handleOpen = () => {
     setOpen(true);
@@ -208,7 +212,8 @@ console.log(fetchedData)
        },
  
      } ).then((response) =>{
-     
+
+   
       setAssociado(response.data)
    })
 
@@ -377,7 +382,8 @@ console.log(fetchedData)
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id , nome , data_cobranca,telefone1,telefone2,cnpf_cnpj,nome_artistico,data_nascimento,email,rua,numero,pais,uf,cep,email2 } = row;
+                    const { id , nome , data_cobranca,telefone1,telefone2,cnpf_cnpj,nome_artistico,data_nascimento,email,rua,numero,
+                      pais,uf,cep,email2 } = row;
                     const isItemSelected = selected.indexOf(nome) !== -1;
 
                     return (  

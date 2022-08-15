@@ -7,7 +7,7 @@ import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormContr
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
-import {setAcessToken, setTenant_id , getAcessToken , getTenant_id} from '../../../utils/services/auth'
+import {setAcessToken, setTenant_id } from '../../../utils/services/auth'
 // ----------------------------------------------------------------------
 async function tenantLogin(credentials) {
   return fetch('http://localhost:8000/api/dashboard/login', {
@@ -67,13 +67,15 @@ export default function LoginForm() {
 
             navigate("/dashboard", { replace: true });
           }else{
-            alert("Login ou senha invalido")
+            alert(    "Login ou senha Invalidos")
+
           }
           
         } catch (error) {
         }
       }
     }
+    
     setAcessToken(login.access_token)
     setTenant_id(login.tenant_id)
   }

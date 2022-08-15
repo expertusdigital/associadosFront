@@ -10,8 +10,14 @@ export const setTenant_id = (tenant_id) => {
 
 export const getTenant_id = () =>{
     const tenant_id = localStorage.getItem("tenant_id");
-    return JSON.parse(tenant_id);
+    return tenant_id ; 
 }
+export const deleteTenant_id = () =>{
+    localStorage.removeItem('tenant_id');
+
+}
+
+
 
 
 
@@ -22,8 +28,19 @@ export const setAcessToken = (access_token) => {
 
 export const getAcessToken = () =>{
     const access_token = localStorage.getItem("access_token");
-    return JSON.parse(access_token);
+    return access_token
 }
+export const deleteAcessToken = () =>{
+    localStorage.removeItem('access_token');
+
+}
+
+
+
+
+
+
+
 
 export const setIdUser = (id_user) => {
     localStorage.setItem("id_user", JSON.stringify(id_user))
@@ -32,5 +49,34 @@ export const setIdUser = (id_user) => {
 
 export const getIduser = () =>{
     const id_user = localStorage.getItem("id_user");
-    return JSON.parse(id_user);
+    return id_user
+}
+export const deleteIdUser = () =>{
+    localStorage.removeItem('id_user');
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+export const setUsuarioData = (usuario) => {
+    localStorage.setItem("usuario", JSON.stringify(usuario))
+
+}
+
+export const getUsuario = () =>{
+    const usuario = localStorage.getItem("usuario");
+    return usuario
+}
+export const deleteUsuario = () =>{
+    localStorage.removeItem('usuario');
+
 }

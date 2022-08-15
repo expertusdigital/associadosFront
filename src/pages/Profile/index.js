@@ -5,7 +5,7 @@ import Particles from 'react-tsparticles'
 import { loadFull } from "tsparticles";
 import { useNavigate } from 'react-router-dom';
 import api from '../../utils/api'
-import {getTenant_id} from '../../utils/services/auth'
+import {getTenant_id,setUsuarioData} from '../../utils/services/auth'
 // material
 import {
   Card,
@@ -30,7 +30,8 @@ import UsuarioAlterar from './UsuarioAlterar'
 export default function Profile() {
   const [fetchedData, setFetchedData] = useState([]);
   const [usuarios, setUsuario] = useState([]);
-  const tenantId = getTenant_id();
+  const tenantId = JSON.parse(getTenant_id());
+  setUsuarioData(usuarios)
 
   useEffect(() => {
     const getData = async () => {

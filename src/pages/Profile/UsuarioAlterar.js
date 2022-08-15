@@ -23,8 +23,8 @@ export default function UsuarioAlterar(usuarios) {
 
 
 
-  const tenant_id = getTenant_id()
-  var access_token = getAcessToken()
+  const tenant_id = JSON.parse(getTenant_id())
+  var access_token = JSON.parse(getAcessToken())
 
 
   async function formAssociados() {

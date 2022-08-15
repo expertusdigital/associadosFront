@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState,useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { alpha } from '@mui/material/styles';
@@ -6,9 +6,11 @@ import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton } from '@
 // components
 import MenuPopover from '../../components/MenuPopover';
 // mocks_
-import account from '../../_mock/account';
-
+import {  deleteUsuario, deleteIdUser, deleteAcessToken, deleteTenant_id,getTenant_id  } from '../../utils/services/auth'
 // ----------------------------------------------------------------------
+import { useNavigate } from 'react-router-dom';
+import api from '../../utils/api'
+
 
 const MENU_OPTIONS = [
 
@@ -22,9 +24,32 @@ const MENU_OPTIONS = [
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
+  let navigate = useNavigate()
+
   const anchorRef = useRef(null);
 
   const [open, setOpen] = useState(null);
+  
+  const [usuarios, setUsuarios] = useState([{
+    email: '',
+    nome: ''
+  }]);
+
+  const tenantId = JSON.parse(getTenant_id());
+
+  useEffect(() => {
+   
+
+    const getUsuario = async () => {
+      const data = await api.get(`http://localhost:8000/${tenantId}/usuarios`, {
+       
+        })
+      
+        setUsuarios(data.data[0]);
+    };
+    getUsuario()
+  }, []);
+
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
@@ -32,6 +57,16 @@ export default function AccountPopover() {
 
   const handleClose = () => {
     setOpen(null);
+  };
+
+  const handleLogout = () => {
+
+    deleteAcessToken()
+    deleteIdUser()
+    deleteTenant_id()
+    deleteUsuario()
+    navigate("/", { replace: true });
+
   };
 
   return (
@@ -54,7 +89,7 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <Avatar src={account.photoURL} alt="photoURL" />
+        <Avatar alt="photoURL" />
       </IconButton>
 
       <MenuPopover
@@ -73,10 +108,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {account.displayName}
+            {usuarios.nome}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {usuarios.email}
           </Typography>
         </Box>
 
@@ -92,7 +127,7 @@ export default function AccountPopover() {
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        <MenuItem onClick={handleClose} sx={{ m: 1 }}>
+        <MenuItem onClick={handleLogout} sx={{ m: 1 }}>
           Logout
         </MenuItem>
       </MenuPopover>

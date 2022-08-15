@@ -30,8 +30,8 @@ export default function EmpresaAlterar(empresasDados) {
   const [telefone2, setTelefone2] = useState(empresasDados.empresa.telefone2);
 
 
-  const tenantId = getTenant_id()
-  var access_token = getAcessToken()
+  const tenantId = JSON.parse(getTenant_id())
+  var access_token = JSON.parse(getAcessToken())
 
 
   async function formAssociados() {
