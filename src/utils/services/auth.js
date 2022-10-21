@@ -80,3 +80,17 @@ export const deleteUsuario = () =>{
     localStorage.removeItem('usuario');
 
 }
+
+export const setUserLogin = (userlogin) => {
+    localStorage.setItem("userlogin", JSON.stringify(userlogin))
+
+}
+
+export const getUserLogin = () =>{
+    const userlogin = localStorage.getItem("userlogin");
+    return userlogin
+}
+export const deleteUserLogin = () =>{
+    localStorage.removeItem('userlogin');
+
+}

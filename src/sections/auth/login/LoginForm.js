@@ -2,12 +2,14 @@ import * as Yup from 'yup';
 import { useEffect, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
+import api from '../../../utils/api'
 // material
 import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel, FormControl, FormGroup, Alert } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
 import {setAcessToken, setTenant_id } from '../../../utils/services/auth'
+import axios from 'axios';
 // ----------------------------------------------------------------------
 async function tenantLogin(credentials) {
   return fetch('http://localhost:8000/api/dashboard/login', {
@@ -30,7 +32,6 @@ async function tenantLogin(credentials) {
   })
     .then(data => data.json())
  }
-
 
 
 
@@ -115,14 +116,8 @@ export default function LoginForm() {
         </Stack>
 
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-          <FormControlLabel
-            control={<Checkbox  />}
-            label="Remember me"
-          />
-
-          <Link component={RouterLink} variant="subtitle2" to="#" underline="hover">
-            Forgot password?
-          </Link>
+         
+         
         </Stack>
 
         <LoadingButton fullWidth size="large" type="submit" variant="contained"  >

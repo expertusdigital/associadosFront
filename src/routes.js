@@ -8,10 +8,14 @@ import NotFound from './pages/PageErro';
 import Associados from './pages/Associados';
 import DashboardApp from './pages/Dashboard';
 import {ProtectedRoute,RouteAutenticate} from './ProtectedRoute'
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 
 
 
 export default function Router() {
+
+  
   return (
     <Routes>
       <Route path="/" element={<Login />} />

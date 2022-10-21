@@ -110,25 +110,12 @@ export default function NewwAssociados() {
           </Stack>
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            <TextField
-                  fullWidth
-                  required
-                  autoComplete="username"
-                  type="text"
-                  label="CPF/CNPJ"
-                  onChange={e => setCpfCnpj(e.target.value)}
-            />
-             <TextField
-                  fullWidth
-                  required
-                  autoComplete="username"
-                  type="data"
-                  label="Data de Nascimento"
-                  onChange={e => setData_nascimento(e.target.value)}
+         
+              <Form.Control placeholder='CPF/CNPJ *' as={InputMask} fullWidth      mask="999-999-999-99"    onChange={e => setCpfCnpj(e.target.value)} />
+             
+              <Form.Control placeholder='Data de Nascimento *' as={InputMask} fullWidth      mask="99-99-9999"      onChange={e => setData_nascimento(e.target.value)}/>
 
-
-                 
-            />
+          
 
           </Stack>
       
@@ -169,18 +156,15 @@ export default function NewwAssociados() {
                 autoComplete="username"
                 type="number"
                 label="Numero"
+                mask="(99)-99999-99999"
                 onChange={e => setNumero(e.target.value)}
 
               />
-
-            <TextField
-                fullWidth
-                autoComplete="username"
-                type="number"
-                label="cep"
-                onChange={e => setCep(e.target.value)}
-
-              />
+         
+             
+              <Form.Control as={InputMask} placeholder="Cep" fullWidth mask="999-999-99" onChange={e => setCep(e.target.value)} />
+             
+            
 
          
           </Stack>
@@ -210,24 +194,9 @@ export default function NewwAssociados() {
               />
           </Stack>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-              <TextField
-                fullWidth
-                required
-                autoComplete="username"
-                type="text"
-                label="Telefone"
-                onChange={e => setTelefone1(e.target.value)}
-              />
-
-            <TextField
-                fullWidth
-                required
-                autoComplete="username"
-                type="text"
-                label="Telefone"
-                onChange={e => setTelefone2(e.target.value)}
-              />
+                <Form.Control placeholder='Telefone *' as={InputMask} fullWidth      mask="(99)-99999-99999"   onChange={e => setTelefone1(e.target.value)} />
                
+               <Form.Control placeholder='Telefone (opcional)' as={InputMask} fullWidth      mask="(99)-99999-99999" onChange={e => setTelefone2(e.target.value)} />
           </Stack>
 
 
@@ -238,7 +207,7 @@ export default function NewwAssociados() {
             <Form.Control
               as={InputMask}
               mask="99-99"
-              placeholder="Digite se CPF"
+              placeholder="Data de Registro"
               onChange={e => setdateCobranca(e.target.value)}
 
             />
