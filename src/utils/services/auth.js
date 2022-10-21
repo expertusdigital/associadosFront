@@ -4,7 +4,9 @@ import { Axios } from 'axios';
 
 
 export const setTenant_id = (tenant_id) => {
-    localStorage.setItem("tenant_id", JSON.stringify(tenant_id))
+    if(tenant_id != null){
+        localStorage.setItem("tenant_id", JSON.stringify(tenant_id))
+    }
 
 }
 
@@ -22,7 +24,10 @@ export const deleteTenant_id = () =>{
 
 
 export const setAcessToken = (access_token) => {
-    localStorage.setItem("access_token", JSON.stringify(access_token))
+   
+    if(access_token!= null){
+        localStorage.setItem("access_token", JSON.stringify(access_token))
+    }
 
 }
 

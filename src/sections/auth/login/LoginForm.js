@@ -8,7 +8,7 @@ import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormContr
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
-import {setAcessToken, setTenant_id } from '../../../utils/services/auth'
+import {setAcessToken, setTenant_id,getAcessToken } from '../../../utils/services/auth'
 import axios from 'axios';
 // ----------------------------------------------------------------------
 async function tenantLogin(credentials) {
@@ -54,7 +54,8 @@ export default function LoginForm() {
     
     if(login != 'Unauthorized' && login != null   ){
       if(login.access_token){
-       
+        setAcessToken(login.access_token)
+        setTenant_id(login.tenant_id)
         navigate("/dashboard/associados", { replace: true });
 
       }else if(login.error){
@@ -76,9 +77,12 @@ export default function LoginForm() {
         }
       }
     }
+
     
-    setAcessToken(login.access_token)
-    setTenant_id(login.tenant_id)
+      setAcessToken(login.access_token)
+      setTenant_id(login.tenant_id)
+    
+     
   }
 
 

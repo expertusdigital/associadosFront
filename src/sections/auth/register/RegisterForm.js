@@ -212,9 +212,10 @@ export default function RegisterForm() {
             required
             autoComplete="current-password"
             type={showPassword ? 'text' : 'password'}
+            inputProps={{ minlength: 8}}
             label="Senha"
             onChange={e => setPassword(e.target.value)}
-        
+            helperText="Mínimo 8 Caracteres"
             InputProps={{
               endAdornment: (
                 <InputAdornment  position="end">
@@ -235,7 +236,7 @@ export default function RegisterForm() {
             type={showPassword ? 'text' : 'password'}
             label="Confirmar senha "
             onChange={e => setPassword_confirmation(e.target.value)}
-        
+            helperText="Mínimo 8 Caracteres"
             InputProps={{
               endAdornment: (
                 <InputAdornment  position="end">
