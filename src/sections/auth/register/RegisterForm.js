@@ -38,7 +38,7 @@ export default function RegisterForm() {
 
 
   async function adminLogin() {
-    await axios.post("http://associados.api.expertusdigital.com/api/dashboard/registrar",{
+    await axios.post("http://associados.api.expertusdigital.com/dashboard/registrar",{
           email,
           password,
           password_confirmation,
