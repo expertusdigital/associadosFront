@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://associados.api.expertusdigital.com/',
+    baseURL: 'https://associados.api.expertusdigital.com/',
 });
   
 
