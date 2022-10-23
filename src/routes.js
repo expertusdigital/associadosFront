@@ -9,6 +9,8 @@ import NotFound from './pages/PageErro';
 import Associados from './pages/Associados';
 import DashboardApp from './pages/Dashboard';
 import {ProtectedRoute,RouteAutenticate} from './ProtectedRoute'
+import {ProtectedRouteAdmin,RouteAutenticateAdmin} from './ProtectedRouteAdmin'
+
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 
@@ -29,6 +31,14 @@ export default function Router() {
           <ProtectedRoute>
             <RouteAutenticate />
           </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/*"
+        element={
+          <ProtectedRouteAdmin>
+            <RouteAutenticateAdmin />
+          </ProtectedRouteAdmin>
         }
       />
     </Routes>

@@ -51,6 +51,13 @@ export default function LoginForm() {
       email,
       password
     });
+
+
+    const adminlogin = await adminLogin({
+      email,
+      password
+    });
+    
     
     if(login != 'Unauthorized' && login != null   ){
       if(login.access_token){
@@ -58,29 +65,19 @@ export default function LoginForm() {
         setTenant_id(login.tenant_id)
         navigate("/dashboard/associados", { replace: true });
 
-      }else if(login.error){
-        try {
-          const login = await adminLogin({
-            email,
-            password
-          });
-          if(login.access_token){
-            setAcessToken(login)
-
-            navigate("/dashboard", { replace: true });
-          }else{
-            alert(    "Login ou senha Invalidos")
-
-          }
-          
-        } catch (error) {
+      }
+      else if(adminlogin != 'Unauthorized' && adminlogin != null   ){
+        if(adminlogin.access_token){
+          setAcessToken(adminlogin.access_token)
+          setTenant_id("admin")
+          navigate("/admin", { replace: true });
+          console.log(adminLogin)
+      
         }
       }
     }
 
-    
-      setAcessToken(login.access_token)
-      setTenant_id(login.tenant_id)
+
     
      
   }
