@@ -6,7 +6,7 @@ import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton } from '@
 // components
 import MenuPopover from '../../components/MenuPopover';
 // mocks_
-import {  deleteUsuario, deleteIdUser, deleteAcessToken, deleteTenant_id,getTenant_id  } from '../../utils/services/auth'
+import {  deleteUsuario, deleteIdUser, deleteAcessToken, deleteTenant_id,getTenant_id,deleteAcessAdmin  } from '../../utils/services/auth'
 // ----------------------------------------------------------------------
 import { useNavigate } from 'react-router-dom';
 import api from '../../utils/api'
@@ -65,6 +65,8 @@ export default function AccountPopover() {
     deleteIdUser()
     deleteTenant_id()
     deleteUsuario()
+    deleteUsuario()
+    deleteAcessAdmin()
     navigate("/", { replace: true });
 
   };

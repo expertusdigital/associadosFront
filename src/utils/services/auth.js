@@ -23,6 +23,32 @@ export const deleteTenant_id = () =>{
 
 
 
+export const setAcessAdmin = (acessadmin) => {
+    if(acessadmin != null){
+        localStorage.setItem("acessadmin", JSON.stringify(acessadmin))
+    }
+
+}
+
+export const getAcessAdmin = () =>{
+    const acessadmin = localStorage.getItem("acessadmin");
+    return acessadmin ; 
+}
+export const deleteAcessAdmin = () =>{
+    localStorage.removeItem('acessadmin');
+
+}
+
+
+
+
+
+
+
+
+
+
+
 export const setAcessToken = (access_token) => {
    
     if(access_token!= null){

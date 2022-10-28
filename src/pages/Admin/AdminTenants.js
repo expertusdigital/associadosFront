@@ -23,7 +23,6 @@ import {
   Typography,
   TableContainer,
   TablePagination,
-  Link,
 } from '@mui/material';
 // components
 import Page from '../../components/Page';
@@ -41,33 +40,21 @@ import {getAcessToken , getTenant_id} from '../../utils/services/auth'
 import NewwAssociados from '../../sections/associados'
 import AtuliazarAssociados from '../../sections/associados/AtuliazarAssociados'
 
-import { Edit } from '@mui/icons-material';
-import { width } from '@mui/system';
+
 
 
 
 // ----------------------------------------------------------------------
 var tenantId = JSON.parse(getTenant_id())
-console.log(tenantId)
+
 var access_token = JSON.parse(getAcessToken())
-
-
-
 // ----------------------------------------------------------------------
 const TABLE_HEAD = [
   { id: 'nome', label: 'Nome Completo', alignRight: false },
-  { id: 'nome_artistico', label: 'Nome artístico', alignRight: false },
-  { id: 'data_nascimento', label: 'Data Nascimento', alignRight: false },
-  { id: 'cnpf_cnpj', label: 'CPf', alignRight: false },
-  { id: 'telefone1', label: 'Telefone', alignRight: false },
-  { id: 'telefone2', label: 'Telefone Securandario', alignRight: false },
-  { id: 'email', label: 'Email', alignRight: false },
-  { id: 'email2', label: 'Email Securandario', alignRight: false },
-  { id: 'rua', label: 'Endereço', alignRight: false },
-  { id: 'cep', label: 'Cep', alignRight: false },
-  { id: 'uf', label: 'Localidade', alignRight: false },
-  { id: 'data_cobranca', label: 'Data de Registro', alignRight: false },
+  { id: 'email', label: 'email', alignRight: false },
+  { id: 'tenant_id', label: 'tenant', alignRight: false },
   { id: 'opcoes', label: 'Opções', alignRight: false },
+  
 
 ];
 
@@ -99,21 +86,16 @@ function applySortFilter(array, comparator, query) {
   if (query) {
     
     return filter(array, (_user) => 
-    _user.data_cobranca.toLowerCase().indexOf(query.toLowerCase()) !== -1   || 
-    _user.nome.toLowerCase().indexOf(query.toLowerCase()) !== -1            || 
-    _user.cnpf_cnpj.toLowerCase().indexOf(query.toLowerCase()) !== -1       ||
-    _user.nome_artistico.toLowerCase().indexOf(query.toLowerCase()) !== -1  ||
-    _user.telefone1.toLowerCase().indexOf(query.toLowerCase()) !== -1       ||
-    _user.email.toLowerCase().indexOf(query.toLowerCase()) !== -1                
-   
-      
- 
+    _user.data_cobranca.toLowerCase().indexOf(query.toLowerCase()) !== -1 || 
+    _user.nome.toLowerCase().indexOf(query.toLowerCase()) !== -1          || 
+    _user.cnpf_cnpj.toLowerCase().indexOf(query.toLowerCase()) !== -1     ||
+    _user.email.toLowerCase().indexOf(query.toLowerCase()) !== -1    
      );  
   }
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function Associados() {
+export default function AdminTenants() {
   
 
   const [fetchedData, setFetchedData] = useState([]);
@@ -122,7 +104,7 @@ export default function Associados() {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await api.get(`dashboard/${tenantId}/associados`, {
+      const data = await api.get(`admin/listartenants`, {
         headers: {
           'Authorization': `Bearer ${access_token}`
         }
@@ -164,7 +146,20 @@ export default function Associados() {
     setSelected([]);
   };
 
-
+  const handleClick = (event, name) => {
+    const selectedIndex = selected.indexOf(name);
+    let newSelected = [];
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, name);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
+    }
+    setSelected(newSelected);
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -261,7 +256,7 @@ export default function Associados() {
 
     
       if(id != null & id != '' ){
-        await api.post(`dashboard/${tenantId}/associados/deletar/${id}`,{
+        await api.post(`admin/usuarios/deletar/${id}`,{
         },{
           headers: {
             'Authorization': `Bearer ${access_token}`
@@ -345,20 +340,22 @@ export default function Associados() {
 /> 
       <Container maxWidth="xl">
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <Button >
-            <Typography variant="h4" color="black" gutterBottom>
-              Associados
-            </Typography>
-          </Button>
-     
-          <Link href="/dashboard/novoassociado" variant="body2">
-          <Button    variant="contained"  startIcon={<Iconify icon="eva:plus-fill" />} >
-            Novo Associado
-          </Button>
-        </Link>
-        
 
-         
+          <Typography variant="h4" gutterBottom>
+          Usuarios
+          </Typography>
+
+          <Button   onClick={handleOpen} variant="contained" component={RouterLink} to="#" startIcon={<Iconify icon="eva:plus-fill" />} >
+            Novo Usuario
+          </Button>
+
+          <Modal open={open} onClose={handleClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
+            <Box >
+                <Card style={modalStyle}>
+                    <NewwAssociados></NewwAssociados>
+                </Card>
+            </Box>
+          </Modal>
         </Stack>
 
         <Card>
@@ -377,8 +374,7 @@ export default function Associados() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id , nome , data_cobranca,telefone1,telefone2,cnpf_cnpj,nome_artistico,data_nascimento,email,rua,numero,
-                      pais,uf,cep,email2 } = row;
+                    const { id , nome , email,tenant_id} = row;
                     const isItemSelected = selected.indexOf(nome) !== -1;
 
                     return (  
@@ -393,17 +389,8 @@ export default function Associados() {
                       >
                       
                           <TableCell align="left">{nome}</TableCell>
-                          <TableCell align="left">{nome_artistico}</TableCell>
-                          <TableCell align="left">{data_nascimento}</TableCell>
-                          <TableCell align="left">{cnpf_cnpj}</TableCell>
-                          <TableCell align="left">{telefone1}</TableCell>
-                          <TableCell align="left">{telefone2}</TableCell>
                           <TableCell align="left">{email}</TableCell>
-                          <TableCell align="left">{email2}</TableCell>
-                          <TableCell align="left">{rua} - {numero}</TableCell>
-                          <TableCell align="left">{cep} </TableCell>
-                          <TableCell align="left">{uf} - {pais}</TableCell>
-                          <TableCell align="left">{data_cobranca}</TableCell>
+                          <TableCell align="left">{tenant_id}</TableCell>
                           <TableCell align="left">
 
                             <MenuItem sx={{ color: 'text.secondary' }} onClick={() => DeletOpen(id)}>

@@ -8,11 +8,11 @@ import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormContr
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
-import {setAcessToken, setTenant_id,getAcessToken } from '../../../utils/services/auth'
+import {setAcessToken, setTenant_id,getAcessToken,setAcessAdmin } from '../../../utils/services/auth'
 import axios from 'axios';
 // ----------------------------------------------------------------------
 async function tenantLogin(credentials) {
-  return fetch('https://associados.api.expertusdigital.com/dashboard/login', {
+  return fetch('http://localhost:8000/dashboard/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -23,7 +23,7 @@ async function tenantLogin(credentials) {
  }
 
  async function adminLogin(credentials) {
-  return fetch('https://associados.api.expertusdigital.com/admin/login', {
+  return fetch('http://localhost:8000/admin/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -69,7 +69,7 @@ export default function LoginForm() {
       else if(adminlogin != 'Unauthorized' && adminlogin != null   ){
         if(adminlogin.access_token){
           setAcessToken(adminlogin.access_token)
-          setTenant_id("admin")
+          setAcessAdmin("admin")
           navigate("/admin", { replace: true });
           console.log(adminLogin)
       

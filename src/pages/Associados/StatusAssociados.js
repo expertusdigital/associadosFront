@@ -23,7 +23,6 @@ import {
   Typography,
   TableContainer,
   TablePagination,
-  Link,
 } from '@mui/material';
 // components
 import Page from '../../components/Page';
@@ -41,33 +40,24 @@ import {getAcessToken , getTenant_id} from '../../utils/services/auth'
 import NewwAssociados from '../../sections/associados'
 import AtuliazarAssociados from '../../sections/associados/AtuliazarAssociados'
 
-import { Edit } from '@mui/icons-material';
-import { width } from '@mui/system';
+import AtuliazarStatus from '../../sections/associados/AtuliazarStatus'
 
 
 
 // ----------------------------------------------------------------------
 var tenantId = JSON.parse(getTenant_id())
-console.log(tenantId)
 var access_token = JSON.parse(getAcessToken())
-
-
 
 // ----------------------------------------------------------------------
 const TABLE_HEAD = [
   { id: 'nome', label: 'Nome Completo', alignRight: false },
   { id: 'nome_artistico', label: 'Nome artístico', alignRight: false },
-  { id: 'data_nascimento', label: 'Data Nascimento', alignRight: false },
   { id: 'cnpf_cnpj', label: 'CPf', alignRight: false },
   { id: 'telefone1', label: 'Telefone', alignRight: false },
-  { id: 'telefone2', label: 'Telefone Securandario', alignRight: false },
   { id: 'email', label: 'Email', alignRight: false },
-  { id: 'email2', label: 'Email Securandario', alignRight: false },
-  { id: 'rua', label: 'Endereço', alignRight: false },
-  { id: 'cep', label: 'Cep', alignRight: false },
-  { id: 'uf', label: 'Localidade', alignRight: false },
-  { id: 'data_cobranca', label: 'Data de Registro', alignRight: false },
-  { id: 'opcoes', label: 'Opções', alignRight: false },
+  { id: 'status', label: 'Status Pagamento', alignRight: false },
+  { id: 'data_cobranca', label: 'Data de Registro', alignRight: false }
+
 
 ];
 
@@ -102,18 +92,16 @@ function applySortFilter(array, comparator, query) {
     _user.data_cobranca.toLowerCase().indexOf(query.toLowerCase()) !== -1   || 
     _user.nome.toLowerCase().indexOf(query.toLowerCase()) !== -1            || 
     _user.cnpf_cnpj.toLowerCase().indexOf(query.toLowerCase()) !== -1       ||
+    _user.status.toLowerCase().indexOf(query.toLowerCase()) !== -1          ||
     _user.nome_artistico.toLowerCase().indexOf(query.toLowerCase()) !== -1  ||
     _user.telefone1.toLowerCase().indexOf(query.toLowerCase()) !== -1       ||
-    _user.email.toLowerCase().indexOf(query.toLowerCase()) !== -1                
-   
-      
- 
+    _user.email.toLowerCase().indexOf(query.toLowerCase()) !== -1    
      );  
   }
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function Associados() {
+export default function StatusAssociados() {
   
 
   const [fetchedData, setFetchedData] = useState([]);
@@ -164,7 +152,20 @@ export default function Associados() {
     setSelected([]);
   };
 
-
+  const handleClick = (event, name) => {
+    const selectedIndex = selected.indexOf(name);
+    let newSelected = [];
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, name);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
+    }
+    setSelected(newSelected);
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -209,7 +210,8 @@ export default function Associados() {
        },
  
      } ).then((response) =>{
-
+      
+   
    
       setAssociado(response.data)
    })
@@ -287,6 +289,24 @@ export default function Associados() {
     };
   
 
+
+    const [editStatus, setEditStatus] = useState(false);
+    const OpenStatus = (id) =>{
+      try {
+        formGetAssociado(id);
+      } catch (error) {
+        
+      }
+      setEditStatus(true);
+      
+   }
+   
+   const EditCloseStatus = (event) =>{
+       event.preventDefault();
+       setEditStatus(false);
+   }
+   
+
   return (
     <Page title="Clientes">   
     <Particles
@@ -314,7 +334,7 @@ export default function Associados() {
             area: 1080
           },
           limit: 0,
-          value: 500,
+          value: 200,
         },
         opacity: {
           animation: {
@@ -345,25 +365,42 @@ export default function Associados() {
 /> 
       <Container maxWidth="xl">
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <Button >
-            <Typography variant="h4" color="black" gutterBottom>
-              Associados
-            </Typography>
-          </Button>
-     
-          <Link href="/dashboard/novoassociado" variant="body2">
-          <Button    variant="contained"  startIcon={<Iconify icon="eva:plus-fill" />} >
-            Novo Associado
-          </Button>
-        </Link>
-        
 
+         
+         
+            <Button    to="#" style={statusAbout} >
+              <Stack direction={{ xs: 'column', sm: 'column', mt: 5 }}  fullWidth  style={stackSelect} >
+
+                <Stack direction={{ xs: 'column', sm: 'column', mt: 5 }}  fullWidth  style={stackSelect} >
+                  <Typography style={tituloHelpText} color="black">Os status podem variar nas seguintes opções a baixo:</Typography>
+                </Stack>
+
+                <Stack direction={{ xs: 'column', sm: 'row'}}  fullWidth  style={stackSelect} >
+                  <Stack direction={{ xs: 'column', sm: 'column'}}  fullWidth  style={stackOptions} >
+                    <Typography style={tituloHelpText} color="green">Aprovado</Typography>
+                    <Typography style={conteudoHelpText}>Pagmento Realizado</Typography>
+                  </Stack>
+
+                  <Stack direction={{ xs: 'column', sm: 'column'}}  fullWidth  style={stackOptions} >
+                    <Typography style={tituloHelpText} color="red">Bloqueado</Typography>
+                    <Typography style={conteudoHelpText}>Pagamento não foi realizado dentro do prazo</Typography>
+                  </Stack>
+
+                  <Stack direction={{ xs: 'column', sm: 'column' }}  fullWidth  style={stackOptions} >
+                    <Typography style={tituloHelpText} color="#eed269">Pendente</Typography>
+                    <Typography style={conteudoHelpText}>Pagamento a ser realizado</Typography>
+                  </Stack>
+                </Stack>
+                
+              </Stack>
+           </Button>
+
+       
          
         </Stack>
 
         <Card>
           <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
-
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
@@ -377,11 +414,11 @@ export default function Associados() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id , nome , data_cobranca,telefone1,telefone2,cnpf_cnpj,nome_artistico,data_nascimento,email,rua,numero,
-                      pais,uf,cep,email2 } = row;
+                    const { id , nome , data_cobranca,telefone1,cnpf_cnpj,nome_artistico,email,status } = row;
                     const isItemSelected = selected.indexOf(nome) !== -1;
 
                     return (  
+
                       <TableRow
                         hover
                         key={id}
@@ -390,63 +427,33 @@ export default function Associados() {
                         selected={isItemSelected}
                         aria-checked={isItemSelected}
                      
-                      >
+                       >
                       
                           <TableCell align="left">{nome}</TableCell>
                           <TableCell align="left">{nome_artistico}</TableCell>
-                          <TableCell align="left">{data_nascimento}</TableCell>
                           <TableCell align="left">{cnpf_cnpj}</TableCell>
                           <TableCell align="left">{telefone1}</TableCell>
-                          <TableCell align="left">{telefone2}</TableCell>
                           <TableCell align="left">{email}</TableCell>
-                          <TableCell align="left">{email2}</TableCell>
-                          <TableCell align="left">{rua} - {numero}</TableCell>
-                          <TableCell align="left">{cep} </TableCell>
-                          <TableCell align="left">{uf} - {pais}</TableCell>
-                          <TableCell align="left">{data_cobranca}</TableCell>
+       
                           <TableCell align="left">
-
-                            <MenuItem sx={{ color: 'text.secondary' }} onClick={() => DeletOpen(id)}>
-                              <ListItemIcon>
-                                <Iconify icon="eva:trash-2-outline" width={24} height={24} />
-                              </ListItemIcon>
-                              <ListItemText primary="Delete" primaryTypographyProps={{ variant: 'body2' }} />
-                            </MenuItem>
-                            
-                            <MenuItem onClick={() => EditOpen(id)} to="#" sx={{ color: 'text.secondary' }}>
-                              <ListItemIcon>
-                                <Iconify icon="eva:edit-fill" width={24} height={24} />
-                              </ListItemIcon>
-                              <ListItemText primary="Edit" primaryTypographyProps={{ variant: 'body2' }} />
+                            <MenuItem  to="#" onClick={() => OpenStatus(id)} style={colorStatus(status)}>
+                              
+                              <ListItemText primary={status}  primaryTypographyProps={{ variant: 'body2' }} />
                             </MenuItem>
 
-                            <Modal open={editAssociado} onClose={EditClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
+                            <Modal open={editStatus} onClose={EditCloseStatus} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
                               <Box >
                                 <Card style={modalStyle}>
-                                  <AtuliazarAssociados associado={associado}></AtuliazarAssociados>
-                                </Card>
-                              </Box>
-                            </Modal>
-
-
-                            <Modal open={getDelte} onClose={DeleteClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
-                              <Box >
-                                <Card style={modalStyleAlert}>
-                                    <Typography> Deseja Realmente excluir?  </Typography>
-
-                                    <Box style={boxAlert}>
-                                      <Button  onClick={() => deleteAssociado(idAssociados)} color="inherit" size="small" >
-                                        Excluir
-                                      </Button> 
-                                      
-                                      <Button  onClick={DeleteClose}  color="inherit" size="small">
-                                      Carcelar
-                                      </Button>
-                                    </Box>
+                                <AtuliazarStatus associado={associado}></AtuliazarStatus>
                                 </Card>
                               </Box>
                             </Modal>
                           </TableCell>
+
+                          <TableCell align="left">{data_cobranca}</TableCell>
+
+                          
+
                       </TableRow>
                     );
                   })}
@@ -469,7 +476,6 @@ export default function Associados() {
               </Table>
             </TableContainer>
           </Scrollbar>
-         
         
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
@@ -488,6 +494,9 @@ export default function Associados() {
 }
 
 
+const statusAbout = {
+ 
+}
 const modalStyle = {
   position: 'absolute' ,
   top: '50%',
@@ -522,3 +531,63 @@ const boxAlert = {
   padding: '1em'
 }
 
+const colorStatus = (status) => {
+
+if(status == "pendente"){
+  const color= {
+    background: "#f0dc82",
+    borderRadius: 20,
+    textAlign: "center",
+    color: "black"
+  }
+  return color
+}else if(status == "aprovado"){
+  const color= {
+    background: "#7ba05b",
+    borderRadius: 20,
+    textAlign: "center",
+    color: "black"
+  }
+  return color
+}else if(status == "bloqueado"){
+  const color= {
+    background: "#da6351",
+    borderRadius: 20,
+    textAlign: "center",
+    color: "black"
+  }
+  return color
+}
+
+
+}
+
+const tituloStatus = {
+  marginBottom: 15,
+  fontSize: 18,
+  fontWeight: 600,
+  
+ }
+ 
+ const stackSelect = {
+   marginBottom: 15
+ }
+
+ const stackOptions = {
+  marginTop: 15,
+  marginBottom: 15,
+  marginLeft: 0,
+  marginRight: 20
+ }
+ 
+ const tituloHelpText = {
+   fontSize: 15,
+   fontWeight: 600,
+ }
+ 
+ const conteudoHelpText = {
+   fontSize: 13,
+   fontWeight: 500,
+   color: "black"
+ }
+ 

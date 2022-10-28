@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { React,useEffect,useState } from 'react';
 import { Outlet } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
@@ -32,13 +32,19 @@ const MainStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
+
+
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
 
+  
+
+
   return (
     <RootStyle>
+   
       <DashboardNavbar onOpenSidebar={() => setOpen(true)} />
-      <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
+      <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)}></DashboardSidebar>
       <MainStyle>
         <Outlet />
       </MainStyle>

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
@@ -14,6 +14,10 @@ import Scrollbar from '../../components/Scrollbar';
 import NavSection from '../../components/NavSection';
 //
 import navConfig from './NavConfig';
+import navConfigAdmin from './NavConfigAdmin';
+import {getTenant_id,getAcessAdmin} from '../../utils/services/auth'
+
+
 
 // ----------------------------------------------------------------------
 
@@ -42,6 +46,26 @@ DashboardSidebar.propTypes = {
 };
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
+  
+const [navConfigList,setnavConfigList]  =  useState(navConfig);
+
+useEffect(() => {
+  
+  if(getAcessAdmin() != null && getAcessAdmin() != 'undefined' ){
+    console.log("test: 1 ",getAcessAdmin())  
+    setnavConfigList(navConfigAdmin)
+  }
+    else{
+    console.log("test: 0 ",getAcessAdmin())
+   
+  }
+
+}, []);
+ 
+
+
+
+
   const { pathname } = useLocation();
 
   const isDesktop = useResponsive('up', 'lg');
@@ -85,7 +109,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         </Link>
       </Box>
 
-      <NavSection navConfig={navConfig} />
+      <NavSection navConfig={navConfigList} />
 
       <Box sx={{ flexGrow: 1 }} />
 

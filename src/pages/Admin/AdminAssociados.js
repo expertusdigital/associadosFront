@@ -23,7 +23,6 @@ import {
   Typography,
   TableContainer,
   TablePagination,
-  Link,
 } from '@mui/material';
 // components
 import Page from '../../components/Page';
@@ -41,17 +40,13 @@ import {getAcessToken , getTenant_id} from '../../utils/services/auth'
 import NewwAssociados from '../../sections/associados'
 import AtuliazarAssociados from '../../sections/associados/AtuliazarAssociados'
 
-import { Edit } from '@mui/icons-material';
-import { width } from '@mui/system';
+
 
 
 
 // ----------------------------------------------------------------------
 var tenantId = JSON.parse(getTenant_id())
-console.log(tenantId)
 var access_token = JSON.parse(getAcessToken())
-
-
 
 // ----------------------------------------------------------------------
 const TABLE_HEAD = [
@@ -99,21 +94,16 @@ function applySortFilter(array, comparator, query) {
   if (query) {
     
     return filter(array, (_user) => 
-    _user.data_cobranca.toLowerCase().indexOf(query.toLowerCase()) !== -1   || 
-    _user.nome.toLowerCase().indexOf(query.toLowerCase()) !== -1            || 
-    _user.cnpf_cnpj.toLowerCase().indexOf(query.toLowerCase()) !== -1       ||
-    _user.nome_artistico.toLowerCase().indexOf(query.toLowerCase()) !== -1  ||
-    _user.telefone1.toLowerCase().indexOf(query.toLowerCase()) !== -1       ||
-    _user.email.toLowerCase().indexOf(query.toLowerCase()) !== -1                
-   
-      
- 
+    _user.data_cobranca.toLowerCase().indexOf(query.toLowerCase()) !== -1 || 
+    _user.nome.toLowerCase().indexOf(query.toLowerCase()) !== -1          || 
+    _user.cnpf_cnpj.toLowerCase().indexOf(query.toLowerCase()) !== -1     ||
+    _user.email.toLowerCase().indexOf(query.toLowerCase()) !== -1    
      );  
   }
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function Associados() {
+export default function AdminAssociados() {
   
 
   const [fetchedData, setFetchedData] = useState([]);
@@ -122,7 +112,7 @@ export default function Associados() {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await api.get(`dashboard/${tenantId}/associados`, {
+      const data = await api.get(`admin/listarassociados`, {
         headers: {
           'Authorization': `Bearer ${access_token}`
         }
@@ -164,7 +154,20 @@ export default function Associados() {
     setSelected([]);
   };
 
-
+  const handleClick = (event, name) => {
+    const selectedIndex = selected.indexOf(name);
+    let newSelected = [];
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, name);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
+    }
+    setSelected(newSelected);
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -203,7 +206,7 @@ export default function Associados() {
   };
 
   async function formGetAssociado(id) {
-    await api.get(`dashboard/${tenantId}/associados/buscar/${id}`,{
+    await api.get(`admin/buscarassociado/${id}`,{
        headers: {
          'Authorization': `Bearer ${access_token}`
        },
@@ -261,7 +264,7 @@ export default function Associados() {
 
     
       if(id != null & id != '' ){
-        await api.post(`dashboard/${tenantId}/associados/deletar/${id}`,{
+        await api.post(`admin/deletarassociado/${id}`,{
         },{
           headers: {
             'Authorization': `Bearer ${access_token}`
@@ -345,20 +348,22 @@ export default function Associados() {
 /> 
       <Container maxWidth="xl">
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <Button >
-            <Typography variant="h4" color="black" gutterBottom>
-              Associados
-            </Typography>
-          </Button>
-     
-          <Link href="/dashboard/novoassociado" variant="body2">
-          <Button    variant="contained"  startIcon={<Iconify icon="eva:plus-fill" />} >
-            Novo Associado
-          </Button>
-        </Link>
-        
 
-         
+          <Typography variant="h4" gutterBottom>
+          Usuarios
+          </Typography>
+
+          <Button   onClick={handleOpen} variant="contained" component={RouterLink} to="#" startIcon={<Iconify icon="eva:plus-fill" />} >
+            Novo Usuario
+          </Button>
+
+          <Modal open={open} onClose={handleClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
+            <Box >
+                <Card style={modalStyle}>
+                    <NewwAssociados></NewwAssociados>
+                </Card>
+            </Box>
+          </Modal>
         </Stack>
 
         <Card>

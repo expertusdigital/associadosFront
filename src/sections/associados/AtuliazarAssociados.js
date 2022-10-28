@@ -44,7 +44,7 @@ export default function NewwAssociados(associado) {
   
 
   async function formAssociados() {
-    await axios.post(`http://localhost:8000/api/dashboard/${tenant_id}/associados/atualizar/${associado.associado.id}`,{
+    await axios.post(`http://localhost:8000/dashboard/${tenant_id}/associados/atualizar/${associado.associado.id}`,{
  
 
           nome,

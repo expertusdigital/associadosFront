@@ -4,6 +4,9 @@ import Associados from './pages/Associados';
 import DashboardApp from './pages/Dashboard';
 import DashboardLayout from './layouts/dashboard';
 import Profile from './pages/Profile';
+import StatusAssociados from './pages/Associados/StatusAssociados'
+import NewwAssociados from './sections/associados'
+
 
 export const ProtectedRoute = ({ children }) => {
 
@@ -25,7 +28,9 @@ export  function RouteAutenticate() {
       children: [
         { path: 'app', element: <DashboardApp /> },
         { path: 'associados', element: <Associados /> },
+        { path: 'status', element: <StatusAssociados /> },
         { path: 'profile', element: <Profile /> },
+        { path: 'novoassociado', element: <NewwAssociados /> },
       ],
     },
   ]);
