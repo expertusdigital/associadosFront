@@ -26,21 +26,17 @@ import {
 } from '@mui/material';
 // components
 import Page from '../../components/Page';
-import Label from '../../components/Label';
 import Scrollbar from '../../components/Scrollbar';
-import Iconify from '../../components/Iconify';
 import SearchNotFound from '../../components/SearchNotFound';
-import { UserListHead, UserListToolbar,UserMoreMenu } from '../../sections/@dashboard/user';
+import { UserListHead, UserListToolbar } from '../../sections/@dashboard/user';
 // mock
-import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@mui/material';
+import {  MenuItem, ListItemText } from '@mui/material';
 
-import {users} from '../../_mock/clientes';
 import api from '../../utils/api';
 import {getAcessToken , getTenant_id} from '../../utils/services/auth'
-import NewwAssociados from '../../sections/associados'
-import AtuliazarAssociados from '../../sections/associados/AtuliazarAssociados'
 
 
+import AtuliazarStatus from '../../sections/admin/associados/AtuliazarStatus'
 
 
 
@@ -56,8 +52,8 @@ const TABLE_HEAD = [
   { id: 'telefone1', label: 'Telefone', alignRight: false },
   { id: 'email', label: 'Email', alignRight: false },
   { id: 'status', label: 'Status Pagamento', alignRight: false },
-  { id: 'data_cobranca', label: 'Data de Registro', alignRight: false },
-  { id: 'opcoes', label: 'Opções', alignRight: false },
+  { id: 'data_cobranca', label: 'Data de Registro', alignRight: false }
+
 
 ];
 
@@ -89,16 +85,19 @@ function applySortFilter(array, comparator, query) {
   if (query) {
     
     return filter(array, (_user) => 
-    _user.data_cobranca.toLowerCase().indexOf(query.toLowerCase()) !== -1 || 
-    _user.nome.toLowerCase().indexOf(query.toLowerCase()) !== -1          || 
-    _user.cnpf_cnpj.toLowerCase().indexOf(query.toLowerCase()) !== -1     ||
+    _user.data_cobranca.toLowerCase().indexOf(query.toLowerCase()) !== -1   || 
+    _user.nome.toLowerCase().indexOf(query.toLowerCase()) !== -1            || 
+    _user.cnpf_cnpj.toLowerCase().indexOf(query.toLowerCase()) !== -1       ||
+    _user.status.toLowerCase().indexOf(query.toLowerCase()) !== -1          ||
+    _user.nome_artistico.toLowerCase().indexOf(query.toLowerCase()) !== -1  ||
+    _user.telefone1.toLowerCase().indexOf(query.toLowerCase()) !== -1       ||
     _user.email.toLowerCase().indexOf(query.toLowerCase()) !== -1    
      );  
   }
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function AdminStatus() {
+export default function StatusAssociados() {
   
 
   const [fetchedData, setFetchedData] = useState([]);
@@ -182,23 +181,12 @@ export default function AdminStatus() {
   const filteredUsers = applySortFilter(teste[0], getComparator(order, orderBy), filterName);      
   
   const isUserNotFound = filteredUsers.length === 0;
-
-  const [open, setOpen] = useState(false);
-
-  const [editAssociado, setEditAssociado] = useState(false);
-
   const [associado , setAssociado] = useState();
 
 
 
 
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   async function formGetAssociado(id) {
     await api.get(`admin/buscarassociado/${id}`,{
@@ -207,7 +195,8 @@ export default function AdminStatus() {
        },
  
      } ).then((response) =>{
-
+      
+   
    
       setAssociado(response.data)
    })
@@ -218,59 +207,9 @@ export default function AdminStatus() {
  
 
   
-    const EditOpen = (id) =>{
-
-      try {
-        formGetAssociado(id);
-      } catch (error) {
-        
-      }
-      
-      setEditAssociado(true);
-
-    }
-
-    const EditClose = (event) =>{
-        event.preventDefault();
-        setEditAssociado(false);
-    }
-
-
-    
-    const [idAssociados, setIdAssociado] = useState(null);
-
-    const [getDelte, setDelete] = useState(false);
-    
-    const DeletOpen = (id) =>{
-        setIdAssociado(id)
-        
-        setDelete(true);
-    }
-
-
-    const DeleteClose = () =>{
-        setDelete(false);
-
-    }
-
-
-    const deleteAssociado = async (id) =>  {
     
 
     
-      if(id != null & id != '' ){
-        await api.post(`admin/deletarassociado/${id}`,{
-        },{
-          headers: {
-            'Authorization': `Bearer ${access_token}`
-          },
-    
-        } ).then((response) =>{
-    
-      })
-      window.location.reload();
-      }
-    }
     const particlesInit = async (main) => {
       console.log(main);
    
@@ -284,6 +223,24 @@ export default function AdminStatus() {
       console.log(container);
     };
   
+
+
+    const [editStatus, setEditStatus] = useState(false);
+    const OpenStatus = (id) =>{
+      try {
+        formGetAssociado(id);
+      } catch (error) {
+        
+      }
+      setEditStatus(true);
+      
+   }
+   
+   const EditCloseStatus = (event) =>{
+       event.preventDefault();
+       setEditStatus(false);
+   }
+   
 
   return (
     <Page title="Clientes">   
@@ -312,7 +269,7 @@ export default function AdminStatus() {
             area: 1080
           },
           limit: 0,
-          value: 500,
+          value: 200,
         },
         opacity: {
           animation: {
@@ -344,26 +301,41 @@ export default function AdminStatus() {
       <Container maxWidth="xl">
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
 
-          <Typography variant="h4" gutterBottom>
-          Usuarios
-          </Typography>
+         
+         
+            <Button    to="#" style={statusAbout} >
+              <Stack direction={{ xs: 'column', sm: 'column', mt: 5 }}  fullWidth  style={stackSelect} >
 
-          <Button   onClick={handleOpen} variant="contained" component={RouterLink} to="#" startIcon={<Iconify icon="eva:plus-fill" />} >
-            Novo Usuario
-          </Button>
+                <Stack direction={{ xs: 'column', sm: 'column', mt: 5 }}  fullWidth  style={stackSelect} >
+                  <Typography style={tituloHelpText} color="black">Os status podem variar nas seguintes opções a baixo:</Typography>
+                </Stack>
 
-          <Modal open={open} onClose={handleClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
-            <Box >
-                <Card style={modalStyle}>
-                    <NewwAssociados></NewwAssociados>
-                </Card>
-            </Box>
-          </Modal>
+                <Stack direction={{ xs: 'column', sm: 'row'}}  fullWidth  style={stackSelect} >
+                  <Stack direction={{ xs: 'column', sm: 'column'}}  fullWidth  style={stackOptions} >
+                    <Typography style={tituloHelpText} color="green">Aprovado</Typography>
+                    <Typography style={conteudoHelpText}>Pagmento Realizado</Typography>
+                  </Stack>
+
+                  <Stack direction={{ xs: 'column', sm: 'column'}}  fullWidth  style={stackOptions} >
+                    <Typography style={tituloHelpText} color="red">Bloqueado</Typography>
+                    <Typography style={conteudoHelpText}>Pagamento não foi realizado dentro do prazo</Typography>
+                  </Stack>
+
+                  <Stack direction={{ xs: 'column', sm: 'column' }}  fullWidth  style={stackOptions} >
+                    <Typography style={tituloHelpText} color="#eed269">Pendente</Typography>
+                    <Typography style={conteudoHelpText}>Pagamento a ser realizado</Typography>
+                  </Stack>
+                </Stack>
+                
+              </Stack>
+           </Button>
+
+       
+         
         </Stack>
 
         <Card>
           <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
-
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
@@ -381,6 +353,7 @@ export default function AdminStatus() {
                     const isItemSelected = selected.indexOf(nome) !== -1;
 
                     return (  
+
                       <TableRow
                         hover
                         key={id}
@@ -389,58 +362,33 @@ export default function AdminStatus() {
                         selected={isItemSelected}
                         aria-checked={isItemSelected}
                      
-                      >
+                       >
                       
                           <TableCell align="left">{nome}</TableCell>
                           <TableCell align="left">{nome_artistico}</TableCell>
                           <TableCell align="left">{cnpf_cnpj}</TableCell>
                           <TableCell align="left">{telefone1}</TableCell>
                           <TableCell align="left">{email}</TableCell>
-                          <TableCell align="left">{status} </TableCell>
-                          <TableCell align="left">{data_cobranca}</TableCell>
+       
                           <TableCell align="left">
-
-                            <MenuItem sx={{ color: 'text.secondary' }} onClick={() => DeletOpen(id)}>
-                              <ListItemIcon>
-                                <Iconify icon="eva:trash-2-outline" width={24} height={24} />
-                              </ListItemIcon>
-                              <ListItemText primary="Delete" primaryTypographyProps={{ variant: 'body2' }} />
-                            </MenuItem>
-                            
-                            <MenuItem onClick={() => EditOpen(id)} to="#" sx={{ color: 'text.secondary' }}>
-                              <ListItemIcon>
-                                <Iconify icon="eva:edit-fill" width={24} height={24} />
-                              </ListItemIcon>
-                              <ListItemText primary="Edit" primaryTypographyProps={{ variant: 'body2' }} />
+                            <MenuItem  to="#" onClick={() => OpenStatus(id)} style={colorStatus(status)}>
+                              
+                              <ListItemText primary={status}  primaryTypographyProps={{ variant: 'body2' }} />
                             </MenuItem>
 
-                            <Modal open={editAssociado} onClose={EditClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
+                            <Modal open={editStatus} onClose={EditCloseStatus} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
                               <Box >
                                 <Card style={modalStyle}>
-                                  <AtuliazarAssociados associado={associado}></AtuliazarAssociados>
-                                </Card>
-                              </Box>
-                            </Modal>
-
-
-                            <Modal open={getDelte} onClose={DeleteClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
-                              <Box >
-                                <Card style={modalStyleAlert}>
-                                    <Typography> Deseja Realmente excluir?  </Typography>
-
-                                    <Box style={boxAlert}>
-                                      <Button  onClick={() => deleteAssociado(idAssociados)} color="inherit" size="small" >
-                                        Excluir
-                                      </Button> 
-                                      
-                                      <Button  onClick={DeleteClose}  color="inherit" size="small">
-                                      Carcelar
-                                      </Button>
-                                    </Box>
+                                <AtuliazarStatus associado={associado}></AtuliazarStatus>
                                 </Card>
                               </Box>
                             </Modal>
                           </TableCell>
+
+                          <TableCell align="left">{data_cobranca}</TableCell>
+
+                          
+
                       </TableRow>
                     );
                   })}
@@ -463,7 +411,6 @@ export default function AdminStatus() {
               </Table>
             </TableContainer>
           </Scrollbar>
-         
         
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
@@ -482,6 +429,9 @@ export default function AdminStatus() {
 }
 
 
+const statusAbout = {
+ 
+}
 const modalStyle = {
   position: 'absolute' ,
   top: '50%',
@@ -516,3 +466,63 @@ const boxAlert = {
   padding: '1em'
 }
 
+const colorStatus = (status) => {
+
+if(status == "pendente"){
+  const color= {
+    background: "#f0dc82",
+    borderRadius: 20,
+    textAlign: "center",
+    color: "black"
+  }
+  return color
+}else if(status == "aprovado"){
+  const color= {
+    background: "#7ba05b",
+    borderRadius: 20,
+    textAlign: "center",
+    color: "black"
+  }
+  return color
+}else if(status == "bloqueado"){
+  const color= {
+    background: "#da6351",
+    borderRadius: 20,
+    textAlign: "center",
+    color: "black"
+  }
+  return color
+}
+
+
+}
+
+const tituloStatus = {
+  marginBottom: 15,
+  fontSize: 18,
+  fontWeight: 600,
+  
+ }
+ 
+ const stackSelect = {
+   marginBottom: 15
+ }
+
+ const stackOptions = {
+  marginTop: 15,
+  marginBottom: 15,
+  marginLeft: 0,
+  marginRight: 20
+ }
+ 
+ const tituloHelpText = {
+   fontSize: 15,
+   fontWeight: 600,
+ }
+ 
+ const conteudoHelpText = {
+   fontSize: 13,
+   fontWeight: 500,
+   color: "black"
+ }
+ 

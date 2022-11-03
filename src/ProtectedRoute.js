@@ -6,6 +6,8 @@ import DashboardLayout from './layouts/dashboard';
 import Profile from './pages/Profile';
 import StatusAssociados from './pages/Associados/StatusAssociados'
 import NewwAssociados from './sections/associados'
+import AtualizarAssociado from './sections/associados/AtuliazarAssociados'
+
 
 
 export const ProtectedRoute = ({ children }) => {
@@ -31,6 +33,8 @@ export  function RouteAutenticate() {
         { path: 'status', element: <StatusAssociados /> },
         { path: 'profile', element: <Profile /> },
         { path: 'novoassociado', element: <NewwAssociados /> },
+        { path: 'atualizarassociado/:id', element: <AtualizarAssociado /> },
+
       ],
     },
   ]);

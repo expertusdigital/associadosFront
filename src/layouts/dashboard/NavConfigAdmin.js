@@ -11,22 +11,27 @@ const AdminConfig = [
   {
     title: 'Usuarios',
     path: 'usuarios',
-    icon: getIcon('eva:pie-chart-2-fill'),
+    icon: getIcon('akar-icons:people-group'),
   },
   {
     title: 'Clientes',
     path: 'tenants',
-    icon: getIcon('eva:pie-chart-2-fill'),
+    icon: getIcon('akar-icons:person'),
   },
   {
     title: 'Associados',
     path: 'associados',
-    icon: getIcon('eva:pie-chart-2-fill'),
+    icon: getIcon('eva:people-fill'),
+  },
+  {
+    title: 'Novo Associado',
+    path: 'novoassociado',
+    icon: getIcon('akar-icons:person-add'),
   },
   {
     title: 'Status',
     path: 'status',
-    icon: getIcon('eva:pie-chart-2-fill'),
+    icon: getIcon('mdi:list-status')
   }
 
 ];

@@ -12,7 +12,7 @@ import {setAcessToken, setTenant_id,getAcessToken,setAcessAdmin } from '../../..
 import axios from 'axios';
 // ----------------------------------------------------------------------
 async function tenantLogin(credentials) {
-  return fetch('http://localhost:8000/dashboard/login', {
+  return fetch('https://associados.api.expertusdigital.com/dashboard/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -23,7 +23,7 @@ async function tenantLogin(credentials) {
  }
 
  async function adminLogin(credentials) {
-  return fetch('http://localhost:8000/admin/login', {
+  return fetch('https://associados.api.expertusdigital.com/admin/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

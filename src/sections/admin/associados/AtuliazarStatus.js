@@ -11,62 +11,63 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { LoadingButton } from '@mui/lab';
 // component
 import axios from 'axios'
-import {getTenant_id,getAcessToken} from '../../utils/services/auth'
+import {getAcessToken} from '../../../utils/services/auth'
 
 export default function AtuliazarStatus(associado) {
 
 
 console.log(associado)
 
-  const [nome, setNome] = useState("");
-  const [nome_artistico, setFantasia] = useState("");
-  const [cnpf_cnpj, setCpfCnpj] = useState("");
-  const [rua, setLogradouro] = useState("");
-  const [numero, setNumero] = useState("");
-  const [cidade, setCidade] = useState("");
-  const [uf, setUf] = useState("");
-  const [cep, setCep] = useState("");
-  const [telefone1, setTelefone1] = useState("");
-  const [telefone2, setTelefone2] = useState("");
-  const [email, setEmail] = useState("");
-  const [email2, setEmail2] = useState("");
-  const [data_nascimento,setData_nascimento] = useState("");
-  const [pais, setPais] = useState("");
-  const [status, setStatus] = useState("");
-  const [data_cobranca,setdateCobranca] = useState("");
+const [nome, setNome] = useState("");
+const [nome_artistico, setFantasia] = useState("");
+const [cnpf_cnpj, setCpfCnpj] = useState("");
+const [rua, setLogradouro] = useState("");
+const [numero, setNumero] = useState("");
+const [cidade, setCidade] = useState("");
+const [uf, setUf] = useState("");
+const [cep, setCep] = useState("");
+const [telefone1, setTelefone1] = useState("");
+const [telefone2, setTelefone2] = useState("");
+const [email, setEmail] = useState("");
+const [email2, setEmail2] = useState("");
+const [data_nascimento,setData_nascimento] = useState("");
+const [pais, setPais] = useState("");
+const [status, setStatus] = useState("");
+const [data_cobranca,setdateCobranca] = useState("");
+const [tenant_id,setTenant_id] = useState("");
 
 
-  useEffect(() => {
-    if(associado.associado!= null && associado.associado != 'undefined'){
-      setNome(associado.associado.nome)
-      setFantasia(associado.associado.nome_artistico)
-      setCpfCnpj(associado.associado.cnpf_cnpj)
-      setLogradouro(associado.associado.rua)
-      setNumero(associado.associado.numero)
-      setCidade(associado.associado.cidade)
-      setUf(associado.associado.uf)
-      setCep(associado.associado.cep)
-      setTelefone1(associado.associado.telefone1)
-      setTelefone2(associado.associado.telefone2)
-      setEmail(associado.associado.email)
-      setEmail2(associado.associado.email2)
-      setData_nascimento(associado.associado.data_nascimento)
-      setPais(associado.associado.pais)
-      setdateCobranca(associado.associado.data_cobranca)
-    }
-  });
+useEffect(() => {
+  if(associado.associado!= null && associado.associado != 'undefined'){
+    setNome(associado.associado.nome)
+    setFantasia(associado.associado.nome_artistico)
+    setCpfCnpj(associado.associado.cnpf_cnpj)
+    setLogradouro(associado.associado.rua)
+    setNumero(associado.associado.numero)
+    setCidade(associado.associado.cidade)
+    setUf(associado.associado.uf)
+    setCep(associado.associado.cep)
+    setTelefone1(associado.associado.telefone1)
+    setTelefone2(associado.associado.telefone2)
+    setEmail(associado.associado.email)
+    setEmail2(associado.associado.email2)
+    setData_nascimento(associado.associado.data_nascimento)
+    setPais(associado.associado.pais)
+    setdateCobranca(associado.associado.data_cobranca)
+    setTenant_id(associado.associado.tenant_id)
+  }
+});
 
 
 
 
-  const tenant_id = JSON.parse(getTenant_id())
- 
+
   var access_token = JSON.parse(getAcessToken())
 
   
 
   async function formAssociados() {
-    await axios.post(`https://associados.api.expertusdigital.com/dashboard/${tenant_id}/associados/atualizar/${associado.associado.id}`,{
+    await axios.post(`https://associados.api.expertusdigital.com/admin/atualizarassociado/${associado.associado.id}`,{
  
 
           nome,

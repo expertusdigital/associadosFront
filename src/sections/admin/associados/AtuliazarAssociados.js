@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import InputMask from 'react-input-mask';
 import { useNavigate, useParams } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
-import {getTenant_id,getAcessToken} from '../../utils/services/auth'
+import {getTenant_id,getAcessToken} from '../../../utils/services/auth'
 import Particles from 'react-tsparticles'
 import { loadFull } from "tsparticles";
-import Page from '../../components/Page';
+import Page from '../../../components/Page';
 import {  TextField, FormControl,
 
   Card,
@@ -17,7 +17,7 @@ import {  TextField, FormControl,
  } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import axios from 'axios';
-import api from '../../utils/api';
+import api from '../../../utils/api';
 
 
 
@@ -69,7 +69,7 @@ export default function NewwAssociados() {
 
 
   async function formGetAssociado(id) {
-    await api.get(`dashboard/${tenantId}/associados/buscar/${id}`,{
+    await api.get(`admin/associados/buscar/${id}`,{
        headers: {
          'Authorization': `Bearer ${access_token}`
        },

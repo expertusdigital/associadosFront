@@ -3,12 +3,12 @@ import { useState } from 'react';
 import InputMask from 'react-input-mask';
 import { useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
-import {getTenant_id,getAcessToken} from '../../utils/services/auth'
+import {getTenant_id,getAcessToken} from '../../../utils/services/auth'
 // material
 import Particles from 'react-tsparticles'
 import { loadFull } from "tsparticles";
  
-import Page from '../../components/Page';
+import Page from '../../../components/Page';
 import {  TextField, FormControl,
 
   Box,
@@ -58,7 +58,7 @@ export default function NewwAssociados() {
 
 
   async function formAssociados() {
-    await axios.post(`https://associados.api.expertusdigital.com/dashboard/${tenantId}/associados/add`,{
+    await axios.post(`https://associados.api.expertusdigital.com/admin/${tenantId}/associados/add`,{
  
 
           nome,
