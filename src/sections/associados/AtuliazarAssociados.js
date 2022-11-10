@@ -107,7 +107,7 @@ export default function NewwAssociados() {
   
 
   async function formAssociados() {
-    await api.post(`admin/associados/atualizar/${idAssociado.id}`,{
+    await api.post(`dashboard/${tenant_id}/associados/atualizar/${idAssociado.id}`,{
  
 
           nome,
@@ -138,7 +138,8 @@ export default function NewwAssociados() {
         },
   
       } ).then((response) =>{
-       
+        
+     
     })
 
 
@@ -239,180 +240,187 @@ export default function NewwAssociados() {
       </Stack>
 
       <Card style={cardForm}>
-      <FormControl >
-      <form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        <Stack spacing={3}>
+      <FormControl  style={StachForm}>
+        <form autoComplete="off" noValidate onSubmit={handleSubmit}>
+          <Stack spacing={3}>
 
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            <TextField
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+              <TextField
+                  fullWidth
+                  type="text"
+                  required
+                  label="nome"
+                  value={nome}
+                  onChange={e => setNome(e.target.value)}
+              />
+              <TextField
                 fullWidth
+                required
+                label="nome artistico"
                 type="text"
-             
-                value={nome}
-                onChange={e => setNome(e.target.value)}
-            />
-            <TextField
-              fullWidth
-              type="text"
-              value={nome_artistico}
-              onChange={e => setFantasia(e.target.value)}
-            />
-          </Stack>
+                value={nome_artistico}
+                onChange={e => setFantasia(e.target.value)}
+              />
+            </Stack>
 
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+              <TextField
+                    fullWidth
+                    required
+                    autoComplete="username"
+                    label="cnpf_cnpj"
+                    type="text"
+                    value={cnpf_cnpj}
+                    onChange={e => setCpfCnpj(e.target.value)}
+              />
+              <TextField
+                    fullWidth
+                    required
+                    autoComplete="username"
+                    type="data"
+                    value={data_nascimento}
+                    label="data_nascimento"
+                    onChange={e => setData_nascimento(e.target.value)}
+
+
+                  
+              />
+
+            </Stack>
+        
             <TextField
+                  fullWidth
+                  required
+                  autoComplete="username"
+                  type="email"
+                  value={email}
+                  label="email"
+                  onChange={e => setEmail(e.target.value)}
+
+              
+                
+            />
+              <TextField
+                  fullWidth
+                  autoComplete="username"
+                  type="email"
+                  value={email2}
+                  label="email (opcional)"
+                  onChange={e => setEmail2(e.target.value)}
+
+              
+                
+            />
+
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                <TextField
+                  fullWidth
+                  autoComplete="username"
+                  type="text"
+                  value={rua}
+                  label="rua "
+                  onChange={e => setLogradouro(e.target.value)}
+
+                />
+
+                <TextField
+                  fullWidth
+                  autoComplete="username"
+                  type="number"
+                  value={numero}
+                  label="numero"
+                  onChange={e => setNumero(e.target.value)}
+
+                />
+
+              <TextField
+                  fullWidth
+                  autoComplete="username"
+                  type="number"
+                  value={cep}
+                  label="cep"
+                  onChange={e => setCep(e.target.value)}
+
+                />
+
+          
+            </Stack>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                <TextField
+                  fullWidth
+                  autoComplete="username"
+                  type="text"
+                  value={cidade}
+                  label="cidade"
+                  onChange={e => setCidade(e.target.value)}
+                />
+
+                <TextField
+                  fullWidth
+                  autoComplete="username"
+                  type="text"
+                  value={uf}
+                  label="uf"
+                  onChange={e => setUf(e.target.value)}
+                />
+
+                <TextField
+                  fullWidth
+                  autoComplete="username"
+                  type="text"
+                  value={pais}
+                  label="pais"
+                  onChange={e => setPais(e.target.value)}
+                />
+            </Stack>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                <TextField
                   fullWidth
                   required
                   autoComplete="username"
                   type="text"
-                  value={cnpf_cnpj}
-                  onChange={e => setCpfCnpj(e.target.value)}
-            />
-             <TextField
+                  value={telefone1}
+                  label="telefone "
+                  onChange={e => setTelefone1(e.target.value)}
+                />
+
+              <TextField
                   fullWidth
-                  required
-                  autoComplete="username"
-                  type="data"
-                  value={data_nascimento}
-
-                  onChange={e => setData_nascimento(e.target.value)}
-
-
-                 
-            />
-
-          </Stack>
-      
-          <TextField
-                fullWidth
-                required
-                autoComplete="username"
-                type="email"
-                value={email}
-
-                onChange={e => setEmail(e.target.value)}
-
-            
-              
-          />
-            <TextField
-                fullWidth
-                autoComplete="username"
-                type="email"
-                value={email2}
-                onChange={e => setEmail2(e.target.value)}
-
-            
-              
-          />
-
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-              <TextField
-                fullWidth
-                autoComplete="username"
-                type="text"
-                value={rua}
-
-                onChange={e => setLogradouro(e.target.value)}
-
-              />
-
-              <TextField
-                fullWidth
-                autoComplete="username"
-                type="number"
-                value={numero}
-
-                onChange={e => setNumero(e.target.value)}
-
-              />
-
-            <TextField
-                fullWidth
-                autoComplete="username"
-                type="number"
-                value={cep}
-
-                onChange={e => setCep(e.target.value)}
-
-              />
-
-         
-          </Stack>
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-              <TextField
-                fullWidth
-                autoComplete="username"
-                type="text"
-                value={cidade}
-
-                onChange={e => setCidade(e.target.value)}
-              />
-
-              <TextField
-                fullWidth
-                autoComplete="username"
-                type="text"
-                value={uf}
-
-                onChange={e => setUf(e.target.value)}
-              />
-
-              <TextField
-                fullWidth
-                autoComplete="username"
-                type="text"
-                value={pais}
-
-                onChange={e => setPais(e.target.value)}
-              />
-          </Stack>
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-              <TextField
-                fullWidth
-                required
-                autoComplete="username"
-                type="text"
-                value={telefone1}
-
-                onChange={e => setTelefone1(e.target.value)}
-              />
-
-            <TextField
-                fullWidth
-                required
-                autoComplete="username"
-                type="text"
-                value={telefone2}
-
-                onChange={e => setTelefone2(e.target.value)}
-              />
-               
-          </Stack>
-
-
        
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-      
+                  autoComplete="username"
+                  type="text"
+                  value={telefone2}
+                  label="telefone (opcional)"
+                  onChange={e => setTelefone2(e.target.value)}
+                />
+                
+            </Stack>
 
-            <Form.Control
-              as={InputMask}
-              mask="99-99"
-              value={data_cobranca}
 
-              onChange={e => setdateCobranca(e.target.value)}
+        
+            <Stack direction={{ xs: 'column', sm: 'column' }} spacing={2}>
+        
 
-            />
+              <Form.Control
+              
+                as={InputMask}
+                mask="99-99"
+                value={data_cobranca}
+         
+                onChange={e => setdateCobranca(e.target.value)}
+
+              />
+                    <Typography style={textoAjudaDC}>Obs: Preencher com MES e ANO. Ex: 12-22 , </Typography>
+            </Stack>
+
+    
+
+            <LoadingButton fullWidth size="large" type="submit" variant="contained" >
+              Atualizar Informações
+            </LoadingButton>
           </Stack>
-
-   
-
-          <LoadingButton fullWidth size="large" type="submit" variant="contained" >
-            Registrar
-          </LoadingButton>
-        </Stack>
-      </form>
-    </FormControl>
+        </form>
+      </FormControl>
       </Card>
     </Container>   
   </Page>
@@ -436,3 +444,12 @@ const controlFormCep= {
   marginBottom: 15,
   borderRadius: 10
 }
+
+const textoAjudaDC = {
+  fontSize: 11,
+  margin: 3
+}
+
+
+
+

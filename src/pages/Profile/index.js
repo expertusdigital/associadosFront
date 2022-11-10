@@ -25,7 +25,8 @@ import Page from '../../components/Page';
 import  UserListToolbar  from '../../sections/menuUser';
 import { useEffect } from 'react';
 import EmpresaAlterar from './EmpresaAlterar'
-import UsuarioAlterar from './UsuarioAlterar'
+import EnderecoAlterar from './Endereco'
+
 
 export default function Profile() {
   const [fetchedData, setFetchedData] = useState([]);
@@ -35,23 +36,14 @@ export default function Profile() {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await api.get(`http://localhost:8000/api/dashboard/${tenantId}/usuarios/pesquisar/${tenantId}`, {
+      const data = await api.get(`/dashboard/${tenantId}/usuarios/pesquisar/${tenantId}`, {
        
         })
-      
+  
       setFetchedData(data.data);
     };
     getData();
 
-
-    const getUsuario = async () => {
-      const data = await api.get(`http://localhost:8000/${tenantId}/usuarios`, {
-       
-        })
-      
-        setUsuario(data.data[0]);
-    };
-    getUsuario()
   }, []);
 
  
@@ -71,130 +63,88 @@ export default function Profile() {
 
 
 
+  const [openEndereco, setOpenEndereco] = React.useState(false);
 
-  const [openUsuario, setOpenUsuario] = React.useState(false);
-
-  const handleOpenUsuario = () => {
-    setOpenUsuario(true);
+  const handleOpenEndereco = () => {
+    setOpenEndereco(true);
   };
 
 
-  const handleCloseUsuario = () => {
-    setOpenUsuario(false);
+  const handleCloseEndereco = () => {
+    setOpenEndereco(false);
   };
 
-  const particlesInit = async (main) => {
-    console.log(main);
+
+
+
+
+
  
-    // you can initialize the tsParticles instance (main) here, adding custom shapes or presets
-    // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
-    // starting from v2 you can add only the features you need reducing the bundle size
-    await loadFull(main);
-  };
-
-  const particlesLoaded = (container) => {
-    console.log(container);
-  };
 
   return (
     <Page title="User">
-         <Particles
-    id="tsparticles"
-    init={particlesInit}
-    loaded={particlesLoaded}
-        options={{
-      background: {
-        color: '#ffffff',
-      },
-      fpsLimit: 40,
-      interactivity: {
-        detectsOn: 'canvas',
-        events: {
-          resize: true
-        },
-      },
-      particles: {
-        color: {
-          value: "#000000"
-        },
-        number: {
-          density: {
-            enable: true,
-            area: 1080
-          },
-          limit: 0,
-          value: 500,
-        },
-        opacity: {
-          animation: {
-            enable: true,
-            minimumValue: 1,
-            speed: 3,
-            sync: false,
-          },
-          random: {
-            enable: true,
-            minimumValue: 0.1,
-          },
-          value: 1,
-        },
-        shape: {
-          type: 'circle',
- 
-        },
-        size: {
-          random: {
-            enable: true,
-            minimumValue: 1.5
-          },
-          value: 1
-        }
-      }
-    }}
-/> 
+  
       <Container maxWidth="xl">
         <Card>
           <UserListToolbar> </UserListToolbar>
           <Grid   container spacing={3}>
+
             <Grid item xs={12} md={6} lg={5} style={gridStyle}>
-              <Paper style={style} elevation={4}>
+              <Paper style={style}  >
 
-                <ListItem button divider>
-                  <Avatar alt="Empresa" src="/static/images/avatar/1.jpg" />
-                  <ListItem>    
-                    <ListItemText primary="Empresa" />                
-                  </ListItem> 
-                
+                  <ListItem button divider>
+                    <Avatar alt="Empresa" src="/static/images/avatar/1.jpg" />
+                    <ListItem>    
+                      <ListItemText primary="Empresa" />                
+                    </ListItem> 
+                  
+                  </ListItem>
+
+                  <ListItem button divider>
+                    <ListItemText primary="Nome da Empresa" />              
+                    <ListItemText style={itemText}  primary={fetchedData.empresa} />
+                  </ListItem>
+
+                  <ListItem button divider>
+                    <ListItemText primary="Nome Fantasia" />              
+                    <ListItemText style={itemText}  primary={fetchedData.fantasia} />
+                  </ListItem>
+
+                  <ListItem button divider>
+                    <ListItemText primary="CNPJ" />              
+                    <ListItemText style={itemText}  primary={fetchedData.cnpf_cnpj} />
+                  </ListItem>
+
+
+                  <ListItem button divider>
+                    <ListItemText primary="Telefone" />              
+                    <ListItemText style={itemText}  primary={fetchedData.telefone1} />
+                  </ListItem>
+
+                  <ListItem button divider>
+                    <ListItemText primary="Telefone Adicional" />              
+                    <ListItemText style={itemText}  primary={fetchedData.telefone2} />
+                  </ListItem>
+
+
+                  
+                <ListItem style={ButtonItem}>
+                  <Button variant="contained"  onClick={() => handleOpen()} >Alterar</Button>
                 </ListItem>
 
-                <ListItem button divider>
-                  <ListItemText primary="Nome da Empresa" />              
-                  <ListItemText style={itemText}  primary={fetchedData.empresa} />
-                </ListItem>
-
-                <ListItem button divider>
-                  <ListItemText primary="Nome Fantasia" />              
-                  <ListItemText style={itemText}  primary={fetchedData.fantasia} />
-                </ListItem>
-
-                <ListItem button divider>
-                  <ListItemText primary="CNPJ" />              
-                  <ListItemText style={itemText}  primary={fetchedData.cnpf_cnpj} />
-                </ListItem>
-
-
-                <ListItem button divider>
-                  <ListItemText primary="Telefone" />              
-                  <ListItemText style={itemText}  primary={fetchedData.telefone1} />
-                </ListItem>
-
-                <ListItem button divider>
-                  <ListItemText primary="Telefone Adicional" />              
-                  <ListItemText style={itemText}  primary={fetchedData.telefone2} />
-                </ListItem>
+                <Modal open={open} onClose={handleClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
+                  <Box >
+                    <Card style={modalStyleAlert}>
+                        <EmpresaAlterar empresa={fetchedData}></EmpresaAlterar>
+                    </Card>
+                  </Box>
+                </Modal>
 
               </Paper>
-              <Paper style={stylePaper2} elevation={4}>
+            </Grid>
+
+            <Grid item xs={12} md={6} lg={5} style={gridStyle}>
+              <Paper style={style} >
                 <ListItem  divider>
                   <Avatar alt="Endereço" src="/static/images/avatar/1.jpg" />
                   <ListItem>
@@ -239,56 +189,17 @@ export default function Profile() {
 
 
                 <ListItem style={ButtonItem}>
-                  <Button variant="contained"  onClick={() => handleOpen()} >Alterar</Button>
+                  <Button variant="contained"  onClick={() => handleOpenEndereco()} >Alterar</Button>
                 </ListItem>
 
-                <Modal open={open} onClose={handleClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
+                <Modal open={openEndereco} onClose={handleCloseEndereco} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
                   <Box >
                     <Card style={modalStyleAlert}>
-                        <EmpresaAlterar empresa={fetchedData}></EmpresaAlterar>
+                        <EnderecoAlterar empresa={fetchedData}></EnderecoAlterar>
                     </Card>
                   </Box>
                 </Modal>
 
-              </Paper>
-            </Grid>
-
-            <Grid item xs={12} md={6} lg={7} style={gridStyle}>
-            <Paper style={style} elevation={4}>
-              <ListItem button divider>
-                <Avatar alt="Usuario" src="/static/images/avatar/1.jpg" />
-                <ListItem>    
-                  <ListItemText primary="Usuario" />                
-                </ListItem> 
-
-              </ListItem>
-
-              <ListItem button divider>
-                <ListItemText primary="Nome do Usuario" />              
-                <ListItemText style={itemText}  primary={usuarios.nome} />
-              </ListItem>
-
-              <ListItem button divider>
-                <ListItemText primary="Email" />              
-                <ListItemText style={itemText}  primary={usuarios.email} />
-              </ListItem>
-
-              <ListItem button divider>
-                <ListItemText primary="password" />              
-                <ListItemText style={itemText}  primary="*********" />
-              </ListItem>
-
-              <ListItem style={ButtonItem}>
-                  <Button variant="contained"   onClick={() => handleOpenUsuario()}>Alterar</Button>
-                </ListItem>
-
-                <Modal open={openUsuario} onClose={handleCloseUsuario} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
-                  <Box >
-                    <Card style={modalStyleAlert}>
-                        <UsuarioAlterar usuarios={usuarios}></UsuarioAlterar>
-                    </Card>
-                  </Box>
-                </Modal>
               </Paper>
             </Grid>
 

@@ -9,10 +9,12 @@ import { Stack, TextField, FormControl} from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
 import axios from 'axios'
+import api from '../../utils/api'
 // ----------------------------------------------------------------------
 
 export default function EmpresaAlterar(empresasDados) {
 
+ 
 
   const navigate = useNavigate();
 
@@ -27,6 +29,7 @@ export default function EmpresaAlterar(empresasDados) {
   const [cep, setCep] = useState(empresasDados.empresa.cep);
   const [telefone1, setTelefone1] = useState(empresasDados.empresa.telefone1);
   const [telefone2, setTelefone2] = useState(empresasDados.empresa.telefone2);
+  const [id, setId] = useState(empresasDados.empresa.id);
 
 
   const tenantId = JSON.parse(getTenant_id())
@@ -34,20 +37,20 @@ export default function EmpresaAlterar(empresasDados) {
 
 
   async function formAssociados() {
-    await axios.post(`http://localhost:8000/api/dashboard/${tenantId}/usuarios/atualizar/tenant/${empresasDados.empresa.id}`,{
+    await api.post(`/dashboard/${tenantId}/usuarios/atualizar/tenant/${id}`,{
  
 
+          id,
           empresa,
-          fantasia,
           cnpf_cnpj,
+          fantasia,
 
-          bairro,
-          cep,
-          cidade,
           logradouro,
           numero,
+          bairro,
+          cidade,
           uf,
-
+          cep,
 
           telefone1,
           telefone2,
@@ -59,11 +62,10 @@ export default function EmpresaAlterar(empresasDados) {
         },
   
       } ).then((response) =>{
-      
+        window.location.reload();
     })
  }
 
- 
 
    
 
@@ -80,64 +82,7 @@ export default function EmpresaAlterar(empresasDados) {
       <form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
 
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            <TextField
-              fullWidth
-              required
-              autoComplete="username"
-              type="text"
-              label="nome empresa"
-              value={empresa}
-              onChange={e => setEmpresa(e.target.value)}
-            />
-            <TextField
-              fullWidth
-              required
-              autoComplete="username"
-              type="text"
-              label="nome fantasia"
-              value={fantasia}
-              onChange={e => setFantasia(e.target.value)}
-            />
-          </Stack>
-          <TextField
-              fullWidth
-              required
-              autoComplete="username"
-              type="text"
-              label="CNPJ"
-              value={cnpf_cnpj}
-              onChange={e => setCpfCnpj(e.target.value)}
-            />
-
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            <TextField
-                  fullWidth
-                  required
-                  autoComplete="username"
-                  type="text"
-                  label="Telefone"
-                  value={telefone1}
-                  onChange={e => setTelefone1(e.target.value)}
-            />
-             <TextField
-                  fullWidth
-                  required
-                  autoComplete="username"
-                  type="data"
-                  label="Telefone Opcional"
-
-                  value={telefone2}
-                  onChange={e => setTelefone2(e.target.value)}
-
-
-                 
-            />
-
-          </Stack>
-      
-  
-
+        
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
               <TextField
                 fullWidth
@@ -163,6 +108,15 @@ export default function EmpresaAlterar(empresasDados) {
 
               />
 
+          
+
+         
+          </Stack>
+
+
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+      
+
             <TextField
                 fullWidth
                 autoComplete="username"
@@ -174,11 +128,7 @@ export default function EmpresaAlterar(empresasDados) {
                 onChange={e => setCep(e.target.value)}
 
               />
-
-         
-          </Stack>
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            <TextField
+  <TextField
                 fullWidth
                 autoComplete="username"
                 type="text"
@@ -189,6 +139,11 @@ export default function EmpresaAlterar(empresasDados) {
                 onChange={e => setBairro(e.target.value)}
               />
 
+         
+          </Stack>
+
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+          
 
               <TextField
                 fullWidth
@@ -217,7 +172,8 @@ export default function EmpresaAlterar(empresasDados) {
    
 
           <LoadingButton fullWidth size="large" type="submit" variant="contained" >
-            Registrar
+          Alterar Informações
+
           </LoadingButton>
         </Stack>
       </form>

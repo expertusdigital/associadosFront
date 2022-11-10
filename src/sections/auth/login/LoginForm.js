@@ -1,15 +1,18 @@
+import React from 'react';
 import * as Yup from 'yup';
 import { useEffect, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 import api from '../../../utils/api'
 // material
-import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel, FormControl, FormGroup, Alert } from '@mui/material';
+import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel, FormControl, FormGroup, Alert, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
 import {setAcessToken, setTenant_id,getAcessToken,setAcessAdmin } from '../../../utils/services/auth'
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 // ----------------------------------------------------------------------
 async function tenantLogin(credentials) {
   return fetch('https://associados.api.expertusdigital.com/dashboard/login', {
@@ -35,7 +38,47 @@ async function tenantLogin(credentials) {
 
 
 
+ 
 export default function LoginForm() {
+
+
+
+  const [show, setShow] = useState(false);
+ 
+
+  function  AlertIncorret (valor) {
+    
+   
+  
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(valor);
+
+    useEffect(() => {
+      handleShow()
+    });
+    
+  
+    return(
+      <div>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
+    )
+  }
+
   const [email, setUserName] = useState();
   const [password, setPassword] = useState();
   const navigate = useNavigate();
@@ -63,16 +106,16 @@ export default function LoginForm() {
       if(login.access_token){
         setAcessToken(login.access_token)
         setTenant_id(login.tenant_id)
-        navigate("/dashboard/associados", { replace: true });
+        navigate("/dashboard/", { replace: true });
 
       }
       else if(adminlogin != 'Unauthorized' && adminlogin != null   ){
         if(adminlogin.access_token){
           setAcessToken(adminlogin.access_token)
           setAcessAdmin("admin")
-          navigate("/admin", { replace: true });
-          console.log(adminLogin)
-      
+          navigate("/admin/usuarios", { replace: true });
+        }else{
+          alert("Login ou Senhas incorreto")
         }
       }
     }
@@ -120,7 +163,7 @@ export default function LoginForm() {
          
          
         </Stack>
-
+     
         <LoadingButton fullWidth size="large" type="submit" variant="contained"  >
           Login
         </LoadingButton>

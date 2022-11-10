@@ -99,7 +99,7 @@ export default function AdminUsers() {
 
 
 
-  useEffect(() => {
+  useEffect(()  =>  {
     const getData = async () => {
       const data = await api.get(`admin/usuarios`, {
         headers: {
@@ -112,7 +112,7 @@ export default function AdminUsers() {
     getData();
   }, []);
 
-  const teste = Array(fetchedData)
+  const   teste =  Array(fetchedData)
   
 
 
@@ -266,7 +266,7 @@ export default function AdminUsers() {
       }
     }
     const particlesInit = async (main) => {
-      console.log(main);
+
    
       // you can initialize the tsParticles instance (main) here, adding custom shapes or presets
       // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
@@ -275,7 +275,7 @@ export default function AdminUsers() {
     };
   
     const particlesLoaded = (container) => {
-      console.log(container);
+     
     };
   
 
@@ -393,14 +393,14 @@ export default function AdminUsers() {
                               <ListItemIcon>
                                 <Iconify icon="eva:trash-2-outline" width={24} height={24} />
                               </ListItemIcon>
-                              <ListItemText primary="Delete" primaryTypographyProps={{ variant: 'body2' }} />
+                              <ListItemText primary="Deletar" primaryTypographyProps={{ variant: 'body2' }} />
                             </MenuItem>
                             
                             <MenuItem onClick={() => EditOpen(id)} to="#" sx={{ color: 'text.secondary' }}>
                               <ListItemIcon>
                                 <Iconify icon="eva:edit-fill" width={24} height={24} />
                               </ListItemIcon>
-                              <ListItemText primary="Edit" primaryTypographyProps={{ variant: 'body2' }} />
+                              <ListItemText primary="Editar" primaryTypographyProps={{ variant: 'body2' }} />
                             </MenuItem>
 
                             <Modal open={editAssociado} onClose={EditClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">

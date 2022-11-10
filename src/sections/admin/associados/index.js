@@ -58,7 +58,7 @@ export default function NewwAssociados() {
 
 
   async function formAssociados() {
-    await axios.post(`https://associados.api.expertusdigital.com/admin/${tenantId}/associados/add`,{
+    await axios.post(`https://associados.api.expertusdigital.com/admin/addassociado`,{
  
 
           nome,
@@ -87,7 +87,11 @@ export default function NewwAssociados() {
         },
   
       } ).then((response) =>{
-        console.log(response)
+   
+        if(response.status == 200){
+          alert("Campo(s) Obrigatirio(s) esta(ão) vazio(s)!")
+        }
+     
         
     })
  }

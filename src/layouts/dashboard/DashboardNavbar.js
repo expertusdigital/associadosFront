@@ -53,7 +53,7 @@ export default function DashboardNavbar({ onOpenSidebar }) {
         </IconButton>
 
         <Box sx={{ flexGrow: 0.5}} />
-        <Button  direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }} display="block">{data}</Button>
+     
         
         <Box sx={{ flexGrow: 0.5}} />
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>

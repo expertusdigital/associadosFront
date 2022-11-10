@@ -48,7 +48,7 @@ import { width } from '@mui/system';
 
 // ----------------------------------------------------------------------
 var tenantId = JSON.parse(getTenant_id())
-console.log(tenantId)
+
 var access_token = JSON.parse(getAcessToken())
 
 
@@ -60,9 +60,7 @@ const TABLE_HEAD = [
   { id: 'data_nascimento', label: 'Data Nascimento', alignRight: false },
   { id: 'cnpf_cnpj', label: 'CPf', alignRight: false },
   { id: 'telefone1', label: 'Telefone', alignRight: false },
-  { id: 'telefone2', label: 'Telefone Securandario', alignRight: false },
   { id: 'email', label: 'Email', alignRight: false },
-  { id: 'email2', label: 'Email Securandario', alignRight: false },
   { id: 'rua', label: 'Endereço', alignRight: false },
   { id: 'cep', label: 'Cep', alignRight: false },
   { id: 'uf', label: 'Localidade', alignRight: false },
@@ -274,7 +272,7 @@ export default function Associados() {
       }
     }
     const particlesInit = async (main) => {
-      console.log(main);
+
    
       // you can initialize the tsParticles instance (main) here, adding custom shapes or presets
       // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
@@ -283,66 +281,14 @@ export default function Associados() {
     };
   
     const particlesLoaded = (container) => {
-      console.log(container);
+     
     };
   
 
   return (
     <Page title="Clientes">   
-    <Particles
-    id="tsparticles"
-    init={particlesInit}
-    loaded={particlesLoaded}
-        options={{
-      background: {
-        color: '#ffffff',
-      },
-      fpsLimit: 40,
-      interactivity: {
-        detectsOn: 'canvas',
-        events: {
-          resize: true
-        },
-      },
-      particles: {
-        color: {
-          value: "#000000"
-        },
-        number: {
-          density: {
-            enable: true,
-            area: 1080
-          },
-          limit: 0,
-          value: 500,
-        },
-        opacity: {
-          animation: {
-            enable: true,
-            minimumValue: 1,
-            speed: 3,
-            sync: false,
-          },
-          random: {
-            enable: true,
-            minimumValue: 0.1,
-          },
-          value: 1,
-        },
-        shape: {
-          type: 'circle',
- 
-        },
-        size: {
-          random: {
-            enable: true,
-            minimumValue: 1.5
-          },
-          value: 1
-        }
-      }
-    }}
-/> 
+   
+
       <Container maxWidth="xl">
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Button >
@@ -397,9 +343,7 @@ export default function Associados() {
                           <TableCell align="left">{data_nascimento}</TableCell>
                           <TableCell align="left">{cnpf_cnpj}</TableCell>
                           <TableCell align="left">{telefone1}</TableCell>
-                          <TableCell align="left">{telefone2}</TableCell>
                           <TableCell align="left">{email}</TableCell>
-                          <TableCell align="left">{email2}</TableCell>
                           <TableCell align="left">{rua} - {numero}</TableCell>
                           <TableCell align="left">{cep} </TableCell>
                           <TableCell align="left">{uf} - {pais}</TableCell>

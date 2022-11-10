@@ -13,7 +13,7 @@ import axios from 'axios'
 
 export default function UsuarioAlterar(usuarios) {
 
-  console.log(usuarios)
+ 
 
   const navigate = useNavigate();
 
@@ -43,7 +43,7 @@ export default function UsuarioAlterar(usuarios) {
         },
   
       } ).then((response) =>{
-        console.log(response.data)
+       
     })
  }
 

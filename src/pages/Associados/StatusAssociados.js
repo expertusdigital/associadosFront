@@ -309,60 +309,7 @@ export default function StatusAssociados() {
 
   return (
     <Page title="Clientes">   
-    <Particles
-    id="tsparticles"
-    init={particlesInit}
-    loaded={particlesLoaded}
-        options={{
-      background: {
-        color: '#ffffff',
-      },
-      fpsLimit: 40,
-      interactivity: {
-        detectsOn: 'canvas',
-        events: {
-          resize: true
-        },
-      },
-      particles: {
-        color: {
-          value: "#000000"
-        },
-        number: {
-          density: {
-            enable: true,
-            area: 1080
-          },
-          limit: 0,
-          value: 200,
-        },
-        opacity: {
-          animation: {
-            enable: true,
-            minimumValue: 1,
-            speed: 3,
-            sync: false,
-          },
-          random: {
-            enable: true,
-            minimumValue: 0.1,
-          },
-          value: 1,
-        },
-        shape: {
-          type: 'circle',
- 
-        },
-        size: {
-          random: {
-            enable: true,
-            minimumValue: 1.5
-          },
-          value: 1
-        }
-      }
-    }}
-/> 
+   
       <Container maxWidth="xl">
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
 

@@ -73,7 +73,7 @@ export default function Login() {
   };
 
   const particlesLoaded = (container) => {
-    console.log(container);
+    
   };
 
   return (
@@ -138,11 +138,14 @@ export default function Login() {
       /> 
         {mdUp && (
           <SectionStyle>
-            <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
+            <Typography variant="h6" sx={{ px: 5}} style={styleComplmentoFirst}>
               Ola, bem vindo.
             </Typography>
-            <Typography variant="h3" sx={{ px: 5, mt: 5, mb: 5 }} style={styleComplmento}>
-              Seja bem-vindo ao Associados. O Programa de Associados da Expertus Digital que ajuda agerenciar seus  afiliados e,parcerios e clientes.
+            <Typography variant="h2" sx={{ px: 5 , mt: 2}}  style={styleTitle}>
+            Associados. 
+            </Typography>
+            <Typography variant="h3" sx={{ px: 5, mt: 2 }} style={styleComplmento}>
+            O Programa de Associados da Expertus Digital lhe ajudara a gerenciar seus afiliados, parceiros ou clientes.
             </Typography>
           </SectionStyle>
         )}
@@ -150,7 +153,6 @@ export default function Login() {
         <Container maxWidth="sm">
           <ContentStyle>
          
-            <AuthSocial />
 
             <LoginForm />
 
@@ -163,6 +165,19 @@ export default function Login() {
 }
 const styleComplmento = {
   fontSize: '20px',
-  fontWeight: '700',
+  fontWeight: 500,
   lineHeight: '1.5em'
+}
+
+
+const styleTitle = {
+  fontWeight: 900,
+  lineHeight: '1.5em'
+}
+
+const styleComplmentoFirst = {
+  fontSize: '20px',
+  fontWeight: 500,
+  lineHeight: '1.5em',
+  fontStyle: 'italic'
 }

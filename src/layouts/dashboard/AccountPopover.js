@@ -40,14 +40,14 @@ export default function AccountPopover() {
   useEffect(() => {
    
 
-    const getUsuario = async () => {
-      const data = await api.get(`http://localhost:8000/${tenantId}/usuarios`, {
+    const getData = async () => {
+      const data = await api.get(`/dashboard/${tenantId}/usuarios/pesquisar/${tenantId}`, {
        
         })
-      
-        setUsuarios(data.data[0]);
+        console.log(data)
+        setUsuarios(data.data);
     };
-    getUsuario()
+    getData();
   }, []);
 
 
@@ -110,11 +110,9 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {usuarios.nome}
+            {usuarios.fantasia}
           </Typography>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {usuarios.email}
-          </Typography>
+     
         </Box>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
