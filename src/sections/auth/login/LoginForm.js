@@ -113,7 +113,7 @@ export default function LoginForm() {
         if(adminlogin.access_token){
           setAcessToken(adminlogin.access_token)
           setAcessAdmin("admin")
-          navigate("/admin/usuarios", { replace: true });
+          navigate("/admin/profile", { replace: true });
         }else{
           alert("Login ou Senhas incorreto")
         }

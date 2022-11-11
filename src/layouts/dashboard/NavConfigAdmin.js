@@ -8,15 +8,16 @@ const getIcon = (name) => <Iconify icon={name} width={22} height={22} />;
 
 const AdminConfig = [
 
-  {
-    title: 'Usuarios',
-    path: 'usuarios',
-    icon: getIcon('akar-icons:people-group'),
-  },
+
   {
     title: 'Clientes',
     path: 'tenants',
     icon: getIcon('akar-icons:person'),
+  },
+  {
+    title: 'Novo Cliente',
+    path: 'register',
+    icon: getIcon('akar-icons:person-add'),
   },
   {
     title: 'Associados',

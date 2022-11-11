@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import InputMask from 'react-input-mask';
 import { useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
@@ -25,10 +25,16 @@ import {  TextField, FormControl,
   Container,
   Typography,
   TableContainer,
-  TablePagination,} from '@mui/material';
+  TablePagination,
+  MenuItem,
+  InputLabel,
+  Select,} from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
 import axios from 'axios'
+
+import api from '../../../utils/api'
+
 // ----------------------------------------------------------------------
 
 export default function NewwAssociados() {
@@ -96,6 +102,27 @@ export default function NewwAssociados() {
     })
  }
 
+
+ const [fetchedData, setFetchedData] = useState([]);
+
+
+
+
+ useEffect(() => {
+   const getData = async () => {
+     const data = await api.get(`admin/listarassociados`, {
+       headers: {
+         'Authorization': `Bearer ${access_token}`
+       }
+       })
+     
+     setFetchedData(data.data);
+   };
+   getData();
+ }, []);
+
+ console.log(fetchedData)
+
    const handleSubmit = async e => {
     e.preventDefault();
     formAssociados();
@@ -116,6 +143,11 @@ export default function NewwAssociados() {
     console.log(container);
   };
 
+
+  const handleChange = (event: SelectChangeEvent) => {
+
+  
+  };
 
 
   return (
@@ -234,9 +266,11 @@ export default function NewwAssociados() {
                         <Form.Control as={InputMask} placeholder="Data de cobrança" fullWidth mask="99-99" onChange={e => setdateCobranca(e.target.value)} style={controlFormCep} />
                         <Typography style={textoAjudaDC}>Obs: Preencher com MES e ANO. Ex: 12-22</Typography>
                       </Stack>
+
+                    
                   </Stack>
-                  
-                  <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} >
+                  <Stack direction={{ xs: 'column', sm: 'column' }} spacing={2} >
+                    <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} >
 
                     <Stack direction={{ xs: 'column', sm: 'column' }} spacing={2}>
                         <TextField
@@ -300,6 +334,25 @@ export default function NewwAssociados() {
 
                       <Form.Control placeholder='Telefone(opcional)' as={InputMask} fullWidth       mask="(99)-99999-9999"     onChange={e => setTelefone2(e.target.value)} style={controlFormCep}/>
                     </Stack>
+                    </Stack>
+
+                    <Stack direction={{ xs: 'column', sm: 'row', mt: 5 }}  fullWidth  >
+                          <Select fullWidth
+                              labelId="demo-simple-select-label"
+                              id="demo-simple-select"
+                              value="teste"
+                              onChange={handleChange}
+                          >
+
+                            {fetchedData.map((user: any) => (
+                                    
+                                    <MenuItem value={user.id}>{user.nome}</MenuItem>
+                                    
+                                ))}
+                          
+                         
+                          </Select>
+                    </Stack>
                   </Stack>
                 </Stack>
 
@@ -354,6 +407,27 @@ const textoAjudaDC = {
 
 
 
+
+const tituloStatus = {
+  marginBottom: 15,
+  fontSize: 18,
+  fontWeight: 600,
+  
+ }
+ 
+ const stackSelect = {
+   marginBottom: 15
+ }
+ 
+ const tituloHelpText = {
+   fontSize: 14,
+   fontWeight: 600,
+ }
+ 
+ const conteudoHelpText = {
+   fontSize: 12,
+   fontWeight: 400,
+ }
 
 
 

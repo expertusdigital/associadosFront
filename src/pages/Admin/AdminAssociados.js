@@ -23,6 +23,7 @@ import {
   Typography,
   TableContainer,
   TablePagination,
+  Link,
 } from '@mui/material';
 // components
 import Page from '../../components/Page';
@@ -418,12 +419,15 @@ export default function AdminAssociados() {
                               <ListItemText primary="Deletar" primaryTypographyProps={{ variant: 'body2' }} />
                             </MenuItem>
                             
-                            <MenuItem onClick={() => EditOpen(id)} to="#" sx={{ color: 'text.secondary' }}>
-                              <ListItemIcon>
-                                <Iconify icon="eva:edit-fill" width={24} height={24} />
-                              </ListItemIcon>
-                              <ListItemText primary="Editar" primaryTypographyProps={{ variant: 'body2' }} />
-                            </MenuItem>
+                            <RouterLink   to={"/admin/atualizarassociado/" + id}>
+                              <MenuItem  to={"/admin/atualizarassociado" + id} sx={{ color: 'text.secondary' }}>
+                                <ListItemIcon>
+                                  <Iconify icon="eva:edit-fill" width={24} height={24} />
+                                </ListItemIcon>
+                                <ListItemText primary="Editar" primaryTypographyProps={{ variant: 'body2' }} />
+                              </MenuItem>
+                            </RouterLink>
+
 
                             <Modal open={editAssociado} onClose={EditClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
                               <Box >

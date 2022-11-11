@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import InputMask from 'react-input-mask';
 import { useNavigate, useParams } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
-import {getTenant_id,getAcessToken} from '../../../utils/services/auth'
+import {getAcessToken} from '../../../utils/services/auth'
 import Particles from 'react-tsparticles'
 import { loadFull } from "tsparticles";
 import Page from '../../../components/Page';
@@ -21,8 +21,7 @@ import api from '../../../utils/api';
 
 
 
-// ----------------------------------------------------------------------
-var tenantId = JSON.parse(getTenant_id())
+
 
 var accesstoken = JSON.parse(getAcessToken())
 
@@ -30,13 +29,10 @@ var accesstoken = JSON.parse(getAcessToken())
 
 export default function NewwAssociados() {
 
-  const tenant_id = tenantId
+
   var access_token = accesstoken
 
   const idAssociado = useParams();
-
-  
-  console.log(idAssociado.id)
 
   let  navigate = useNavigate();
 
@@ -57,6 +53,8 @@ export default function NewwAssociados() {
   const [pais, setPais] = useState("");
   const [data_cobranca,setdateCobranca] = useState("");;
   const [status, setStatus] = useState("");
+  const [tenant_id, setTenantId] = useState("");
+
 
 
  
@@ -69,13 +67,13 @@ export default function NewwAssociados() {
 
 
   async function formGetAssociado(id) {
-    await api.get(`admin/associados/buscar/${id}`,{
+    await api.get(`admin/buscarassociado/${id}`,{
        headers: {
          'Authorization': `Bearer ${access_token}`
        },
  
      } ).then((response) =>{  
-    
+  
         setNome(response.data.nome)
         setFantasia(response.data.nome_artistico)
         setCpfCnpj(response.data.cnpf_cnpj)
@@ -92,13 +90,14 @@ export default function NewwAssociados() {
         setPais(response.data.pais)
         setdateCobranca(response.data.data_cobranca)
         setStatus(response.data.status)
+        setTenantId(response.data.tenant_id)
       
    })
 
 
  }
 
- console.log(associado)
+
  
  useEffect(() => {
     // Atualiza o título do documento usando a API do browser
@@ -107,7 +106,7 @@ export default function NewwAssociados() {
   
 
   async function formAssociados() {
-    await api.post(`admin/associados/atualizar/${idAssociado.id}`,{
+    await api.post(`admin/atualizarassociado/${idAssociado.id}`,{
  
 
           nome,
@@ -409,7 +408,7 @@ export default function NewwAssociados() {
    
 
           <LoadingButton fullWidth size="large" type="submit" variant="contained" >
-            Registrar
+          Salvar Alteração
           </LoadingButton>
         </Stack>
       </form>
