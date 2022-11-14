@@ -9,6 +9,7 @@ import { LoadingButton } from '@mui/lab';
 import Iconify from '../../../components/Iconify';
 import axios from 'axios'
 // ----------------------------------------------------------------------
+import validator from 'validator'
 
 export default function RegisterForm() {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ export default function RegisterForm() {
 
 
 
-  async function adminLogin() {
+  async function RegisterTenant() {
     await axios.post("https://associados.api.expertusdigital.com/dashboard/registrar",{
           email,
           password,
@@ -69,9 +70,16 @@ export default function RegisterForm() {
 
    const handleSubmit = async e => {
     e.preventDefault();
-    adminLogin();
+  
+    if (validator.isEmail(email)) {
+      alert("email validado")
+    } else {
+      alert("Email invalido")
+    }
   }
  
+ 
+  
 
 
 
@@ -201,7 +209,7 @@ export default function RegisterForm() {
             autoComplete="username"
             type="email"
             label="Email address"
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
 
          
           

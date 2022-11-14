@@ -7,12 +7,15 @@ import { Stack, TextField, IconButton, InputAdornment , FormControl,Card,Contain
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../components/Iconify';
-import axios from 'axios'
+import axios from 'axios';
+import api from '../../utils/api'
 // ----------------------------------------------------------------------
 import Page from '../../components/Page';
+import {getAcessToken} from '../../utils/services/auth'
 
 export default function RegisterTenants() {
   
+var accesstoken = JSON.parse(getAcessToken())
     const navigate = useNavigate();
 
   const [nome, setNome] = useState();
@@ -38,9 +41,9 @@ export default function RegisterTenants() {
   };
 
 
-
+  var access_token = accesstoken
   async function adminLogin() {
-    await axios.post("/dashboard/registrar",{
+    await api.post("/dashboard/registrar",{
           email,
           password,
           password_confirmation,
@@ -60,6 +63,10 @@ export default function RegisterTenants() {
 
           telefone1,
       
+      } ,{
+        headers: {
+          'Authorization': `Bearer ${access_token}`
+        },
       }).then((response) =>{
         console.log(response.data)
     })
