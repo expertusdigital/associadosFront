@@ -256,7 +256,7 @@ export default function AdminTenants() {
 
     
       if(id != null & id != '' ){
-        await api.post(`admin/usuarios/deletar/${id}`,{
+        await api.post(`admin/deletartenant/${id}`,{
         },{
           headers: {
             'Authorization': `Bearer ${access_token}`

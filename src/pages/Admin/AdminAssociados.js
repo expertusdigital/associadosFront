@@ -56,12 +56,11 @@ const TABLE_HEAD = [
   { id: 'data_nascimento', label: 'Data Nascimento', alignRight: false },
   { id: 'cnpf_cnpj', label: 'CPf', alignRight: false },
   { id: 'telefone1', label: 'Telefone', alignRight: false },
-  { id: 'telefone2', label: 'Telefone Securandario', alignRight: false },
   { id: 'email', label: 'Email', alignRight: false },
-  { id: 'email2', label: 'Email Securandario', alignRight: false },
   { id: 'rua', label: 'Endereço', alignRight: false },
   { id: 'cep', label: 'Cep', alignRight: false },
   { id: 'uf', label: 'Localidade', alignRight: false },
+  { id: 'cliente', label: 'Cliente', alignRight: false },
   { id: 'data_cobranca', label: 'Data de Registro', alignRight: false },
   { id: 'opcoes', label: 'Opções', alignRight: false },
 
@@ -384,7 +383,7 @@ export default function AdminAssociados() {
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                     const { id , nome , data_cobranca,telefone1,telefone2,cnpf_cnpj,nome_artistico,data_nascimento,email,rua,numero,
-                      pais,uf,cep,email2 } = row;
+                      pais,uf,cep,tenant_id } = row;
                     const isItemSelected = selected.indexOf(nome) !== -1;
 
                     return (  
@@ -403,12 +402,11 @@ export default function AdminAssociados() {
                           <TableCell align="left">{data_nascimento}</TableCell>
                           <TableCell align="left">{cnpf_cnpj}</TableCell>
                           <TableCell align="left">{telefone1}</TableCell>
-                          <TableCell align="left">{telefone2}</TableCell>
                           <TableCell align="left">{email}</TableCell>
-                          <TableCell align="left">{email2}</TableCell>
                           <TableCell align="left">{rua} - {numero}</TableCell>
                           <TableCell align="left">{cep} </TableCell>
                           <TableCell align="left">{uf} - {pais}</TableCell>
+                          <TableCell align="left">{tenant_id}</TableCell>
                           <TableCell align="left">{data_cobranca}</TableCell>
                           <TableCell align="left">
 

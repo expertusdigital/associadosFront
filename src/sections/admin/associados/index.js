@@ -38,10 +38,12 @@ import api from '../../../utils/api'
 // ----------------------------------------------------------------------
 
 export default function NewwAssociados() {
+  
 
 
   const navigate = useNavigate();
 
+  const [tenant, setTenant] = useState('')
   const [nome, setNome] = useState();
   const [nome_artistico, setFantasia] = useState();
   const [cnpf_cnpj, setCpfCnpj] = useState();
@@ -57,6 +59,7 @@ export default function NewwAssociados() {
   const [data_nascimento,setData_nascimento] = useState();
   const [pais, setPais] = useState();
   const [data_cobranca,setdateCobranca] = useState();
+  const [tenant_id, setTenant_id] = useState();
 
   const tenantId = JSON.parse(getTenant_id())
 
@@ -83,7 +86,7 @@ export default function NewwAssociados() {
           email2,
           telefone1,
           telefone2,
-
+          tenant_id,
           data_cobranca
 
       
@@ -96,6 +99,9 @@ export default function NewwAssociados() {
    
         if(response.status == 200){
           alert("Campo(s) Obrigatirio(s) esta(ão) vazio(s)!")
+        }
+        if(response.status == 201 ){
+          alert("Cadastrado com sucesso!")
         }
      
         
@@ -110,7 +116,7 @@ export default function NewwAssociados() {
 
  useEffect(() => {
    const getData = async () => {
-     const data = await api.get(`admin/listarassociados`, {
+     const data = await api.get(`admin/listartenants`, {
        headers: {
          'Authorization': `Bearer ${access_token}`
        }
@@ -121,7 +127,7 @@ export default function NewwAssociados() {
    getData();
  }, []);
 
- console.log(fetchedData)
+
 
    const handleSubmit = async e => {
     e.preventDefault();
@@ -143,68 +149,25 @@ export default function NewwAssociados() {
     console.log(container);
   };
 
+  const [idTenant, SetidTenant] = useState('');
 
-  const handleChange = (event: SelectChangeEvent) => {
 
-  
+  const handleChange = async (event: SelectChangeEvent) => {
+    SetidTenant(event.target.value)
+
+    const data = await api.get(`admin/buscartenant/${event.target.value}`, {
+        headers: {
+          'Authorization': `Bearer ${access_token}`
+        }
+    })
+    setTenant_id(data.data.tenant_id)
+
   };
 
 
   return (
     <Page title="Clientes">   
-      <Particles
-      id="tsparticles"
-      init={particlesInit}
-      loaded={particlesLoaded}
-          options={{
-        background: {
-          color: '#ffffff',
-        },
-        fpsLimit: 40,
-        interactivity: {
-          detectsOn: 'canvas',
-          events: {
-            resize: true
-          },
-        },
-        particles: {
-          color: {
-            value: "#000000"
-          },
-          number: {
-            density: {
-              enable: true,
-              area: 1080
-            },
-            limit: 0,
-            value: 500,
-          },
-          opacity: {
-            animation: {
-              enable: true,
-              minimumValue: 1,
-              speed: 3,
-              sync: false,
-            },
-            random: {
-              enable: true,
-              minimumValue: 0.1,
-            },
-            value: 1,
-          },
-          shape: {
-            type: 'circle',
-  
-          },
-          size: {
-            random: {
-              enable: true,
-              minimumValue: 1.5
-            },
-            value: 1
-          }
-        }
-      }}/> 
+    
 
       <Container maxWidth="xl">
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
@@ -337,11 +300,13 @@ export default function NewwAssociados() {
                     </Stack>
 
                     <Stack direction={{ xs: 'column', sm: 'row', mt: 5 }}  fullWidth  >
+                      
                           <Select fullWidth
-                              labelId="demo-simple-select-label"
-                              id="demo-simple-select"
-                              value="teste"
-                              onChange={handleChange}
+                             labelId="demo-simple-select-label"
+                             id="demo-simple-select"
+                             value={idTenant}
+                          
+                             onChange={handleChange}
                           >
 
                             {fetchedData.map((user: any) => (

@@ -51,6 +51,7 @@ const TABLE_HEAD = [
   { id: 'cnpf_cnpj', label: 'CPf', alignRight: false },
   { id: 'telefone1', label: 'Telefone', alignRight: false },
   { id: 'email', label: 'Email', alignRight: false },
+  { id: 'cliente', label: 'Cliente ', alignRight: false },
   { id: 'status', label: 'Status Pagamento', alignRight: false },
   { id: 'data_cobranca', label: 'Data de Registro', alignRight: false }
 
@@ -349,7 +350,7 @@ export default function StatusAssociados() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id , nome , data_cobranca,telefone1,cnpf_cnpj,nome_artistico,email,status } = row;
+                    const { id , nome , data_cobranca,telefone1,cnpf_cnpj,nome_artistico,email,status,tenant_id } = row;
                     const isItemSelected = selected.indexOf(nome) !== -1;
 
                     return (  
@@ -369,7 +370,7 @@ export default function StatusAssociados() {
                           <TableCell align="left">{cnpf_cnpj}</TableCell>
                           <TableCell align="left">{telefone1}</TableCell>
                           <TableCell align="left">{email}</TableCell>
-       
+                          <TableCell align="left">{tenant_id}</TableCell>
                           <TableCell align="left">
                             <MenuItem  to="#" onClick={() => OpenStatus(id)} style={colorStatus(status)}>
                               
