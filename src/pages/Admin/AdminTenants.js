@@ -77,6 +77,7 @@ function getComparator(order, orderBy) {
 }
 
 function applySortFilter(array, comparator, query) {
+  console.log(array)
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
@@ -99,14 +100,16 @@ export default function AdminTenants() {
   
 
   const [fetchedData, setFetchedData] = useState([]);
+  console.log(fetchedData)
 
-
+    console.log(access_token)
+    console.log(JSON.parse(getAcessToken()))
 
   useEffect(() => {
     const getData = async () => {
       const data = await api.get(`admin/listartenants`, {
         headers: {
-          'Authorization': `Bearer ${access_token}`
+          'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
         }
         })
       
@@ -115,7 +118,7 @@ export default function AdminTenants() {
     getData();
   }, []);
 
-  const teste = Array(fetchedData)
+
   
 
 
@@ -139,7 +142,7 @@ export default function AdminTenants() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = teste.map((n) => n.name);
+      const newSelecteds = fetchedData.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -174,9 +177,9 @@ export default function AdminTenants() {
     setFilterName(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - teste.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - fetchedData.length) : 0;
 
-  const filteredUsers = applySortFilter(teste[0], getComparator(order, orderBy), filterName);      
+  const filteredUsers = applySortFilter(fetchedData, getComparator(order, orderBy), filterName);      
   
   const isUserNotFound = filteredUsers.length === 0;
 
@@ -457,7 +460,7 @@ export default function AdminTenants() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={teste.length}
+            count={fetchedData.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

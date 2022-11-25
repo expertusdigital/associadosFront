@@ -46,10 +46,9 @@ import { width } from '@mui/system';
 
 
 
-// ----------------------------------------------------------------------
-var tenantId = JSON.parse(getTenant_id())
 
-var access_token = JSON.parse(getAcessToken())
+
+
 
 
 
@@ -58,7 +57,7 @@ const TABLE_HEAD = [
   { id: 'nome', label: 'Nome Completo', alignRight: false },
   { id: 'nome_artistico', label: 'Nome artístico', alignRight: false },
   { id: 'data_nascimento', label: 'Data Nascimento', alignRight: false },
-  { id: 'cnpf_cnpj', label: 'CPf', alignRight: false },
+  { id: 'cnpf_cnpj', label: 'CPf/CNPJ', alignRight: false },
   { id: 'telefone1', label: 'Telefone', alignRight: false },
   { id: 'email', label: 'Email', alignRight: false },
   { id: 'rua', label: 'Endereço', alignRight: false },
@@ -120,9 +119,9 @@ export default function Associados() {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await api.get(`dashboard/${tenantId}/associados`, {
+      const data = await api.get(`dashboard/${JSON.parse(getTenant_id())}/associados`, {
         headers: {
-          'Authorization': `Bearer ${access_token}`
+          'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
         }
         })
       
@@ -201,9 +200,9 @@ export default function Associados() {
   };
 
   async function formGetAssociado(id) {
-    await api.get(`dashboard/${tenantId}/associados/buscar/${id}`,{
+    await api.get(`dashboard/${JSON.parse(getTenant_id())}/associados/buscar/${id}`,{
        headers: {
-         'Authorization': `Bearer ${access_token}`
+         'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
        },
  
      } ).then((response) =>{
@@ -259,10 +258,10 @@ export default function Associados() {
 
     
       if(id != null & id != '' ){
-        await api.post(`dashboard/${tenantId}/associados/deletar/${id}`,{
+        await api.post(`dashboard/${JSON.parse(getTenant_id())}/associados/deletar/${id}`,{
         },{
           headers: {
-            'Authorization': `Bearer ${access_token}`
+            'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
           },
     
         } ).then((response) =>{
@@ -347,7 +346,7 @@ export default function Associados() {
                           <TableCell align="left">{rua} - {numero}</TableCell>
                           <TableCell align="left">{cep} </TableCell>
                           <TableCell align="left">{uf} - {pais}</TableCell>
-                          <TableCell align="left">{data_cobranca}</TableCell>
+                          <TableCell align="left" type="month">{data_cobranca}</TableCell>
                           <TableCell align="left">
 
                             <MenuItem sx={{ color: 'text.secondary' }} onClick={() => DeletOpen(id)}>

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import {getTenant_id,getAcessToken} from '../../utils/services/auth'
 // material
-import { Stack, TextField, FormControl} from '@mui/material';
+import { Stack, TextField, FormControl, Typography} from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
 import axios from 'axios'
@@ -115,20 +115,19 @@ export default function EmpresaAlterar(empresasDados) {
 
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-      
-
+          <Stack direction={{ xs: 'column', sm: 'column' }}>
             <TextField
                 fullWidth
                 autoComplete="username"
                 type="number"
                 label="Cep"
-
                 value={cep}
 
                 onChange={e => setCep(e.target.value)}
-
               />
-  <TextField
+              <Typography style={textoAjudaDC}>Somente Numeros</Typography>
+              </Stack>
+          <TextField
                 fullWidth
                 autoComplete="username"
                 type="text"
@@ -179,4 +178,9 @@ export default function EmpresaAlterar(empresasDados) {
       </form>
     </FormControl>
   );
+}
+
+const textoAjudaDC = {
+  fontSize: 11,
+  margin: 3
 }

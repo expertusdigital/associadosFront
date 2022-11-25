@@ -38,28 +38,25 @@ export default function EmpresaAlterar(empresasDados) {
 
 
   async function formAssociados() {
-    await api.post(`/dashboard/${tenant_id}/usuarios/atualizar/tenant/${id}`,{
+    await api.post(`/dashboard/${JSON.parse(getTenant_id())}/usuarios/atualizar/tenant/${id}`,{
  
-
           id,
           empresa,
           cnpf_cnpj,
           fantasia,
-
           logradouro,
           numero,
           bairro,
           cidade,
           uf,
           cep,
-
           telefone1,
           telefone2,
 
       
       },{
         headers: {
-          'Authorization': `Bearer ${access_token}`
+          'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
         },
   
       } ).then((response) =>{
@@ -128,9 +125,7 @@ export default function EmpresaAlterar(empresasDados) {
                   fullWidth
                   required
                   autoComplete="username"
-                  type="data"
                   label="Telefone Opcional"
-
                   value={telefone2}
                   onChange={e => setTelefone2(e.target.value)}
 

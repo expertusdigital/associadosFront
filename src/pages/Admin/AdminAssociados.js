@@ -124,7 +124,7 @@ export default function AdminAssociados() {
   }, []);
 
   const teste = Array(fetchedData)
-  
+
 
 
   const [page, setPage] = useState(0);

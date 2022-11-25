@@ -51,13 +51,13 @@ const [navConfigList,setnavConfigList]  =  useState(navConfig);
 
 useEffect(() => {
   
-  if(getAcessAdmin() != null && getAcessAdmin() != 'undefined' ){
-    console.log("test: 1 ",getAcessAdmin())  
+  if(JSON.parse(getAcessAdmin()) == 1  ){
+    console.log("admin ",getAcessAdmin())  
     setnavConfigList(navConfigAdmin)
   }
-    else{
-    console.log("test: 0 ",getAcessAdmin())
-   
+  else{
+    setnavConfigList(navConfig)
+    console.log("tenant ",getAcessAdmin())
   }
 
 }, []);

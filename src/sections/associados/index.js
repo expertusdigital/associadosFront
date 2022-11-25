@@ -52,13 +52,9 @@ export default function NewwAssociados() {
   const [pais, setPais] = useState();
   const [data_cobranca,setdateCobranca] = useState();
 
-  const tenantId = JSON.parse(getTenant_id())
-
-  var access_token = JSON.parse(getAcessToken())
-
 
   async function formAssociados() {
-    await axios.post(`https://associados.api.expertusdigital.com/dashboard/${tenantId}/associados/add`,{
+    await axios.post(`https://associados.api.expertusdigital.com/dashboard/${JSON.parse(getTenant_id())}/associados/add`,{
  
 
           nome,
@@ -83,7 +79,7 @@ export default function NewwAssociados() {
       
       },{
         headers: {
-          'Authorization': `Bearer ${access_token}`
+          'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
         },
   
       } ).then((response) =>{
@@ -165,8 +161,9 @@ export default function NewwAssociados() {
                       </Stack>
 
                       <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                    
-                          <Form.Control placeholder='CPF/CNPJ *' as={InputMask} fullWidth      mask="999-999-999-99"    onChange={e => setCpfCnpj(e.target.value)} style={controlFormCep}/>
+                        
+
+                          <Form.Control placeholder='CPF/CNPJ*' as={InputMask} fullWidth         onChange={e => setCpfCnpj(e.target.value)} style={controlFormCep}/>
                         
                           <Form.Control placeholder='Data de Nascimento *' as={InputMask} fullWidth      mask="9999-99-99"      onChange={e => setData_nascimento(e.target.value)} style={controlFormCep}/>
 
@@ -179,8 +176,8 @@ export default function NewwAssociados() {
                       <TextField  fullWidth  autoComplete="username"  type="email"  label="Email address (opcional)"  onChange={e => setEmail2(e.target.value)}  style={controlFormCep} />
 
                       <Stack direction={{ xs: 'column', sm: 'column' }}>
-                        <Form.Control as={InputMask} placeholder="Data de cobrança" fullWidth mask="99-99" onChange={e => setdateCobranca(e.target.value)} style={controlFormCep} />
-                        <Typography style={textoAjudaDC}>Obs: Preencher com MES e ANO. Ex: 12-22</Typography>
+                        <Form.Control as={InputMask} type="month"  placeholder="Data de cobrança" fullWidth  onChange={e => setdateCobranca(e.target.value)} style={controlFormCep} />
+                        
                       </Stack>
                   </Stack>
                   

@@ -106,13 +106,13 @@ export default function LoginForm() {
       if(login.access_token){
         setAcessToken(login.access_token)
         setTenant_id(login.tenant_id)
-        navigate("/dashboard/", { replace: true });
+        navigate("/dashboard/profile", { replace: true });
 
       }
       else if(adminlogin != 'Unauthorized' && adminlogin != null   ){
         if(adminlogin.access_token){
           setAcessToken(adminlogin.access_token)
-          setAcessAdmin("admin")
+          setAcessAdmin(1)
           navigate("/admin/profile", { replace: true });
         }else{
           alert("Login ou Senhas incorreto")

@@ -15,7 +15,7 @@ import api from '../../utils/api'
 const MENU_OPTIONS = [
 
   {
-    label: 'Profile',
+    label: 'Perfil',
     icon: 'eva:person-fill',
     linkTo: 'profile',
   },
@@ -128,7 +128,7 @@ export default function AccountPopover() {
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <MenuItem onClick={handleLogout} sx={{ m: 1 }}>
-          Logout
+          Sair
         </MenuItem>
       </MenuPopover>
     </>

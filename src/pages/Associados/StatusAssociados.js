@@ -45,8 +45,8 @@ import AtuliazarStatus from '../../sections/associados/AtuliazarStatus'
 
 
 // ----------------------------------------------------------------------
-var tenantId = JSON.parse(getTenant_id())
-var access_token = JSON.parse(getAcessToken())
+
+
 
 // ----------------------------------------------------------------------
 const TABLE_HEAD = [
@@ -110,9 +110,9 @@ export default function StatusAssociados() {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await api.get(`dashboard/${tenantId}/associados`, {
+      const data = await api.get(`dashboard/${JSON.parse(getTenant_id())}/associados`, {
         headers: {
-          'Authorization': `Bearer ${access_token}`
+          'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
         }
         })
       
@@ -204,9 +204,9 @@ export default function StatusAssociados() {
   };
 
   async function formGetAssociado(id) {
-    await api.get(`dashboard/${tenantId}/associados/buscar/${id}`,{
+    await api.get(`dashboard/${JSON.parse(getTenant_id())}/associados/buscar/${id}`,{
        headers: {
-         'Authorization': `Bearer ${access_token}`
+         'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
        },
  
      } ).then((response) =>{
@@ -263,10 +263,10 @@ export default function StatusAssociados() {
 
     
       if(id != null & id != '' ){
-        await api.post(`dashboard/${tenantId}/associados/deletar/${id}`,{
+        await api.post(`dashboard/${JSON.parse(getTenant_id())}/associados/deletar/${id}`,{
         },{
           headers: {
-            'Authorization': `Bearer ${access_token}`
+            'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
           },
     
         } ).then((response) =>{

@@ -66,7 +66,7 @@ console.log(associado)
   
 
   async function formAssociados() {
-    await axios.post(`https://associados.api.expertusdigital.com/dashboard/${tenant_id}/associados/atualizar/${associado.associado.id}`,{
+    await axios.post(`https://associados.api.expertusdigital.com/dashboard/${JSON.parse(getTenant_id())}/associados/atualizar/${associado.associado.id}`,{
  
 
           nome,
@@ -93,7 +93,7 @@ console.log(associado)
       
       },{
         headers: {
-          'Authorization': `Bearer ${access_token}`
+          'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
         },
   
       } ).then((response) =>{

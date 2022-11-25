@@ -21,17 +21,15 @@ import api from '../../utils/api';
 
 
 
-// ----------------------------------------------------------------------
-var tenantId = JSON.parse(getTenant_id())
 
-var accesstoken = JSON.parse(getAcessToken())
+
 
 
 
 export default function NewwAssociados() {
 
-  const tenant_id = tenantId
-  var access_token = accesstoken
+  const tenant_id = JSON.parse(getTenant_id())
+
 
   const idAssociado = useParams();
 
@@ -69,9 +67,9 @@ export default function NewwAssociados() {
 
 
   async function formGetAssociado(id) {
-    await api.get(`dashboard/${tenantId}/associados/buscar/${id}`,{
+    await api.get(`dashboard/${JSON.parse(getTenant_id())}/associados/buscar/${id}`,{
        headers: {
-         'Authorization': `Bearer ${access_token}`
+         'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
        },
  
      } ).then((response) =>{  
@@ -107,7 +105,7 @@ export default function NewwAssociados() {
   
 
   async function formAssociados() {
-    await api.post(`dashboard/${tenant_id}/associados/atualizar/${idAssociado.id}`,{
+    await api.post(`dashboard/${JSON.parse(getTenant_id())}/associados/atualizar/${idAssociado.id}`,{
  
 
           nome,
@@ -134,7 +132,7 @@ export default function NewwAssociados() {
       
       },{
         headers: {
-          'Authorization': `Bearer ${access_token}`
+          'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
         },
   
       } ).then((response) =>{
@@ -268,7 +266,7 @@ export default function NewwAssociados() {
                     fullWidth
                     required
                     autoComplete="username"
-                    label="cnpf_cnpj"
+                    label="CPF/CNPJ"
                     type="text"
                     value={cnpf_cnpj}
                     onChange={e => setCpfCnpj(e.target.value)}
@@ -398,21 +396,6 @@ export default function NewwAssociados() {
 
 
         
-            <Stack direction={{ xs: 'column', sm: 'column' }} spacing={2}>
-        
-
-              <Form.Control
-              
-                as={InputMask}
-                mask="99-99"
-                value={data_cobranca}
-         
-                onChange={e => setdateCobranca(e.target.value)}
-
-              />
-                    <Typography style={textoAjudaDC}>Obs: Preencher com MES e ANO. Ex: 12-22 , </Typography>
-            </Stack>
-
     
 
             <LoadingButton fullWidth size="large" type="submit" variant="contained" >
