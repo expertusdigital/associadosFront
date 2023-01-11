@@ -165,7 +165,7 @@ export default function NewwAssociados() {
 
                           <Form.Control placeholder='CPF/CNPJ*' as={InputMask} fullWidth         onChange={e => setCpfCnpj(e.target.value)} style={controlFormCep}/>
                         
-                          <Form.Control placeholder='Data de Nascimento *' as={InputMask} fullWidth      mask="9999-99-99"      onChange={e => setData_nascimento(e.target.value)} style={controlFormCep}/>
+                          <Form.Control placeholder='Data de Nascimento *' as={InputMask} fullWidth     type="date" id="start" name="trip-start"     onChange={e => setData_nascimento(e.target.value)} style={controlFormCep}/>
 
                       
 
@@ -204,7 +204,7 @@ export default function NewwAssociados() {
                         />
 
                       
-                        <Form.Control as={InputMask} placeholder="Cep" fullWidth mask="999-999-99" onChange={e => setCep(e.target.value)} style={controlFormCep}/>
+                        <Form.Control as={InputMask} placeholder="Cep" fullWidth mask="99999-999" onChange={e => setCep(e.target.value)} style={controlFormCep}/>
                       
                         <Form.Control placeholder='Telefone *' as={InputMask} fullWidth      mask="(99)-99999-9999"    onChange={e => setTelefone1(e.target.value)} style={controlFormCep}/>
                   

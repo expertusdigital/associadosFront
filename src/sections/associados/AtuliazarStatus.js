@@ -136,7 +136,7 @@ console.log(associado)
                     onChange={handleChange}
                 >
                     <MenuItem value="aprovado">Aprovado</MenuItem>
-                    <MenuItem value="bloqueado">Bloqueado</MenuItem>
+              
                     <MenuItem value="pendente">Pendente</MenuItem>
                 </Select>
           </Stack>
@@ -156,10 +156,6 @@ console.log(associado)
               <Typography style={conteudoHelpText}>Pagmento Realizado</Typography>
             </Stack>
 
-            <Stack direction={{ xs: 'column', sm: 'column', mt: 5 }}  fullWidth  style={stackSelect} >
-              <Typography style={tituloHelpText} color="red">Bloqueado</Typography>
-              <Typography style={conteudoHelpText}>Pagamento não foi realizado dentro do prazo</Typography>
-            </Stack>
 
             <Stack direction={{ xs: 'column', sm: 'column', mt: 5 }}  fullWidth  style={stackSelect} >
               <Typography style={tituloHelpText} color="#eed269">Pendente</Typography>

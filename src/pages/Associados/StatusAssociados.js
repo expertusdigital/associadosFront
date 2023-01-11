@@ -328,11 +328,7 @@ export default function StatusAssociados() {
                     <Typography style={conteudoHelpText}>Pagmento Realizado</Typography>
                   </Stack>
 
-                  <Stack direction={{ xs: 'column', sm: 'column'}}  fullWidth  style={stackOptions} >
-                    <Typography style={tituloHelpText} color="red">Bloqueado</Typography>
-                    <Typography style={conteudoHelpText}>Pagamento não foi realizado dentro do prazo</Typography>
-                  </Stack>
-
+                  
                   <Stack direction={{ xs: 'column', sm: 'column' }}  fullWidth  style={stackOptions} >
                     <Typography style={tituloHelpText} color="#eed269">Pendente</Typography>
                     <Typography style={conteudoHelpText}>Pagamento a ser realizado</Typography>
