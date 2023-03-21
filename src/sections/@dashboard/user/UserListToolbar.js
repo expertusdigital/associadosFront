@@ -8,6 +8,9 @@ import Iconify from '../../../components/Iconify';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Toolbar)(({ theme }) => ({
+  margin: "-20px",
+  marginBottom: "20px",
+  marginTop: "20px",
   height: 96,
   display: 'flex',
   justifyContent: 'space-between',
@@ -43,6 +46,7 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName 
           color: 'primary.main',
           bgcolor: 'primary.lighter',
         }),
+      
       }}
     >
     

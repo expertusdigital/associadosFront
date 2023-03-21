@@ -1,10 +1,12 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://associados.api.expertusdigital.com/',
+    baseURL: 'http://localhost:8000',
 });
-  
 
-export default api;
+const apiUrl = 'http://localhost:8000'
+
+export default {api,apiUrl};
+
   
   

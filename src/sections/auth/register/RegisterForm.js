@@ -39,7 +39,7 @@ export default function RegisterForm() {
 
 
   async function RegisterTenant() {
-    await axios.post("https://associados.api.expertusdigital.com/dashboard/registrar",{
+    await axios.post("http://localhost:8000/dashboard/registrar",{
           email,
           password,
           password_confirmation,
@@ -72,7 +72,7 @@ export default function RegisterForm() {
     e.preventDefault();
   
     if (validator.isEmail(email)) {
-      alert("email validado")
+      RegisterTenant()
     } else {
       alert("Email invalido")
     }

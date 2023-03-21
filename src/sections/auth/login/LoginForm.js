@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import { useEffect, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
-import api from '../../../utils/api'
+import apiUrl from '../../../utils/api'
 // material
 import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel, FormControl, FormGroup, Alert, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -15,7 +15,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 // ----------------------------------------------------------------------
 async function tenantLogin(credentials) {
-  return fetch('https://associados.api.expertusdigital.com/dashboard/login', {
+  return fetch(`${apiUrl.apiUrl}/dashboard/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -25,8 +25,11 @@ async function tenantLogin(credentials) {
     .then(data => data.json())
  }
 
+
+
+
  async function adminLogin(credentials) {
-  return fetch('https://associados.api.expertusdigital.com/admin/login', {
+  return fetch(   `${apiUrl.apiUrl}/admin/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

@@ -31,6 +31,7 @@ import { LoadingButton } from '@mui/lab';
 import axios from 'axios'
 // ----------------------------------------------------------------------
 
+import apiUrl from '../../utils/api'
 export default function NewwAssociados() {
 
 
@@ -52,9 +53,10 @@ export default function NewwAssociados() {
   const [pais, setPais] = useState();
   const [data_cobranca,setdateCobranca] = useState();
 
+  
 
   async function formAssociados() {
-    await axios.post(`https://associados.api.expertusdigital.com/dashboard/${JSON.parse(getTenant_id())}/associados/add`,{
+    await axios.post( `${apiUrl.apiUrl}/dashboard/${JSON.parse(getTenant_id())}/associados/add`,{
  
 
           nome,

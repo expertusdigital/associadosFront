@@ -110,7 +110,7 @@ export default function StatusAssociados() {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await api.get(`dashboard/${JSON.parse(getTenant_id())}/associados`, {
+      const data = await api.api.get(`dashboard/${JSON.parse(getTenant_id())}/associados`, {
         headers: {
           'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
         }
