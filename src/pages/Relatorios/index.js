@@ -132,6 +132,7 @@ export default function Relatorios() {
 
   const relatorios = Array(relatorio)
   
+  relatorios[0].reverse()
 
   const [page, setPage] = useState(0);
 

@@ -93,8 +93,8 @@ useEffect(() => {
         component="img"
         sx={{
          
-          width: "auto",
-          maxHeight: { xs: 233, md: 167 },
+          width: "200px",
+          margin: "auto",
           overflow: "hidden",
           p:2
         }}
