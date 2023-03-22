@@ -105,11 +105,53 @@ console.log(associado)
 
  }
  
+ async function formRelatorios() {
+  await axios.post(`https://associados.api.expertusdigital.com/dashboard/${JSON.parse(getTenant_id())}/relatorios/add/`,{
+
+
+        nome,
+        nome_artistico,
+        cnpf_cnpj,
+        data_nascimento,
+
+        rua,
+        numero,
+        cep,
+        cidade,
+        uf,
+        pais,
+
+        email,
+        email2,
+        telefone1,
+        telefone2,
+
+        status,
+        data_cobranca,
+        tenant_id
+
+    
+    },{
+      headers: {
+        'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
+      },
+
+    } ).then((response) =>{
+        console.log(response)
+  })
+
+
+
+
+}
+
+
+
    const handleSubmit = async e => {
     e.preventDefault();
     await  formAssociados()
-
-    window.location.reload();
+    if(status === "aprovado")await formRelatorios()
+    // window.location.reload();
   }
  
 

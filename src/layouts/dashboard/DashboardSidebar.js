@@ -81,33 +81,27 @@ useEffect(() => {
     <Scrollbar
       sx={{
         height: 1,
-        '& .simplebar-content': { height: 1, display: 'flex', flexDirection: 'column' },
+        '& .simplebar-content': { height: 1, display: 'flex', flexDirection: 'column' , overflowX: "hidden",},
       }}
+
     >
       <Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
-       
+
       </Box>
 
-      <Box sx={{ mb: 5, mx: 2.5 }}>
-        <Link underline="none" component={RouterLink} to="#">
-          {/* 
-          
-          
-          <AccountStyle>
-            <Avatar alt="photoURL" />
-            <Box sx={{ ml: 2 }}>
-              <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                Usuario
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                Admin
-              </Typography>
-            </Box>
-          </AccountStyle>
-          
-          */}
-        </Link>
-      </Box>
+      <Box
+        component="img"
+        sx={{
+         
+          width: "auto",
+          maxHeight: { xs: 233, md: 167 },
+          overflow: "hidden",
+          p:2
+        }}
+        alt="Logo."
+        src="https://i.imgur.com/DBXjyxG.png"
+        
+      />
 
       <NavSection navConfig={navConfigList} />
 
@@ -124,8 +118,9 @@ useEffect(() => {
           open={isOpenSidebar}
           onClose={onCloseSidebar}
           PaperProps={{
-            sx: { width: DRAWER_WIDTH },
+            sx: { width: DRAWER_WIDTH,backgroundColor: "#0088ff" },
           }}
+    
         >
           {renderContent}
         </Drawer>
@@ -140,8 +135,11 @@ useEffect(() => {
               width: DRAWER_WIDTH,
               bgcolor: 'background.default',
               borderRightStyle: 'dashed',
+              backgroundColor: "#0088ff"
             },
+            
           }}
+        
         >
           {renderContent}
         </Drawer>

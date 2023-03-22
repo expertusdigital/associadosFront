@@ -4,6 +4,7 @@ import Associados from './pages/Associados';
 import DashboardApp from './pages/Dashboard';
 import DashboardLayout from './layouts/dashboard';
 import Profile from './pages/Profile';
+import Relatorios from './pages/Relatorios';
 import StatusAssociados from './pages/Associados/StatusAssociados'
 import NewwAssociados from './sections/associados'
 import AtualizarAssociado from './sections/associados/AtuliazarAssociados'
@@ -33,6 +34,7 @@ export  function RouteAutenticate() {
         { path: 'status', element: <StatusAssociados /> },
         { path: 'profile', element: <Profile /> },
         { path: 'novoassociado', element: <NewwAssociados /> },
+        { path: 'relatorios', element: <Relatorios/>},
         { path: 'atualizarassociado/:id', element: <AtualizarAssociado /> },
 
       ],

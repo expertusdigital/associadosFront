@@ -16,14 +16,14 @@ const TenantConfig = [
     icon: getIcon('eva:people-fill'),
   },
   {
-    title: 'Novo Associado',
-    path: '/dashboard/novoassociado',
-    icon: getIcon('akar-icons:person-add'),
-  },
-  {
     title: 'Status',
     path: 'status',
     icon: getIcon('mdi:list-status'),
+  },
+  {
+    title: 'Relatorios',
+    path: '/dashboard/relatorios',
+    icon: getIcon('akar-icons:person-add'),
   },
 
 ];

@@ -44,7 +44,7 @@ export default function DashboardLayout() {
     <RootStyle>
    
       <DashboardNavbar onOpenSidebar={() => setOpen(true)} />
-      <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)}></DashboardSidebar>
+      <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)}  sx={{background: "red"}}></DashboardSidebar>
       <MainStyle>
         <Outlet />
       </MainStyle>

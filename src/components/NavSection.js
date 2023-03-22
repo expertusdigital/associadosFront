@@ -48,14 +48,17 @@ function NavItem({ item, active }) {
   };
 
   const activeRootStyle = {
-    color: 'primary.main',
+    color: 'white',
     fontWeight: 'fontWeightMedium',
     bgcolor: alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
+    transform: 'translate(-4px ,8px) scale(1)'
   };
 
   const activeSubStyle = {
-    color: 'text.primary',
+    color: 'white',
     fontWeight: 'fontWeightMedium',
+    transform: 'translate(-4px ,8px) scale(1)',
+    bgcolor: alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
   };
 
   if (children) {
@@ -89,7 +92,9 @@ function NavItem({ item, active }) {
                   to={path}
                   sx={{
                     ...(isActiveSub && activeSubStyle),
+                    color: "white"
                   }}
+                
                 >
                   <ListItemIconStyle>
                     <Box
@@ -110,7 +115,7 @@ function NavItem({ item, active }) {
                       }}
                     />
                   </ListItemIconStyle>
-                  <ListItemText disableTypography primary={title} />
+                  <ListItemText disableTypography primary={title} sx={{color: "white"}}/>
                 </ListItemStyle>
               );
             })}
@@ -126,6 +131,7 @@ function NavItem({ item, active }) {
       to={path}
       sx={{
         ...(isActiveRoot && activeRootStyle),
+        color: "white"
       }}
     >
       <ListItemIconStyle>{icon && icon}</ListItemIconStyle>
