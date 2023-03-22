@@ -28,7 +28,7 @@ import {
 import Page from '../../../components/Page';
 
 import Scrollbar from '../../../components/Scrollbar';
-
+import 'react-toastify/dist/ReactToastify.css';
 import SearchNotFound from '../../../components/SearchNotFound';
 import { UserListHead, UserListToolbar,UserMoreMenu } from '../../../sections/@dashboard/user';
 // mock
@@ -41,6 +41,7 @@ import AtuliazarAssociados from '../../../sections/associados/AtuliazarAssociado
 
 import AtuliazarStatus from '../../../sections/associados/AtuliazarStatus'
 import {formatData, maskCpfCnpj} from '../../../utils/Functions'
+import { ToastContainer } from "react-bootstrap";
 
 
 
@@ -208,7 +209,8 @@ export default function StatusAssociados() {
 
   return (
     <Page title="Clientes">   
- 
+       <ToastContainer/>
+
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
 
          
@@ -285,19 +287,19 @@ export default function StatusAssociados() {
                      
                        >
                       
-                          <TableCell align="left">{nome}</TableCell>
-                          <TableCell align="left">{nome_artistico}</TableCell>
-                          <TableCell align="left">{maskCpfCnpj(cnpf_cnpj)}</TableCell>
-                          <TableCell align="left">{telefone1}</TableCell>
-                          <TableCell align="left">{email}</TableCell>
+                          <TableCell align="center">{nome}</TableCell>
+                          <TableCell align="center">{nome_artistico}</TableCell>
+                          <TableCell align="center">{maskCpfCnpj(cnpf_cnpj)}</TableCell>
+                          <TableCell align="center">{telefone1}</TableCell>
+                          <TableCell align="center">{email}</TableCell>
        
-                          <TableCell align="left">
+                          <TableCell align="center">
                             <MenuItem  to="#" onClick={() => OpenStatus(id)} style={colorStatus(status)}>
                               
                               <ListItemText primary={status}  primaryTypographyProps={{ variant: 'body2' }} />
                             </MenuItem>
 
-                            <Modal open={editStatus} onClose={EditCloseStatus} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
+                            <Modal open={editStatus} onClose={EditCloseStatus} >
                               <Box >
                                 <Card style={modalStyle}>
                                   <AtuliazarStatus associado={associado}></AtuliazarStatus>
@@ -351,7 +353,7 @@ const modalStyle = {
   transform: 'translate(-50%, -50%)',
   bgcolor: 'background.paper',
   border: '2px solid #f2f2f2',
-  boxShadow: 25,
+
   padding: '1em',
 
 }

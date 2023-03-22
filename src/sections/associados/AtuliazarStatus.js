@@ -5,13 +5,16 @@ import InputMask from 'react-input-mask';
 import { useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 // material
-import { Stack, TextField, FormControl, MenuItem, InputLabel, Typography} from '@mui/material';
+import { Stack, TextField, FormControl, MenuItem, InputLabel, Typography, Snackbar} from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import { LoadingButton } from '@mui/lab';
 // component
 import axios from 'axios'
 import {getTenant_id,getAcessToken} from '../../utils/services/auth'
+import { Toast } from 'bootstrap';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function AtuliazarStatus(associado) {
 
@@ -139,8 +142,11 @@ export default function AtuliazarStatus(associado) {
     } ).then((response) =>{
      
       if(response.status == 201){
-        alert("Cadastrado com Sucesso")
+      
         window.location.reload();
+
+        alert("teste")
+        
       }
   })
 

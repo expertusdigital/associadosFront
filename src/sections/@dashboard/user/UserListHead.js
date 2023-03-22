@@ -46,8 +46,9 @@ export default function UserListHead({
         {headLabel.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.alignRight ? 'right' : 'left'}
+    
             sortDirection={orderBy === headCell.id ? order : false}
+            align="center"
           >
             <TableSortLabel
               hideSortIcon

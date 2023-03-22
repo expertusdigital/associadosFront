@@ -291,16 +291,16 @@ export default function Relatorios() {
                      
                        >
                       
-                          <TableCell align="left">{nome}</TableCell>
-                          <TableCell align="left">{nome_artistico}</TableCell>
-                          <TableCell align="left">{maskCpfCnpj(cnpf_cnpj)}</TableCell>
-                          <TableCell align="left">{telefone1}</TableCell>
-                          <TableCell align="left">{email}</TableCell>
+                          <TableCell align="center">{nome}</TableCell>
+                          <TableCell align="center">{nome_artistico}</TableCell>
+                          <TableCell align="center">{maskCpfCnpj(cnpf_cnpj)}</TableCell>
+                          <TableCell align="center">{telefone1}</TableCell>
+                          <TableCell align="center">{email}</TableCell>
        
                           
-                          <TableCell align="left">{status}</TableCell>
+                          <TableCell align="center">{status}</TableCell>
        
-                          <TableCell align="left">{formatData(data_cobranca)}</TableCell>
+                          <TableCell align="center">{formatData(data_cobranca)}</TableCell>
 
                           
 

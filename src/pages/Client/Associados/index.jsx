@@ -356,15 +356,15 @@ return <>
                           
                           >
                           
-                              <TableCell align="left">{nome}</TableCell>
-                              <TableCell align="left">{nome_artistico}</TableCell>
-                              <TableCell align="left">{data_nascimento}</TableCell>
-                              <TableCell align="left">{maskCpfCnpj(cnpf_cnpj)}</TableCell>
-                              <TableCell align="left">{telefone1}</TableCell>
-                              <TableCell align="left">{email}</TableCell>
+                              <TableCell align="center">{nome}</TableCell>
+                              <TableCell align="center">{nome_artistico}</TableCell>
+                              <TableCell align="center">{data_nascimento}</TableCell>
+                              <TableCell align="center">{maskCpfCnpj(cnpf_cnpj)}</TableCell>
+                              <TableCell align="center">{telefone1}</TableCell>
+                              <TableCell align="center">{email}</TableCell>
                      
-                              <TableCell align="left">{formatData(data_cobranca)}</TableCell>
-                              <TableCell align="left">
+                              <TableCell align="center">{formatData(data_cobranca)}</TableCell>
+                              <TableCell align="center">
 
                                 <MenuItem sx={{ color: 'text.secondary' }} onClick={() => DeletOpen(id)}>
                                   <ListItemIcon>
@@ -443,7 +443,7 @@ return <>
 const modalStyle = {
   position: 'absolute' ,
   top: '50%',
-  left: '50%',
+  center: '50%',
   transform: 'translate(-50%, -50%)',
   bgcolor: 'background.paper',
   border: '2px solid #f2f2f2',
@@ -455,7 +455,7 @@ const modalStyle = {
 const modalStyleAlert = {
   position: 'absolute' ,
   top: '50%',
-  left: '50%',
+  center: '50%',
   transform: 'translate(-50%, -50%)',
   bgcolor: 'background.paper',
   border: '2px solid #f2f2f2',
