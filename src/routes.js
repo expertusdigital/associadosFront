@@ -1,18 +1,14 @@
 import { Routes, Route} from 'react-router-dom';
 // layouts
-import DashboardLayout from './layouts/dashboard';
-import LogoOnlyLayout from './layouts/LogoOnlyLayout';
+
 //
 import Login from './pages/LoginRegister/Login';
 import Register from './pages/LoginRegister/Register';
 import NotFound from './pages/PageErro';
-import Associados from './pages/Associados';
-import DashboardApp from './pages/Dashboard';
+
 import {ProtectedRoute,RouteAutenticate} from './ProtectedRoute'
 import {ProtectedRouteAdmin,RouteAutenticateAdmin} from './ProtectedRouteAdmin'
 
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 
 
 

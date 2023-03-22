@@ -2,7 +2,7 @@ import { Navigate ,useRoutes} from "react-router-dom";
 import AdminUsers from './pages/Admin';
 import AdminAssociados from './pages/Admin/AdminAssociados';
 import AdminTenants from './pages/Admin/AdminTenants';
-import DashboardApp from './pages/Dashboard';
+
 import DashboardLayout from './layouts/dashboard';
 import AdminStatus from './pages/Admin/AdminStatus'
 import RegisterTenants from './pages/Admin/RegisterTenants'
@@ -27,7 +27,7 @@ export  function RouteAutenticateAdmin() {
       path: '/',
       element: <DashboardLayout />,
       children: [
-        { path: 'app', element: <DashboardApp /> },
+       
         { path: 'associados', element: <AdminAssociados /> },
         { path: 'tenants', element: <AdminTenants /> },
         { path: 'status', element: <AdminStatus /> },

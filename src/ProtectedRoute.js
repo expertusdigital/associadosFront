@@ -1,7 +1,7 @@
 import { Navigate ,useRoutes} from "react-router-dom";
 import { getTenant_id } from "./utils/services/auth";
 import Associados from './pages/Associados';
-import DashboardApp from './pages/Dashboard';
+
 import DashboardLayout from './layouts/dashboard';
 import Profile from './pages/Profile';
 import Relatorios from './pages/Relatorios';
@@ -29,7 +29,7 @@ export  function RouteAutenticate() {
       path: '/',
       element: <DashboardLayout />,
       children: [
-        { path: 'app', element: <DashboardApp /> },
+       
         { path: 'associados', element: <Associados /> },
         { path: 'status', element: <StatusAssociados /> },
         { path: 'profile', element: <Profile /> },

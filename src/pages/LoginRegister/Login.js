@@ -145,7 +145,7 @@ export default function Login() {
             Associados. 
             </Typography>
             <Typography variant="h3" sx={{ px: 5, mt: 2 }} style={styleComplmento}>
-            O Programa de Associados da Expertus Digital lhe ajudara a gerenciar seus afiliados, parceiros ou clientes.
+            Faça gestão dos seus associados de forma rápida e simples
             </Typography>
           </SectionStyle>
         )}
