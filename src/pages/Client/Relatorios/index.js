@@ -57,7 +57,7 @@ import PrintIcon from '@mui/icons-material/Print';
 const TABLE_HEAD = [
   { id: 'nome', label: 'Nome Completo', alignRight: false },
   { id: 'nome_artistico', label: 'Nome artístico', alignRight: false },
-  { id: 'cnpf_cnpj', label: 'CPF', alignRight: false },
+  { id: 'cnpf_cnpj', label: 'CPF/CNPJ', alignRight: false },
   { id: 'telefone1', label: 'Telefone', alignRight: false },
   { id: 'email', label: 'Email', alignRight: false },
   { id: 'status', label: 'Status Pagamento', alignRight: false },
@@ -214,19 +214,13 @@ export default function Relatorios() {
              
    
       <Column field="nome" title="Nome" width="alto"  />
-      <Column field="cnpf_cnpj" title="Cpf/Cpnj" width="alto"  />
+      <Column field="cnpf_cnpj" title="CPF/CNPJ" width="alto"  />
       <Column field="nome_artistico" title="Nome Artistico" width="alto" />
       <Column field="data_nascimento" title="Data de Nascimento" width="alto" />
       <Column field="email" title="E-mail" width="alto" />
       <Column field="telefone1" title="Telefone" width="alto" />
-
-      <Column field="cep" title="Cep" width="alto" />
-      <Column field="rua" title="Rua" width="alto" />
-      <Column field="cidade" title="Cidade" width="alto" />
-
-
-
-      <Column field="data_cobranca" title="Data de Cobrança" width="alto" />
+      <Column field="status" title="Status Pagamento" width="alto" />
+      <Column field="data_cobranca" title="Data de Renovacao" width="alto" />
       <GridToolbar>
         
       </GridToolbar>

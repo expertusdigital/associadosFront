@@ -45,14 +45,10 @@ import {formatData, maskCpfCnpj} from '../../../utils/Functions'
 
 
 // ----------------------------------------------------------------------
-
-
-
-// ----------------------------------------------------------------------
 const TABLE_HEAD = [
   { id: 'nome', label: 'Nome Completo', alignRight: false },
   { id: 'nome_artistico', label: 'Nome artístico', alignRight: false },
-  { id: 'cnpf_cnpj', label: 'CPF', alignRight: false },
+  { id: 'cnpf_cnpj', label: 'CPF/CNPJ', alignRight: false },
   { id: 'telefone1', label: 'Telefone', alignRight: false },
   { id: 'email', label: 'Email', alignRight: false },
   { id: 'status', label: 'Status Pagamento', alignRight: false },
@@ -115,16 +111,16 @@ export default function StatusAssociados() {
           'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
         }
         })
-      
-      setFetchedData(data.data);
+    
+
+      setFetchedData(data.data.reverse());
     };
+   
     getData();
   }, []);
 
-  const statusList = Array(fetchedData)
   
-  statusList[0].reverse()
-
+ 
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -145,28 +141,14 @@ export default function StatusAssociados() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = statusList.map((n) => n.name);
+      const newSelecteds = fetchedData.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
-    }
-    setSelected(newSelected);
-  };
-
+  
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -180,28 +162,15 @@ export default function StatusAssociados() {
     setFilterName(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - statusList.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - fetchedData.length) : 0;
 
-  const filteredUsers = applySortFilter(statusList[0], getComparator(order, orderBy), filterName);      
+  const filteredUsers = applySortFilter(fetchedData, getComparator(order, orderBy), filterName);      
   
   const isUserNotFound = filteredUsers.length === 0;
 
-  const [open, setOpen] = useState(false);
-
-  const [editAssociado, setEditAssociado] = useState(false);
+ 
 
   const [associado , setAssociado] = useState();
-
-
-
-
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   async function formGetAssociado(id) {
     await api.api.get(`dashboard/${JSON.parse(getTenant_id())}/associados/buscar/${id}`,{
@@ -219,76 +188,6 @@ export default function StatusAssociados() {
 
  }
  
- 
-
-  
-    const EditOpen = (id) =>{
-
-      try {
-        formGetAssociado(id);
-      } catch (error) {
-        
-      }
-      
-      setEditAssociado(true);
-
-    }
-
-    const EditClose = (event) =>{
-        event.preventDefault();
-        setEditAssociado(false);
-    }
-
-
-    
-    const [idAssociados, setIdAssociado] = useState(null);
-
-    const [getDelte, setDelete] = useState(false);
-    
-    const DeletOpen = (id) =>{
-        setIdAssociado(id)
-        
-        setDelete(true);
-    }
-
-
-    const DeleteClose = () =>{
-        setDelete(false);
-
-    }
-
-
-    const deleteAssociado = async (id) =>  {
-    
-
-    
-      if(id != null & id != '' ){
-        await api.post(`dashboard/${JSON.parse(getTenant_id())}/associados/deletar/${id}`,{
-        },{
-          headers: {
-            'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
-          },
-    
-        } ).then((response) =>{
-    
-      })
-      window.location.reload();
-      }
-    }
-    const particlesInit = async (main) => {
-      console.log(main);
-   
-      // you can initialize the tsParticles instance (main) here, adding custom shapes or presets
-      // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
-      // starting from v2 you can add only the features you need reducing the bundle size
-      await loadFull(main);
-    };
-  
-    const particlesLoaded = (container) => {
-      console.log(container);
-    };
-  
-
 
     const [editStatus, setEditStatus] = useState(false);
     const OpenStatus = (id) =>{
@@ -349,7 +248,7 @@ export default function StatusAssociados() {
           <TablePagination
             rowsPerPageOptions={[10, 20, 30]}
             component="div"
-            count={statusList[0].length}
+            count={fetchedData.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -401,7 +300,7 @@ export default function StatusAssociados() {
                             <Modal open={editStatus} onClose={EditCloseStatus} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
                               <Box >
                                 <Card style={modalStyle}>
-                                <AtuliazarStatus associado={associado}></AtuliazarStatus>
+                                  <AtuliazarStatus associado={associado}></AtuliazarStatus>
                                 </Card>
                               </Box>
                             </Modal>

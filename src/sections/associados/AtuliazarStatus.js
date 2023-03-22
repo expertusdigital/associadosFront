@@ -16,7 +16,7 @@ import {getTenant_id,getAcessToken} from '../../utils/services/auth'
 export default function AtuliazarStatus(associado) {
 
 
-console.log(associado)
+
 
   const [nome, setNome] = useState("");
   const [nome_artistico, setFantasia] = useState("");
@@ -137,7 +137,11 @@ console.log(associado)
       },
 
     } ).then((response) =>{
-        console.log(response)
+     
+      if(response.status == 201){
+        alert("Cadastrado com Sucesso")
+        window.location.reload();
+      }
   })
 
 
@@ -151,7 +155,7 @@ console.log(associado)
     e.preventDefault();
     await  formAssociados()
     if(status === "aprovado")await formRelatorios()
-    // window.location.reload();
+   
   }
  
 
