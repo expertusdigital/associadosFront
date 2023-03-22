@@ -36,7 +36,7 @@ export default function Profile() {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await api.get(`/dashboard/${tenantId}/usuarios/pesquisar/${tenantId}`, {
+      const data = await api.api.get(`/dashboard/${tenantId}/usuarios/pesquisar/${tenantId}`, {
        
         })
   

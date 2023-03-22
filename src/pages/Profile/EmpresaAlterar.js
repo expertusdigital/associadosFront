@@ -38,7 +38,7 @@ export default function EmpresaAlterar(empresasDados) {
 
 
   async function formAssociados() {
-    await api.post(`/dashboard/${JSON.parse(getTenant_id())}/usuarios/atualizar/tenant/${id}`,{
+    await api.api.post(`/dashboard/${JSON.parse(getTenant_id())}/usuarios/atualizar/tenant/${id}`,{
  
           id,
           empresa,

@@ -52,7 +52,7 @@ export default function NewwAssociados() {
   const [data_nascimento,setData_nascimento] = useState();
   const [pais, setPais] = useState();
   const [data_cobranca,setdateCobranca] = useState();
-
+  const [status, setStatus] = useState("pendente");
   
 
   async function formAssociados() {
@@ -75,7 +75,7 @@ export default function NewwAssociados() {
           email2,
           telefone1,
           telefone2,
-
+          status,
           data_cobranca
 
       

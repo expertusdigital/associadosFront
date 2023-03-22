@@ -7,13 +7,44 @@ import { useEffect, useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import api from '../../utils/api';
 import {getAcessToken , getTenant_id} from '../../utils/services/auth'
+// material
+import {
+  Box,
+  Card,
+  Modal,
+  Table,
+  Stack,
+  Avatar,
+  Button,
+IconButton, 
+  Checkbox,
+  TableRow,
+  TableBody,
+  TableCell,
+  Container,
+  Typography,
+  TableContainer,
+  TablePagination,
+  Link
+} from '@mui/material';
+import Iconify from '../../components/Iconify';
+import { Link as RouterLink } from 'react-router-dom';
 
+import SearchNotFound from '../../components/SearchNotFound';
 import { Grid, GridColumn as Column, GridToolbar } from '@progress/kendo-react-grid';
 import { GridPDFExport } from '@progress/kendo-react-pdf';
-import { Box, Button, IconButton } from "@mui/material";
-import { UserListToolbar } from "../../sections/@dashboard/user";
+import Scrollbar from '../../components/Scrollbar';
+import { UserListHead, UserListToolbar } from "../../sections/@dashboard/user";
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import ReceiptIcon from '@mui/icons-material/Receipt';
+import PrintIcon from '@mui/icons-material/Print';
+import { Edit } from '@mui/icons-material';
+import { width } from '@mui/system';
+import NewwAssociados from '../../sections/associados'
+import AtuliazarAssociados from '../../sections/associados/AtuliazarAssociados'
+import { Menu, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
 // ----------------------------------------------------------------------
+import Page from '../../components/Page';
 const TABLE_HEAD = [
   { id: 'nome', label: 'Nome Completo', alignRight: false },
   { id: 'nome_artistico', label: 'Nome artístico', alignRight: false },
@@ -87,11 +118,7 @@ export default function Associados() {
   }, []);
 
   const teste = Array(fetchedData)
-  let pageSize = 10;
-  const [page, setPage] = React.useState({
-    skip: 0,
-    take: pageSize
-  });
+  const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
 
@@ -190,7 +217,7 @@ export default function Associados() {
 
     
       if(id != null & id != '' ){
-        await api.post(`dashboard/${JSON.parse(getTenant_id())}/associados/deletar/${id}`,{
+        await api.api.post(`dashboard/${JSON.parse(getTenant_id())}/associados/deletar/${id}`,{
         },{
           headers: {
             'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
@@ -229,40 +256,186 @@ export default function Associados() {
       }, 250);
     };
 
+    
+    const grid = <Grid data={filteredUsers}   onClick={(e) => console.log("test")}  
+    >
 
-
-    const grid = <Grid data={filteredUsers.slice(page.skip, page.skip + page.take)} pageable={true} onPageChange={pageChange} pageSize={pageSize} total={total} {...page} >
-  
-         
+               
      
         <Column field="nome" title="Nome" width="alto"  />
-        <Column field="cnpf_cnpj" title="cnpf_cnpj" width="alto" height="50px" />
-        <Column field="nome_artistico" title="nome_artistico" width="alto" />
-        <Column field="data_nascimento" title="data_nascimento" width="alto" />
-        <Column field="email" title="email" width="alto" />
-        <Column field="telefone1" title="telefone1" width="alto" />
+        <Column field="cnpf_cnpj" title="Cpf/Cpnj" width="alto"  />
+        <Column field="nome_artistico" title="Nome Artistico" width="alto" />
+        <Column field="data_nascimento" title="Data de Nascimento" width="alto" />
+        <Column field="email" title="E-mail" width="alto" />
+        <Column field="telefone1" title="Telefone" width="alto" />
 
-        <Column field="cep" title="cep" width="alto" />
-        <Column field="rua" title="rua" width="alto" />
-        <Column field="cidade" title="cidade" width="alto" />
+        <Column field="cep" title="Cep" width="alto" />
+        <Column field="rua" title="Rua" width="alto" />
+        <Column field="cidade" title="Cidade" width="alto" />
 
 
-        <Column field="data_cobranca" title="data_cobranca" width="alto" />
+
+        <Column field="data_cobranca" title="Data de Cobrança" width="alto" />
         <GridToolbar>
-          <Box  sx={{display: "flex" , justifyContent: "right", width: "100%"}}> 
-            <IconButton aria-label="delete"  color="primary"  title="Export PDF"  onClick={exportPDF}>
-              <PictureAsPdfIcon />
-            </IconButton>
-          </Box>
+          
         </GridToolbar>
       </Grid>;
-return <div>
-         <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
-        {grid}
+return <>
         <GridPDFExport ref={pdfExport => gridPDFExport = pdfExport} margin="1cm">
           {grid}
         </GridPDFExport>
-      </div>;
+        <Page title="Clientes">   
+          <Container maxWidth="xl">
+            <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+              <Button >
+                <Typography variant="h4" color="black" gutterBottom>
+                  Associados
+                </Typography>
+              </Button>
+              <Box  sx={{display: "flex" , justifyContent: "center"}}> 
+            
+                  <IconButton aria-label="delete"      >
+                    <ReceiptIcon size="medium" sx={{mr:1,color:"blue"}} /> <Typography sx={{color: "black"}}>Exportar Excel</Typography>
+                  </IconButton>
+
+                  <IconButton aria-label="delete"  color="primary"  title=" Imprimir"  >
+                    <PrintIcon size="medium" sx={{mr:1,color:"black"}} /> <Typography sx={{color: "black"}}> Imprimir</Typography>
+                  </IconButton>
+                  <IconButton aria-label="delete"    onClick={exportPDF}>
+                    <PictureAsPdfIcon size="medium" sx={{mr:1,color:"red"}} /> <Typography sx={{color: "black"}}>Exportar Pdf</Typography>
+                  </IconButton>
+                </Box>
+              <Link href="/dashboard/novoassociado" variant="body2">
+                <Button    variant="contained"  startIcon={<Iconify icon="eva:plus-fill" />} >
+                  Novo Associado
+                </Button>
+              </Link>
+            </Stack>
+
+            <Card>
+              <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
+
+              <Scrollbar>
+                <TableContainer sx={{ minWidth: 800 }}>
+                  <Table>
+                    <UserListHead
+                    order={order}
+                    orderBy={orderBy}
+                    headLabel={TABLE_HEAD}
+                    numSelected={selected.length}
+                    onRequestSort={handleRequestSort}
+                    onSelectAllClick={handleSelectAllClick}
+                    />
+                    <TableBody>
+                      {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                        const { id , nome , data_cobranca,telefone1,telefone2,cnpf_cnpj,nome_artistico,data_nascimento,email,rua,numero,
+                          pais,uf,cep,email2 } = row;
+                        const isItemSelected = selected.indexOf(nome) !== -1;
+
+                        return (  
+                          <TableRow
+                            hover
+                            key={id}
+                            tabIndex={-1}
+                            role="checkbox"
+                            selected={isItemSelected}
+                            aria-checked={isItemSelected}
+                          
+                          >
+                          
+                              <TableCell align="left">{nome}</TableCell>
+                              <TableCell align="left">{nome_artistico}</TableCell>
+                              <TableCell align="left">{data_nascimento}</TableCell>
+                              <TableCell align="left">{cnpf_cnpj}</TableCell>
+                              <TableCell align="left">{telefone1}</TableCell>
+                              <TableCell align="left">{email}</TableCell>
+                              <TableCell align="left">{rua} - {numero}</TableCell>
+                              <TableCell align="left">{cep} </TableCell>
+                              <TableCell align="left">{uf} - {pais}</TableCell>
+                              <TableCell align="left" type="month">{data_cobranca}</TableCell>
+                              <TableCell align="left">
+
+                                <MenuItem sx={{ color: 'text.secondary' }} onClick={() => DeletOpen(id)}>
+                                  <ListItemIcon>
+                                    <Iconify icon="eva:trash-2-outline" width={24} height={24} />
+                                  </ListItemIcon>
+                                  <ListItemText primary="Deletar" primaryTypographyProps={{ variant: 'body2' }} />
+                                </MenuItem>
+                                
+                                <RouterLink   to={"/dashboard/atualizarassociado/" + id}>
+                                <MenuItem  to={"/dashboard/atualizarassociado" + id} sx={{ color: 'text.secondary' }}>
+                                  <ListItemIcon>
+                                    <Iconify icon="eva:edit-fill" width={24} height={24} />
+                                  </ListItemIcon>
+                                  <ListItemText primary="Editar" primaryTypographyProps={{ variant: 'body2' }} />
+                                </MenuItem>
+
+                                </RouterLink>
+                              
+                                <Modal open={editAssociado} onClose={EditClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
+                                  <Box >
+                                    <Card style={modalStyle}>
+                                      <AtuliazarAssociados associado={associado}></AtuliazarAssociados>
+                                    </Card>
+                                  </Box>
+                                </Modal>
+
+
+                                <Modal open={getDelte} onClose={DeleteClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
+                                  <Box >
+                                    <Card style={modalStyleAlert}>
+                                        <Typography> Deseja Realmente excluir?  </Typography>
+
+                                        <Box style={boxAlert}>
+                                          <Button  onClick={() => deleteAssociado(idAssociados)} color="inherit" size="small" >
+                                            Excluir
+                                          </Button> 
+                                          
+                                          <Button  onClick={DeleteClose}  color="inherit" size="small">
+                                          Carcelar
+                                          </Button>
+                                        </Box>
+                                    </Card>
+                                  </Box>
+                                </Modal>
+                              </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                      {emptyRows > 0 && (
+                        <TableRow style={{ height: 53 * emptyRows }}>
+                          <TableCell colSpan={6} />
+                        </TableRow>
+                      )}
+                    </TableBody>
+
+                    {isUserNotFound && (
+                      <TableBody >
+                        <TableRow    >
+                          <TableCell align="center" colSpan={12} sx={{ py: 3 }} > 
+                            <SearchNotFound searchQuery={filterName} />
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    )}
+                  </Table>
+                </TableContainer>
+              </Scrollbar>
+              
+            
+              <TablePagination
+                rowsPerPageOptions={[10,20,30]}
+                component="div"
+                count={teste.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </Card>
+          </Container>
+       </Page>
+      </>;
 }
 
 

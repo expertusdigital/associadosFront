@@ -201,7 +201,7 @@ export default function AdminTenants() {
   };
 
   async function formGetAssociado(id) {
-    await api.get(`dashboard/${tenantId}/associados/buscar/${id}`,{
+    await api.api.get(`dashboard/${tenantId}/associados/buscar/${id}`,{
        headers: {
          'Authorization': `Bearer ${access_token}`
        },

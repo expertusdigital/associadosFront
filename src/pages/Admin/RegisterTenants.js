@@ -43,7 +43,7 @@ var accesstoken = JSON.parse(getAcessToken())
 
   var access_token = accesstoken
   async function adminLogin() {
-    await api.post("/dashboard/registrar",{
+    await api.api.post("/dashboard/registrar",{
           email,
           password,
           password_confirmation,

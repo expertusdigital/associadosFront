@@ -67,7 +67,7 @@ export default function NewwAssociados() {
 
 
   async function formGetAssociado(id) {
-    await api.get(`dashboard/${JSON.parse(getTenant_id())}/associados/buscar/${id}`,{
+    await api.api.get(`dashboard/${JSON.parse(getTenant_id())}/associados/buscar/${id}`,{
        headers: {
          'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
        },
@@ -105,7 +105,7 @@ export default function NewwAssociados() {
   
 
   async function formAssociados() {
-    await api.post(`dashboard/${JSON.parse(getTenant_id())}/associados/atualizar/${idAssociado.id}`,{
+    await api.api.post(`dashboard/${JSON.parse(getTenant_id())}/associados/atualizar/${idAssociado.id}`,{
  
 
           nome,
