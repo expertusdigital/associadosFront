@@ -4,8 +4,8 @@ import React from "react"
 import Particles from 'react-tsparticles'
 import { loadFull } from "tsparticles";
 import { useNavigate } from 'react-router-dom';
-import api from '../../utils/api'
-import {getAcessToken} from '../../utils/services/auth'
+import api from '../../../utils/api'
+import {getAcessToken} from '../../../utils/services/auth'
 
 // material
 import {
@@ -22,8 +22,8 @@ import {
 
 } from '@mui/material';
 // components
-import Page from '../../components/Page';
-import  UserListToolbar  from '../../sections/menuUser';
+import Page from '../../../components/Page';
+import  UserListToolbar  from '../../../sections/menuUser';
 import { useEffect } from 'react';
 
 export default function AdminProfile() {

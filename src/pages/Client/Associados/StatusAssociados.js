@@ -6,9 +6,6 @@ import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
 import { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Grid, GridColumn as Column, GridToolbar } from '@progress/kendo-react-grid';
-import { GridPDFExport } from '@progress/kendo-react-pdf';
-
 // material
 import {
   Box,
@@ -28,24 +25,21 @@ import {
   TablePagination,
 } from '@mui/material';
 // components
-import Page from '../../components/Page';
-import Label from '../../components/Label';
-import Scrollbar from '../../components/Scrollbar';
-import Iconify from '../../components/Iconify';
-import SearchNotFound from '../../components/SearchNotFound';
-import { UserListHead, UserListToolbar,UserMoreMenu } from '../../sections/@dashboard/user';
+import Page from '../../../components/Page';
+
+import Scrollbar from '../../../components/Scrollbar';
+
+import SearchNotFound from '../../../components/SearchNotFound';
+import { UserListHead, UserListToolbar,UserMoreMenu } from '../../../sections/@dashboard/user';
 // mock
 import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@mui/material';
 
-import {users} from '../../_mock/clientes';
-import api from '../../utils/api';
-import {getAcessToken , getTenant_id} from '../../utils/services/auth'
-import NewwAssociados from '../../sections/associados'
-import AtuliazarAssociados from '../../sections/associados/AtuliazarAssociados'
+import api from '../../../utils/api';
+import {getAcessToken , getTenant_id} from '../../../utils/services/auth'
+import NewwAssociados from '../../../sections/associados'
+import AtuliazarAssociados from '../../../sections/associados/AtuliazarAssociados'
 
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-import ReceiptIcon from '@mui/icons-material/Receipt';
-import PrintIcon from '@mui/icons-material/Print';
+import AtuliazarStatus from '../../../sections/associados/AtuliazarStatus'
 
 
 
@@ -106,33 +100,29 @@ function applySortFilter(array, comparator, query) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function Relatorios() {
+export default function StatusAssociados() {
   
 
-
-  const [relatorio , setRelatorio] = useState([]);
-
-
-
+  const [fetchedData, setFetchedData] = useState([]);
 
 
 
   useEffect(() => {
     const getData = async () => {
-      const data = await api.api.get(`dashboard/${JSON.parse(getTenant_id())}/relatorios`, {
+      const data = await api.api.get(`dashboard/${JSON.parse(getTenant_id())}/associados`, {
         headers: {
           'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
         }
         })
-        console.log(data)
-        setRelatorio(data.data);
+      
+      setFetchedData(data.data);
     };
     getData();
   }, []);
 
-  const relatorios = Array(relatorio)
+  const teste = Array(fetchedData)
   
-  relatorios[0].reverse()
+
 
   const [page, setPage] = useState(0);
 
@@ -144,7 +134,7 @@ export default function Relatorios() {
 
   const [filterName, setFilterName] = useState('');
 
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -154,11 +144,26 @@ export default function Relatorios() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = relatorios.map((n) => n.name);
+      const newSelecteds = teste.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
+  };
+
+  const handleClick = (event, name) => {
+    const selectedIndex = selected.indexOf(name);
+    let newSelected = [];
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, name);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
+    }
+    setSelected(newSelected);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -173,102 +178,171 @@ export default function Relatorios() {
   const handleFilterByName = (event) => {
     setFilterName(event.target.value);
   };
-  console.log(relatorios)
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - relatorios[0].length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - teste.length) : 0;
 
-  const filteredAssociados = applySortFilter(relatorios[0], getComparator(order, orderBy), filterName);      
+  const filteredUsers = applySortFilter(teste[0], getComparator(order, orderBy), filterName);      
   
-  const isUserNotFound = filteredAssociados.length === 0;
+  const isUserNotFound = filteredUsers.length === 0;
 
-  
+  const [open, setOpen] = useState(false);
+
+  const [editAssociado, setEditAssociado] = useState(false);
+
+  const [associado , setAssociado] = useState();
 
 
 
-  let gridPDFExport;
-  let total = filteredAssociados.length;
 
-  const pageChange = event => {
-    setPage(event.page);
+
+  const handleOpen = () => {
+    setOpen(true);
   };
-  const exportPDF = () => {
-    // Simulate a response from a web request.
-    setTimeout(() => {
-      if (gridPDFExport) {
-        gridPDFExport.save(filteredAssociados);
-      }
-    }, 250);
+  const handleClose = () => {
+    setOpen(false);
   };
 
-  
+  async function formGetAssociado(id) {
+    await api.api.get(`dashboard/${JSON.parse(getTenant_id())}/associados/buscar/${id}`,{
+       headers: {
+         'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
+       },
+ 
+     } ).then((response) =>{
+      
+   
+   
+      setAssociado(response.data)
+   })
 
+
+ }
+ 
  
 
-
   
-   
-   
-  const grid = <Grid data={filteredAssociados}   onClick={(e) => console.log("test")}  
-  >
+    const EditOpen = (id) =>{
 
-             
-   
-      <Column field="nome" title="Nome" width="alto"  />
-      <Column field="cnpf_cnpj" title="Cpf/Cpnj" width="alto"  />
-      <Column field="nome_artistico" title="Nome Artistico" width="alto" />
-      <Column field="data_nascimento" title="Data de Nascimento" width="alto" />
-      <Column field="email" title="E-mail" width="alto" />
-      <Column field="telefone1" title="Telefone" width="alto" />
-
-      <Column field="cep" title="Cep" width="alto" />
-      <Column field="rua" title="Rua" width="alto" />
-      <Column field="cidade" title="Cidade" width="alto" />
-
-
-
-      <Column field="data_cobranca" title="Data de Cobrança" width="alto" />
-      <GridToolbar>
+      try {
+        formGetAssociado(id);
+      } catch (error) {
         
-      </GridToolbar>
-    </Grid>;
+      }
+      
+      setEditAssociado(true);
+
+    }
+
+    const EditClose = (event) =>{
+        event.preventDefault();
+        setEditAssociado(false);
+    }
+
+
+    
+    const [idAssociados, setIdAssociado] = useState(null);
+
+    const [getDelte, setDelete] = useState(false);
+    
+    const DeletOpen = (id) =>{
+        setIdAssociado(id)
+        
+        setDelete(true);
+    }
+
+
+    const DeleteClose = () =>{
+        setDelete(false);
+
+    }
+
+
+    const deleteAssociado = async (id) =>  {
+    
+
+    
+      if(id != null & id != '' ){
+        await api.post(`dashboard/${JSON.parse(getTenant_id())}/associados/deletar/${id}`,{
+        },{
+          headers: {
+            'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
+          },
+    
+        } ).then((response) =>{
+    
+      })
+      window.location.reload();
+      }
+    }
+    const particlesInit = async (main) => {
+      console.log(main);
+   
+      // you can initialize the tsParticles instance (main) here, adding custom shapes or presets
+      // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
+      // starting from v2 you can add only the features you need reducing the bundle size
+      await loadFull(main);
+    };
+  
+    const particlesLoaded = (container) => {
+      console.log(container);
+    };
+  
+
+
+    const [editStatus, setEditStatus] = useState(false);
+    const OpenStatus = (id) =>{
+      try {
+        formGetAssociado(id);
+      } catch (error) {
+        
+      }
+      setEditStatus(true);
+      
+   }
+   
+   const EditCloseStatus = (event) =>{
+       event.preventDefault();
+       setEditStatus(false);
+   }
+   
 
   return (
     <Page title="Clientes">   
    
-   <GridPDFExport ref={pdfExport => gridPDFExport = pdfExport} margin="1cm">
-          {grid}
-        </GridPDFExport>
+      <Container maxWidth="xl">
+        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+
+         
+         
+            <Button    to="#" style={statusAbout} >
+              <Stack direction={{ xs: 'column', sm: 'column', mt: 5 }}  fullWidth  style={stackSelect} >
+
+                <Stack direction={{ xs: 'column', sm: 'column', mt: 5 }}  fullWidth  style={stackSelect} >
+                  <Typography style={tituloHelpText} color="black">Os status podem variar nas seguintes opções a baixo:</Typography>
+                </Stack>
+
+                <Stack direction={{ xs: 'column', sm: 'row'}}  fullWidth  style={stackSelect} >
+                  <Stack direction={{ xs: 'column', sm: 'column'}}  fullWidth  style={stackOptions} >
+                    <Typography style={tituloHelpText} color="green">Aprovado</Typography>
+                    <Typography style={conteudoHelpText}>Pagmento Realizado</Typography>
+                  </Stack>
+
+                  
+                  <Stack direction={{ xs: 'column', sm: 'column' }}  fullWidth  style={stackOptions} >
+                    <Typography style={tituloHelpText} color="#eed269">Pendente</Typography>
+                    <Typography style={conteudoHelpText}>Pagamento a ser realizado</Typography>
+                  </Stack>
+                </Stack>
+                
+              </Stack>
+           </Button>
+
        
+         
+        </Stack>
 
         <Card>
-
-          <Box  sx={{display: "flex" , justifyContent: "space-between", alignItems: "center"}}> 
           <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
-
-          <Box sx={{display: "flex" , justifyContent: "center", alignItems: "center"}}>
-              <IconButton aria-label="delete"   sx={{height: "40px"}}   >
-                  <ReceiptIcon size="medium" sx={{mr:1,color:"blue"}} /> <Typography sx={{color: "black"}}>Exportar Excel</Typography>
-                </IconButton>
-
-                <IconButton aria-label="delete"  color="primary"  title=" Imprimir"  sx={{height: "40px"}}>
-                  <PrintIcon size="medium" sx={{mr:1,color:"black"}} /> <Typography sx={{color: "black"}}> Imprimir</Typography>
-                </IconButton>
-                <IconButton aria-label="delete"    onClick={exportPDF} sx={{height: "40px"}}>
-                  <PictureAsPdfIcon size="medium" sx={{mr:1,color:"red"}} /> <Typography sx={{color: "black"}}>Exportar Pdf</Typography>
-                </IconButton>
-              </Box>
-          </Box>
-        
-          
-          <TablePagination
-            rowsPerPageOptions={[10,20,30]}
-            component="div"
-            count={relatorios[0].length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
@@ -281,7 +355,7 @@ export default function Relatorios() {
                 onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
-                  {filteredAssociados.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                  {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                     const { id , nome , data_cobranca,telefone1,cnpf_cnpj,nome_artistico,email,status } = row;
                     const isItemSelected = selected.indexOf(nome) !== -1;
 
@@ -303,9 +377,21 @@ export default function Relatorios() {
                           <TableCell align="left">{telefone1}</TableCell>
                           <TableCell align="left">{email}</TableCell>
        
-                          
-                          <TableCell align="left">{status}</TableCell>
-       
+                          <TableCell align="left">
+                            <MenuItem  to="#" onClick={() => OpenStatus(id)} style={colorStatus(status)}>
+                              
+                              <ListItemText primary={status}  primaryTypographyProps={{ variant: 'body2' }} />
+                            </MenuItem>
+
+                            <Modal open={editStatus} onClose={EditCloseStatus} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
+                              <Box >
+                                <Card style={modalStyle}>
+                                <AtuliazarStatus associado={associado}></AtuliazarStatus>
+                                </Card>
+                              </Box>
+                            </Modal>
+                          </TableCell>
+
                           <TableCell align="left">{data_cobranca}</TableCell>
 
                           
@@ -334,16 +420,16 @@ export default function Relatorios() {
           </Scrollbar>
         
           <TablePagination
-            rowsPerPageOptions={[10,20,30]}
+            rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={relatorios[0].length}
+            count={teste.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </Card>
-   
+      </Container>
         
     </Page>
   );

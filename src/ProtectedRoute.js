@@ -1,14 +1,16 @@
 import { Navigate ,useRoutes} from "react-router-dom";
 import { getTenant_id } from "./utils/services/auth";
-import Associados from './pages/Associados';
+
 
 import DashboardLayout from './layouts/dashboard';
-import Profile from './pages/Profile';
-import Relatorios from './pages/Relatorios';
-import StatusAssociados from './pages/Associados/StatusAssociados'
 import NewwAssociados from './sections/associados'
 import AtualizarAssociado from './sections/associados/AtuliazarAssociados'
 
+
+import Associados from './pages/Client/Associados';
+import Profile from './pages/Client/Profile';
+import Relatorios from './pages/Client/Relatorios';
+import StatusAssociados from './pages/Client/Associados/StatusAssociados'
 
 
 export const ProtectedRoute = ({ children }) => {

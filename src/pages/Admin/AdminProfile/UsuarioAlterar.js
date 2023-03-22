@@ -3,7 +3,7 @@ import { useState } from 'react';
 import InputMask from 'react-input-mask';
 import { useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
-import {getTenant_id,getAcessToken} from '../../utils/services/auth'
+import {getTenant_id,getAcessToken} from '../../../utils/services/auth'
 // material
 import { Stack, TextField, FormControl} from '@mui/material';
 import { LoadingButton } from '@mui/lab';

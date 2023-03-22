@@ -11,7 +11,9 @@ import NewwAssociados from './sections/admin/associados/index'
 import AtualizarAssociado from './sections/admin/associados/AtuliazarAssociados'
 import AtualizarClientes from './sections/admin/clientes/AtualizarClientes'
 
-import AdminProfile from './pages/AdminProfile'
+import AdminProfile from './pages/Admin/AdminProfile'
+import Relatorios from './pages/Admin/Relatorios'
+
 
 
 
@@ -35,8 +37,8 @@ export  function RouteAutenticateAdmin() {
         { path: 'atualizarassociado/:id', element: <AtualizarAssociado /> },
         { path: 'atualizarcliente/:id', element: <AtualizarClientes /> },
         { path: 'register', element: <RegisterTenants /> },
-        { path: 'profile', element: <AdminProfile /> }
-
+        { path: 'profile', element: <AdminProfile /> },
+        { path: 'relatorios', element: <Relatorios/>},
 
 
 

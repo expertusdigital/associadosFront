@@ -1,11 +1,8 @@
 
 import { useState } from 'react';
 import React from "react"
-import Particles from 'react-tsparticles'
-import { loadFull } from "tsparticles";
-import { useNavigate } from 'react-router-dom';
-import api from '../../utils/api'
-import {getTenant_id,setUsuarioData} from '../../utils/services/auth'
+import api from '../../../utils/api'
+import {getTenant_id,setUsuarioData} from '../../../utils/services/auth'
 // material
 import {
   Card,
@@ -21,8 +18,8 @@ import {
 
 } from '@mui/material';
 // components
-import Page from '../../components/Page';
-import  UserListToolbar  from '../../sections/menuUser';
+import Page from '../../../components/Page';
+import  UserListToolbar  from '../../../sections/menuUser';
 import { useEffect } from 'react';
 import EmpresaAlterar from './EmpresaAlterar'
 import EnderecoAlterar from './Endereco'

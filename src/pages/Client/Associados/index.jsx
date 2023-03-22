@@ -5,8 +5,8 @@ import { loadFull } from "tsparticles";
 import { filter } from 'lodash';
 import { useEffect, useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
-import api from '../../utils/api';
-import {getAcessToken , getTenant_id} from '../../utils/services/auth'
+import api from '../../../utils/api';
+import {getAcessToken , getTenant_id} from '../../../utils/services/auth'
 // material
 import {
   Box,
@@ -27,24 +27,26 @@ IconButton,
   TablePagination,
   Link
 } from '@mui/material';
-import Iconify from '../../components/Iconify';
+import Iconify from '../../../components/Iconify';
 import { Link as RouterLink } from 'react-router-dom';
 
-import SearchNotFound from '../../components/SearchNotFound';
+import SearchNotFound from '../../../components/SearchNotFound';
 import { Grid, GridColumn as Column, GridToolbar } from '@progress/kendo-react-grid';
 import { GridPDFExport } from '@progress/kendo-react-pdf';
-import Scrollbar from '../../components/Scrollbar';
-import { UserListHead, UserListToolbar } from "../../sections/@dashboard/user";
+import Scrollbar from '../../../components/Scrollbar';
+import { UserListHead, UserListToolbar } from "../../../sections/@dashboard/user";
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import PrintIcon from '@mui/icons-material/Print';
 import { Edit } from '@mui/icons-material';
 import { width } from '@mui/system';
-import NewwAssociados from '../../sections/associados'
-import AtuliazarAssociados from '../../sections/associados/AtuliazarAssociados'
+import NewwAssociados from '../../../sections/associados'
+import AtuliazarAssociados from '../../../sections/associados/AtuliazarAssociados'
 import { Menu, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
 // ----------------------------------------------------------------------
-import Page from '../../components/Page';
+import Page from '../../../components/Page';
+
+
 const TABLE_HEAD = [
   { id: 'nome', label: 'Nome Completo', alignRight: false },
   { id: 'nome_artistico', label: 'Nome artístico', alignRight: false },
@@ -52,9 +54,9 @@ const TABLE_HEAD = [
   { id: 'cnpf_cnpj', label: 'CPF/CNPJ', alignRight: false },
   { id: 'telefone1', label: 'Telefone', alignRight: false },
   { id: 'email', label: 'Email', alignRight: false },
-  { id: 'rua', label: 'Endereço', alignRight: false },
-  { id: 'cep', label: 'Cep', alignRight: false },
-  { id: 'uf', label: 'Localidade', alignRight: false },
+
+
+
   { id: 'data_cobranca', label: 'Data de Registro', alignRight: false },
   { id: 'opcoes', label: 'Opções', alignRight: false },
 
@@ -269,9 +271,6 @@ export default function Associados() {
         <Column field="email" title="E-mail" width="alto" />
         <Column field="telefone1" title="Telefone" width="alto" />
 
-        <Column field="cep" title="Cep" width="alto" />
-        <Column field="rua" title="Rua" width="alto" />
-        <Column field="cidade" title="Cidade" width="alto" />
 
 
 
@@ -349,9 +348,7 @@ return <>
                               <TableCell align="left">{cnpf_cnpj}</TableCell>
                               <TableCell align="left">{telefone1}</TableCell>
                               <TableCell align="left">{email}</TableCell>
-                              <TableCell align="left">{rua} - {numero}</TableCell>
-                              <TableCell align="left">{cep} </TableCell>
-                              <TableCell align="left">{uf} - {pais}</TableCell>
+                     
                               <TableCell align="left" type="month">{data_cobranca}</TableCell>
                               <TableCell align="left">
 

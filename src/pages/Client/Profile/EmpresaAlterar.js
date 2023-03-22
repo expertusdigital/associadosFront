@@ -3,16 +3,18 @@ import { useState } from 'react';
 import InputMask from 'react-input-mask';
 import { useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
-import {getTenant_id,getAcessToken} from '../../utils/services/auth'
+import {getTenant_id,getAcessToken} from '../../../utils/services/auth'
 // material
 import { Stack, TextField, FormControl} from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
 import axios from 'axios'
+import api from '../../../utils/api'
 // ----------------------------------------------------------------------
 
 export default function EmpresaAlterar(empresasDados) {
 
+ 
 
   const navigate = useNavigate();
 
@@ -27,39 +29,38 @@ export default function EmpresaAlterar(empresasDados) {
   const [cep, setCep] = useState(empresasDados.empresa.cep);
   const [telefone1, setTelefone1] = useState(empresasDados.empresa.telefone1);
   const [telefone2, setTelefone2] = useState(empresasDados.empresa.telefone2);
+  const [id, setId] = useState(empresasDados.empresa.id);
 
 
-  const tenantId = JSON.parse(getTenant_id())
+  const tenant_id = JSON.parse(getTenant_id())
   var access_token = JSON.parse(getAcessToken())
 
 
+
   async function formAssociados() {
-    await axios.post(`http://localhost:8000/api/dashboard/${tenantId}/usuarios/atualizar/tenant/${empresasDados.empresa.id}`,{
+    await api.api.post(`/dashboard/${JSON.parse(getTenant_id())}/usuarios/atualizar/tenant/${id}`,{
  
-
+          id,
           empresa,
-          fantasia,
           cnpf_cnpj,
-
-          bairro,
-          cep,
-          cidade,
+          fantasia,
           logradouro,
           numero,
+          bairro,
+          cidade,
           uf,
-
-
+          cep,
           telefone1,
           telefone2,
 
       
       },{
         headers: {
-          'Authorization': `Bearer ${access_token}`
+          'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
         },
   
       } ).then((response) =>{
-      
+        window.location.reload();
     })
  }
 
@@ -124,9 +125,7 @@ export default function EmpresaAlterar(empresasDados) {
                   fullWidth
                   required
                   autoComplete="username"
-                  type="data"
                   label="Telefone Opcional"
-
                   value={telefone2}
                   onChange={e => setTelefone2(e.target.value)}
 
@@ -138,86 +137,11 @@ export default function EmpresaAlterar(empresasDados) {
       
   
 
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-              <TextField
-                fullWidth
-                autoComplete="username"
-                type="text"
-                label="Rua"
-
-                value={logradouro}
-
-                onChange={e => setLogradouro(e.target.value)}
-
-              />
-
-              <TextField
-                fullWidth
-                autoComplete="username"
-                type="number"
-                label="Numero"
-
-                value={numero}
-
-                onChange={e => setNumero(e.target.value)}
-
-              />
-
-            <TextField
-                fullWidth
-                autoComplete="username"
-                type="number"
-                label="Cep"
-
-                value={cep}
-
-                onChange={e => setCep(e.target.value)}
-
-              />
-
-         
-          </Stack>
-          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            <TextField
-                fullWidth
-                autoComplete="username"
-                type="text"
-                label="Bairro"
-
-                value={bairro}
-
-                onChange={e => setBairro(e.target.value)}
-              />
-
-
-              <TextField
-                fullWidth
-                autoComplete="username"
-                type="text"
-                label="Cidade"
-
-                value={cidade}
-
-                onChange={e => setCidade(e.target.value)}
-              />
-
-              <TextField
-                fullWidth
-                autoComplete="username"
-                type="text"
-                label="UF"
-
-                value={uf}
-                onChange={e => setUf(e.target.value)}
-              />
-
-            
-          </Stack>
     
    
 
           <LoadingButton fullWidth size="large" type="submit" variant="contained" >
-            Registrar
+            Alterar Informações
           </LoadingButton>
         </Stack>
       </form>

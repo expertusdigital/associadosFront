@@ -16,7 +16,7 @@ const TenantConfig = [
     icon: getIcon('eva:people-fill'),
   },
   {
-    title: 'Status',
+    title: 'Controle de pag',
     path: 'status',
     icon: getIcon('mdi:list-status'),
   },

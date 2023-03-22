@@ -21,7 +21,7 @@ const AdminConfig = [
   },
   
   {
-    title: 'Status',
+    title: 'Controle de pag',
     path: 'status',
     icon: getIcon('mdi:list-status')
   },
