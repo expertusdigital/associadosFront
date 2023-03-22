@@ -49,7 +49,7 @@ const TABLE_HEAD = [
   { id: 'nome', label: 'Nome Completo', alignRight: false },
   { id: 'nome_artistico', label: 'Nome artístico', alignRight: false },
   { id: 'data_nascimento', label: 'Data Nascimento', alignRight: false },
-  { id: 'cnpf_cnpj', label: 'CPf/CNPJ', alignRight: false },
+  { id: 'cnpf_cnpj', label: 'CPF/CNPJ', alignRight: false },
   { id: 'telefone1', label: 'Telefone', alignRight: false },
   { id: 'email', label: 'Email', alignRight: false },
   { id: 'rua', label: 'Endereço', alignRight: false },

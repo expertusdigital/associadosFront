@@ -57,7 +57,7 @@ import PrintIcon from '@mui/icons-material/Print';
 const TABLE_HEAD = [
   { id: 'nome', label: 'Nome Completo', alignRight: false },
   { id: 'nome_artistico', label: 'Nome artístico', alignRight: false },
-  { id: 'cnpf_cnpj', label: 'CPf', alignRight: false },
+  { id: 'cnpf_cnpj', label: 'CPF', alignRight: false },
   { id: 'telefone1', label: 'Telefone', alignRight: false },
   { id: 'email', label: 'Email', alignRight: false },
   { id: 'status', label: 'Status Pagamento', alignRight: false },
