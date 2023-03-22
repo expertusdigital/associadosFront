@@ -1,7 +1,7 @@
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Card, Link, Container, Typography } from '@mui/material';
+import { Card, Link, Container, Typography, Box } from '@mui/material';
 // hooks
 import useResponsive from '../../hooks/useResponsive';
 // components
@@ -44,7 +44,8 @@ const SectionStyle = styled(Card)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  margin: theme.spacing(2, 0, 2, 2),
+  borderRadius: "0px",
+  background: "#0088ff"
 }));
 
 const ContentStyle = styled('div')(({ theme }) => ({
@@ -82,72 +83,31 @@ export default function Login() {
         <HeaderStyle>
         
         </HeaderStyle>
-        <Particles
-          id="tsparticles"
-          init={particlesInit}
-          loaded={particlesLoaded}
-              options={{
-            background: {
-              color: '#ffffff',
-            },
-            fpsLimit: 40,
-            interactivity: {
-              detectsOn: 'canvas',
-              events: {
-                resize: true
-              },
-            },
-            particles: {
-              color: {
-                value: "#000000"
-              },
-              number: {
-                density: {
-                  enable: true,
-                  area: 1080
-                },
-                limit: 0,
-                value: 500,
-              },
-              opacity: {
-                animation: {
-                  enable: true,
-                  minimumValue: 1,
-                  speed: 3,
-                  sync: false,
-                },
-                random: {
-                  enable: true,
-                  minimumValue: 0.1,
-                },
-                value: 1,
-              },
-              shape: {
-                type: 'circle',
-       
-              },
-              size: {
-                random: {
-                  enable: true,
-                  minimumValue: 1.5
-                },
-                value: 1
-              }
-            }
-          }}
-      /> 
+    
         {mdUp && (
+          
           <SectionStyle>
-            <Typography variant="h6" sx={{ px: 5}} style={styleComplmentoFirst}>
-              Ola, bem vindo.
-            </Typography>
-            <Typography variant="h2" sx={{ px: 5 , mt: 2}}  style={styleTitle}>
-            Associados. 
-            </Typography>
-            <Typography variant="h3" sx={{ px: 5, mt: 2 }} style={styleComplmento}>
+           
+              <Box
+          component="img"
+          sx={{
+            width: "auto",
+            maxWidth: "300px",
+            marginLeft: "40px",
+            marginRight: "40px",
+            overflow: "hidden",
+            p:2
+          }}
+          alt="Logo."
+          src="https://i.imgur.com/vfQwOUK.png"
+          
+        />
+           
+            <Typography variant="h3" sx={{ px: 5, mt: 2 ,color: "white"}} style={styleComplmento} >
             Faça gestão dos seus associados de forma rápida e simples
             </Typography>
           </SectionStyle>
+        
         )}
 
         <Container maxWidth="sm">
