@@ -15,23 +15,19 @@ const AdminConfig = [
     icon: getIcon('akar-icons:person'),
   },
   {
-    title: 'Novo Cliente',
-    path: 'register',
-    icon: getIcon('akar-icons:person-add'),
-  },
-  {
     title: 'Associados',
     path: 'associados',
     icon: getIcon('eva:people-fill'),
   },
-  {
-    title: 'Novo Associado',
-    path: 'novoassociado',
-    icon: getIcon('akar-icons:person-add'),
-  },
+  
   {
     title: 'Status',
     path: 'status',
+    icon: getIcon('mdi:list-status')
+  },
+  {
+    title: 'Relatorios',
+    path: 'relatorios',
     icon: getIcon('mdi:list-status')
   }
 

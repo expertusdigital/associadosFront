@@ -21,7 +21,7 @@ import {getTenant_id,getAcessAdmin} from '../../utils/services/auth'
 
 // ----------------------------------------------------------------------
 
-const DRAWER_WIDTH = 200;
+const DRAWER_WIDTH = 250;
 
 const RootStyle = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('lg')]: {
@@ -99,7 +99,7 @@ useEffect(() => {
           p:2
         }}
         alt="Logo."
-        src="https://i.imgur.com/DBXjyxG.png"
+        src="https://i.imgur.com/vfQwOUK.png"
         
       />
 
