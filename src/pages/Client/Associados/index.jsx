@@ -45,7 +45,7 @@ import AtuliazarAssociados from '../../../sections/associados/AtuliazarAssociado
 import { Menu, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
 // ----------------------------------------------------------------------
 import Page from '../../../components/Page';
-
+import {maskCpfCnpj} from '../../../utils/Functions'
 
 const TABLE_HEAD = [
   { id: 'nome', label: 'Nome Completo', alignRight: false },
@@ -97,7 +97,7 @@ function applySortFilter(array, comparator, query) {
     _user.telefone1.toLowerCase().indexOf(query.toLowerCase()) !== -1       ||
     _user.email.toLowerCase().indexOf(query.toLowerCase()) !== -1                
    
-      
+    
  
      );  
   }
@@ -119,7 +119,10 @@ export default function Associados() {
     getData();
   }, []);
 
-  const teste = Array(fetchedData)
+  const associadosList = Array(fetchedData)
+
+  associadosList[0].reverse()
+
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -130,7 +133,7 @@ export default function Associados() {
 
   const [filterName, setFilterName] = useState('');
 
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -140,7 +143,7 @@ export default function Associados() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = teste.map((n) => n.name);
+      const newSelecteds = associadosList.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -162,9 +165,9 @@ export default function Associados() {
     setFilterName(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - teste.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - associadosList.length) : 0;
 
-  const filteredUsers = applySortFilter(teste[0], getComparator(order, orderBy), filterName);      
+  const filteredUsers = applySortFilter(associadosList[0], getComparator(order, orderBy), filterName);      
   
   const isUserNotFound = filteredUsers.length === 0;
 
@@ -284,7 +287,7 @@ return <>
           {grid}
         </GridPDFExport>
         <Page title="Clientes">   
-          <Container maxWidth="xl">
+      
             <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
               <Button >
                 <Typography variant="h4" color="black" gutterBottom>
@@ -314,6 +317,17 @@ return <>
             <Card>
               <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
 
+ 
+              <TablePagination
+                rowsPerPageOptions={[10,20,30]}
+                component="div"
+                count={associadosList[0].length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+              
               <Scrollbar>
                 <TableContainer sx={{ minWidth: 800 }}>
                   <Table>
@@ -345,7 +359,7 @@ return <>
                               <TableCell align="left">{nome}</TableCell>
                               <TableCell align="left">{nome_artistico}</TableCell>
                               <TableCell align="left">{data_nascimento}</TableCell>
-                              <TableCell align="left">{cnpf_cnpj}</TableCell>
+                              <TableCell align="left">{maskCpfCnpj(cnpf_cnpj)}</TableCell>
                               <TableCell align="left">{telefone1}</TableCell>
                               <TableCell align="left">{email}</TableCell>
                      
@@ -418,19 +432,9 @@ return <>
                   </Table>
                 </TableContainer>
               </Scrollbar>
-              
-            
-              <TablePagination
-                rowsPerPageOptions={[10,20,30]}
-                component="div"
-                count={teste.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
+             
             </Card>
-          </Container>
+        
        </Page>
       </>;
 }

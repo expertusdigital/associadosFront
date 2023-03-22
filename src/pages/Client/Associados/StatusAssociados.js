@@ -40,6 +40,7 @@ import NewwAssociados from '../../../sections/associados'
 import AtuliazarAssociados from '../../../sections/associados/AtuliazarAssociados'
 
 import AtuliazarStatus from '../../../sections/associados/AtuliazarStatus'
+import {maskCpfCnpj} from '../../../utils/Functions'
 
 
 
@@ -120,9 +121,9 @@ export default function StatusAssociados() {
     getData();
   }, []);
 
-  const teste = Array(fetchedData)
+  const statusList = Array(fetchedData)
   
-
+  statusList[0].reverse()
 
   const [page, setPage] = useState(0);
 
@@ -134,7 +135,7 @@ export default function StatusAssociados() {
 
   const [filterName, setFilterName] = useState('');
 
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -144,7 +145,7 @@ export default function StatusAssociados() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = teste.map((n) => n.name);
+      const newSelecteds = statusList.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -179,9 +180,9 @@ export default function StatusAssociados() {
     setFilterName(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - teste.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - statusList.length) : 0;
 
-  const filteredUsers = applySortFilter(teste[0], getComparator(order, orderBy), filterName);      
+  const filteredUsers = applySortFilter(statusList[0], getComparator(order, orderBy), filterName);      
   
   const isUserNotFound = filteredUsers.length === 0;
 
@@ -308,8 +309,7 @@ export default function StatusAssociados() {
 
   return (
     <Page title="Clientes">   
-   
-      <Container maxWidth="xl">
+ 
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
 
          
@@ -343,6 +343,21 @@ export default function StatusAssociados() {
 
         <Card>
           <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
+
+
+            
+          <TablePagination
+            rowsPerPageOptions={[10, 20, 30]}
+            component="div"
+            count={statusList[0].length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+
+
+          
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
@@ -373,7 +388,7 @@ export default function StatusAssociados() {
                       
                           <TableCell align="left">{nome}</TableCell>
                           <TableCell align="left">{nome_artistico}</TableCell>
-                          <TableCell align="left">{cnpf_cnpj}</TableCell>
+                          <TableCell align="left">{maskCpfCnpj(cnpf_cnpj)}</TableCell>
                           <TableCell align="left">{telefone1}</TableCell>
                           <TableCell align="left">{email}</TableCell>
        
@@ -419,17 +434,8 @@ export default function StatusAssociados() {
             </TableContainer>
           </Scrollbar>
         
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={teste.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
         </Card>
-      </Container>
+    
         
     </Page>
   );

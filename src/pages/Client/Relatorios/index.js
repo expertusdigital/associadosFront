@@ -36,7 +36,7 @@ import SearchNotFound from '../../../components/SearchNotFound';
 import { UserListHead, UserListToolbar,UserMoreMenu } from '../../../sections/@dashboard/user';
 // mock
 import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@mui/material';
-
+import {maskCpfCnpj} from '../../../utils/Functions'
 import {users} from '../../../_mock/clientes';
 import api from '../../../utils/api';
 import {getAcessToken , getTenant_id} from '../../../utils/services/auth'
@@ -299,7 +299,7 @@ export default function Relatorios() {
                       
                           <TableCell align="left">{nome}</TableCell>
                           <TableCell align="left">{nome_artistico}</TableCell>
-                          <TableCell align="left">{cnpf_cnpj}</TableCell>
+                          <TableCell align="left">{maskCpfCnpj(cnpf_cnpj)}</TableCell>
                           <TableCell align="left">{telefone1}</TableCell>
                           <TableCell align="left">{email}</TableCell>
        
@@ -332,16 +332,7 @@ export default function Relatorios() {
               </Table>
             </TableContainer>
           </Scrollbar>
-        
-          <TablePagination
-            rowsPerPageOptions={[10,20,30]}
-            component="div"
-            count={relatorios[0].length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
+    
         </Card>
    
         
