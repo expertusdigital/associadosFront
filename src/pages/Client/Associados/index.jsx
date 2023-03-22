@@ -45,7 +45,7 @@ import AtuliazarAssociados from '../../../sections/associados/AtuliazarAssociado
 import { Menu, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
 // ----------------------------------------------------------------------
 import Page from '../../../components/Page';
-import {maskCpfCnpj} from '../../../utils/Functions'
+import {formatData, maskCpfCnpj} from '../../../utils/Functions'
 
 const TABLE_HEAD = [
   { id: 'nome', label: 'Nome Completo', alignRight: false },
@@ -57,7 +57,7 @@ const TABLE_HEAD = [
 
 
 
-  { id: 'data_cobranca', label: 'Data de Registro', alignRight: false },
+  { id: 'data_cobranca', label: 'Data de renovação', alignRight: false },
   { id: 'opcoes', label: 'Opções', alignRight: false },
 
 ];
@@ -363,7 +363,7 @@ return <>
                               <TableCell align="left">{telefone1}</TableCell>
                               <TableCell align="left">{email}</TableCell>
                      
-                              <TableCell align="left" type="month">{data_cobranca}</TableCell>
+                              <TableCell align="left">{formatData(data_cobranca)}</TableCell>
                               <TableCell align="left">
 
                                 <MenuItem sx={{ color: 'text.secondary' }} onClick={() => DeletOpen(id)}>

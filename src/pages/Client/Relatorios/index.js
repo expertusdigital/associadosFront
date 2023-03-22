@@ -36,7 +36,7 @@ import SearchNotFound from '../../../components/SearchNotFound';
 import { UserListHead, UserListToolbar,UserMoreMenu } from '../../../sections/@dashboard/user';
 // mock
 import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@mui/material';
-import {maskCpfCnpj} from '../../../utils/Functions'
+import {formatData, maskCpfCnpj} from '../../../utils/Functions'
 import {users} from '../../../_mock/clientes';
 import api from '../../../utils/api';
 import {getAcessToken , getTenant_id} from '../../../utils/services/auth'
@@ -61,7 +61,7 @@ const TABLE_HEAD = [
   { id: 'telefone1', label: 'Telefone', alignRight: false },
   { id: 'email', label: 'Email', alignRight: false },
   { id: 'status', label: 'Status Pagamento', alignRight: false },
-  { id: 'data_cobranca', label: 'Data de Registro', alignRight: false }
+  { id: 'data_cobranca', label: 'Data de Renovação', alignRight: false }
 
 
 ];
@@ -306,7 +306,7 @@ export default function Relatorios() {
                           
                           <TableCell align="left">{status}</TableCell>
        
-                          <TableCell align="left">{data_cobranca}</TableCell>
+                          <TableCell align="left">{formatData(data_cobranca)}</TableCell>
 
                           
 

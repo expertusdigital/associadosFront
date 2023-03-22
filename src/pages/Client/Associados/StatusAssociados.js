@@ -40,7 +40,7 @@ import NewwAssociados from '../../../sections/associados'
 import AtuliazarAssociados from '../../../sections/associados/AtuliazarAssociados'
 
 import AtuliazarStatus from '../../../sections/associados/AtuliazarStatus'
-import {maskCpfCnpj} from '../../../utils/Functions'
+import {formatData, maskCpfCnpj} from '../../../utils/Functions'
 
 
 
@@ -56,7 +56,7 @@ const TABLE_HEAD = [
   { id: 'telefone1', label: 'Telefone', alignRight: false },
   { id: 'email', label: 'Email', alignRight: false },
   { id: 'status', label: 'Status Pagamento', alignRight: false },
-  { id: 'data_cobranca', label: 'Data de Registro', alignRight: false }
+  { id: 'data_cobranca', label: 'Data de renovação', alignRight: false }
 
 
 ];
@@ -373,7 +373,7 @@ export default function StatusAssociados() {
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                     const { id , nome , data_cobranca,telefone1,cnpf_cnpj,nome_artistico,email,status } = row;
                     const isItemSelected = selected.indexOf(nome) !== -1;
-
+                
                     return (  
 
                       <TableRow
@@ -407,7 +407,7 @@ export default function StatusAssociados() {
                             </Modal>
                           </TableCell>
 
-                          <TableCell align="left">{data_cobranca}</TableCell>
+                          <TableCell align="left">{formatData(data_cobranca)}</TableCell>
 
                           
 
