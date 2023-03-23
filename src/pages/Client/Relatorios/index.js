@@ -115,16 +115,16 @@ export default function Relatorios() {
 
 
 
-
-
   useEffect(() => {
     const getData = async () => {
-      const data = await api.api.get(`dashboard/${JSON.parse(getTenant_id())}/relatorios`, {
+        const data = await api.api.get(`dashboard/${JSON.parse(getTenant_id())}/relatorios`, {
         headers: {
           'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
         }
         })
-        console.log(data)
+        
+    
+
         setRelatorio(data.data);
     };
     getData();

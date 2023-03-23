@@ -100,7 +100,7 @@ export default function AtuliazarStatus(associado) {
         },
   
       } ).then((response) =>{
-        
+       
     })
 
 
@@ -143,9 +143,9 @@ export default function AtuliazarStatus(associado) {
      
       if(response.status == 201){
       
-        window.location.reload();
+       
 
-        alert("teste")
+        
         
       }
   })
@@ -160,8 +160,8 @@ export default function AtuliazarStatus(associado) {
    const handleSubmit = async e => {
     e.preventDefault();
     await  formAssociados()
-    if(status === "aprovado")await formRelatorios()
-   
+    if(status === "aprovado"){await formRelatorios()}
+    window.location.reload();
   }
  
 

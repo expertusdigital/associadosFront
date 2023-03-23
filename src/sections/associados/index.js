@@ -32,6 +32,7 @@ import axios from 'axios'
 // ----------------------------------------------------------------------
 
 import apiUrl from '../../utils/api'
+import { ToastContainer, toast } from 'react-toastify';
 export default function NewwAssociados() {
 
 
@@ -90,7 +91,7 @@ export default function NewwAssociados() {
           alert("Campo(s) Obrigatirio(s) esta(ão) vazio(s)!")
         }
         if(response.status == 201){
-          alert("Cadastrado com Sucesso")
+         toast( "Cadastrado com Sucesso")
         }
     })
  }
@@ -119,7 +120,7 @@ export default function NewwAssociados() {
 
   return (
     <Page title="Clientes">   
-     
+     <ToastContainer></ToastContainer>
       <Container maxWidth="xl">
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Button >

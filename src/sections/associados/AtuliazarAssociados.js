@@ -18,6 +18,7 @@ import {  TextField, FormControl,
 import { LoadingButton } from '@mui/lab';
 import axios from 'axios';
 import api from '../../utils/api';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 
@@ -137,7 +138,7 @@ export default function NewwAssociados() {
   
       } ).then((response) =>{
         
-     
+        toast( "Atualizado com Sucesso")
     })
 
 
@@ -171,59 +172,7 @@ export default function NewwAssociados() {
 
   return (
     <Page title="Clientes">   
-    <Particles
-    id="tsparticles"
-    init={particlesInit}
-    loaded={particlesLoaded}
-        options={{
-      background: {
-        color: '#ffffff',
-      },
-      fpsLimit: 40,
-      interactivity: {
-        detectsOn: 'canvas',
-        events: {
-          resize: true
-        },
-      },
-      particles: {
-        color: {
-          value: "#000000"
-        },
-        number: {
-          density: {
-            enable: true,
-            area: 1080
-          },
-          limit: 0,
-          value: 500,
-        },
-        opacity: {
-          animation: {
-            enable: true,
-            minimumValue: 1,
-            speed: 3,
-            sync: false,
-          },
-          random: {
-            enable: true,
-            minimumValue: 0.1,
-          },
-          value: 1,
-        },
-        shape: {
-          type: 'circle',
-
-        },
-        size: {
-          random: {
-            enable: true,
-            minimumValue: 1.5
-          },
-          value: 1
-        }
-      }
-    }}/> 
+  <ToastContainer></ToastContainer>
 
     <Container maxWidth="xl">
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
