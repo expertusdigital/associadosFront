@@ -113,7 +113,7 @@ export default function StatusAssociados() {
         }
         })
     
-
+      
       setFetchedData(data.data.reverse());
     };
    
@@ -206,6 +206,7 @@ export default function StatusAssociados() {
        setEditStatus(false);
    }
    
+   console.log(filteredUsers)
 
   return (
     <Page title="Clientes">   
@@ -274,7 +275,8 @@ export default function StatusAssociados() {
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                     const { id , nome , data_cobranca,telefone1,cnpf_cnpj,nome_artistico,email,status } = row;
                     const isItemSelected = selected.indexOf(nome) !== -1;
-                
+                      if(status === "pendente"){
+                           
                     return (  
 
                       <TableRow
@@ -314,6 +316,7 @@ export default function StatusAssociados() {
 
                       </TableRow>
                     );
+                      }
                   })}
                   {emptyRows > 0 && (
                     <TableRow style={{ height: 53 * emptyRows }}>
@@ -384,7 +387,7 @@ const colorStatus = (status) => {
 
 if(status == "pendente"){
   const color= {
-    background: "#f0dc82",
+    background: "#FFA319",
     borderRadius: 20,
     textAlign: "center",
     color: "black"
@@ -392,15 +395,7 @@ if(status == "pendente"){
   return color
 }else if(status == "aprovado"){
   const color= {
-    background: "#7ba05b",
-    borderRadius: 20,
-    textAlign: "center",
-    color: "black"
-  }
-  return color
-}else if(status == "bloqueado"){
-  const color= {
-    background: "#da6351",
+    background: "#57CA22",
     borderRadius: 20,
     textAlign: "center",
     color: "black"

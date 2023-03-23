@@ -16,14 +16,14 @@ const TenantConfig = [
     icon: getIcon('eva:people-fill'),
   },
   {
-    title: 'Controle de pag',
+    title: 'Pag. Pendentes',
     path: 'status',
-    icon: getIcon('mdi:list-status'),
+    icon: getIcon('material-symbols:rotate-right-rounded'),
   },
   {
-    title: 'Relatorios',
+    title: 'Pag. Efetuados',
     path: '/dashboard/relatorios',
-    icon: getIcon('akar-icons:person-add'),
+    icon: getIcon('game-icons:confirmed'),
   },
 
 ];

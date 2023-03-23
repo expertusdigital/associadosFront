@@ -36,6 +36,7 @@ export default function AtuliazarStatus(associado) {
   const [data_nascimento,setData_nascimento] = useState("");
   const [pais, setPais] = useState("");
   const [status, setStatus] = useState("");
+  const [valor, setValor] = useState(0);
   const [data_cobranca,setdateCobranca] = useState("");
 
 
@@ -55,7 +56,7 @@ export default function AtuliazarStatus(associado) {
       setEmail2(associado.associado.email2)
       setData_nascimento(associado.associado.data_nascimento)
       setPais(associado.associado.pais)
-      setdateCobranca(associado.associado.data_cobranca)
+  
     }
   });
 
@@ -154,11 +155,13 @@ export default function AtuliazarStatus(associado) {
 
 
 }
-
+const current = new Date();
+const date = `${current.getMonth()+1}/${current.getFullYear()}`;
 
 
    const handleSubmit = async e => {
     e.preventDefault();
+    console.log(valor)
     await  formAssociados()
     if(status === "aprovado"){await formRelatorios()}
     window.location.reload();
@@ -176,44 +179,20 @@ export default function AtuliazarStatus(associado) {
     <FormControl >
       <form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
-        <Typography style={tituloStatus}>Selecioneo o status do Associado</Typography>
+        <Typography style={tituloStatus}>Confirmar Pagamento</Typography>
           
-          <Stack direction={{ xs: 'column', sm: 'row', mt: 5 }}  fullWidth  style={stackSelect} >
-            <InputLabel fullWidth ></InputLabel>
-                <Select fullWidth
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={status}
-               
-                    onChange={handleChange}
-                >
-                    <MenuItem value="aprovado">Aprovado</MenuItem>
-              
-                    <MenuItem value="pendente">Pendente</MenuItem>
-                </Select>
-          </Stack>
-
-   
+        <TextField id="outlined-basic" label="Valor" variant="outlined" 
+          onChange={(event) => {
+            setStatus("aprovado")
+            setdateCobranca(`${date}`)
+            setValor(event.target.value);
+          }}
+        />
 
           <LoadingButton fullWidth size="large" type="submit" variant="contained" >
-            Alterar status
+           Confirmar
           </LoadingButton>
 
-
-
-
-          <Stack direction={{ xs: 'column', sm: 'column', mt: 5 }}  fullWidth  style={stackSelect} >
-            <Stack direction={{ xs: 'column', sm: 'column', mt: 5 }}  fullWidth  style={stackSelect} >
-              <Typography style={tituloHelpText} color="green">Aprovado</Typography>
-              <Typography style={conteudoHelpText}>Pagmento Realizado</Typography>
-            </Stack>
-
-
-            <Stack direction={{ xs: 'column', sm: 'column', mt: 5 }}  fullWidth  style={stackSelect} >
-              <Typography style={tituloHelpText} color="#eed269">Pendente</Typography>
-              <Typography style={conteudoHelpText}>Pagamento a ser realizado</Typography>
-            </Stack>
-          </Stack>
 
 
         </Stack>

@@ -36,8 +36,9 @@ import { ToastContainer, toast } from 'react-toastify';
 export default function NewwAssociados() {
 
 
-  const navigate = useNavigate();
-
+  const current = new Date();
+  const date = `${current.getMonth()+1}/${current.getFullYear()}`;
+ 
   const [nome, setNome] = useState();
   const [nome_artistico, setFantasia] = useState();
   const [cnpf_cnpj, setCpfCnpj] = useState();
@@ -52,11 +53,13 @@ export default function NewwAssociados() {
   const [email2, setEmail2] = useState();
   const [data_nascimento,setData_nascimento] = useState();
   const [pais, setPais] = useState();
-  const [data_cobranca,setdateCobranca] = useState();
-  const [status, setStatus] = useState("pendente");
+  const [data_cobranca,setdateCobranca] = useState(date);
+  
   
 
-  async function formAssociados() {
+  async function formAssociados(status) {
+
+    var status = status
     await axios.post( `${apiUrl.apiUrl}/dashboard/${JSON.parse(getTenant_id())}/associados/add`,{
  
 
@@ -96,12 +99,58 @@ export default function NewwAssociados() {
     })
  }
 
-   const handleSubmit = async e => {
+ async function formRelatorio(status) {
+
+  var status = status
+  await axios.post( `${apiUrl.apiUrl}/dashboard/${JSON.parse(getTenant_id())}/relatorios/add`,{
+
+
+        nome,
+        nome_artistico,
+        cnpf_cnpj,
+        data_nascimento,
+
+        rua,
+        numero,
+        cep,
+        cidade,
+        uf,
+        pais,
+
+        email,
+        email2,
+        telefone1,
+        telefone2,
+        status,
+        data_cobranca
+
+    
+    },{
+      headers: {
+        'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
+      },
+
+    } ).then((response) =>{
+      
+  })
+}
+
+   const handleSubmitSim = async e => {
     e.preventDefault();
-    formAssociados();
-
-
+   
+    await formAssociados("aprovado");
+    await formRelatorio("aprovado");
+    window.location.reload();
   }
+
+
+
+  const handleSubmitNão= async e => {
+    e.preventDefault();
+    await formAssociados("pendente");
+    window.location.reload();
+  }
+
  
   const particlesInit = async (main) => {
     console.log(main);
@@ -116,7 +165,18 @@ export default function NewwAssociados() {
     console.log(container);
   };
 
+  const [editStatus, setEditStatus] = useState(false);
+    const OpenStatus = () =>{
+      setEditStatus(true);
+   }
+   
+   const EditCloseStatus = (event) =>{
+       event.preventDefault();
+       setEditStatus(false);
+   }
+   
 
+   
 
   return (
     <Page title="Clientes">   
@@ -135,7 +195,7 @@ export default function NewwAssociados() {
 
         <Card style={cardForm}>
           <FormControl style={StachForm} >
-            <form autoComplete="off" noValidate onSubmit={handleSubmit}>
+            <form autoComplete="off" noValidate>
               <Stack spacing={3}  >
                
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} >
@@ -178,10 +238,7 @@ export default function NewwAssociados() {
 
                       <TextField  fullWidth  autoComplete="username"  type="email"  label="Email address (opcional)"  onChange={e => setEmail2(e.target.value)}  style={controlFormCep} />
 
-                      <Stack direction={{ xs: 'column', sm: 'column' }}>
-                        <Form.Control as={InputMask} type="month"  placeholder="Data de cobrança" fullWidth  onChange={e => setdateCobranca(e.target.value)} style={controlFormCep} />
-                        
-                      </Stack>
+                     
                   </Stack>
                   
                   <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} >
@@ -251,19 +308,64 @@ export default function NewwAssociados() {
                   </Stack>
                 </Stack>
 
-                <LoadingButton fullWidth size="large" type="submit" variant="contained" >
+                <Button fullWidth size="large"  variant="contained" onClick={OpenStatus} >
                   Registrar
-                </LoadingButton>
+                </Button>
               </Stack>
 
             </form>
           </FormControl>
+
+       
+                           
+                            <Modal open={editStatus} onClose={EditCloseStatus} >
+                              <Box >
+                                <Card style={modalStyle}>
+                                
+                                        <Stack spacing={3}>
+                                        <Typography > Deseja Confirma pagamento ? </Typography>
+                                          
+                                        <TextField id="outlined-basic" label="Valor do pagamento..." variant="outlined" 
+                                          
+                                        />
+
+                                          <Box sx={{display: 'flex', justifyContent: "space-between"}}>
+                                          <Button fullWidth size="large" type="submit" variant="contained" sx={{mr:1}} onClick={handleSubmitSim}>
+                                          Sim
+                                          </Button>
+                                          <Button fullWidth size="large" type="submit" variant="contained" onClick={handleSubmitNão}  >
+                                          Não
+                                          </Button>
+
+                                          </Box>
+
+
+                                        </Stack>
+                                     
+                                </Card>
+                              </Box>
+                            </Modal>
+                     
+
+
         </Card>
       </Container>   
     </Page>
   );
 }
 
+
+const modalStyle = {
+  position: 'absolute' ,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  bgcolor: 'background.paper',
+  border: '2px solid #f2f2f2',
+
+  padding: '1em',
+
+}
 
 
 const cardForm ={

@@ -21,8 +21,8 @@ export const maskCpfCnpj = (v) => {
 
   export const formatData = (data) => {
 
-    var ano = data.split("-")[0]
-    var mes = data.split("-")[1]
+    var mes = data.split("/")[0]
+    var ano = data.split("/")[1]
   
     if(mes == 1){
       return <Typography>Janeiro  de {ano}</Typography>
@@ -33,7 +33,7 @@ export const maskCpfCnpj = (v) => {
     }
 
     if(mes == 3){
-      return <Typography>Março  de {ano}</Typography>
+      return <Typography>Março  de {ano} </Typography>
     }
 
     if(mes == 4){
@@ -49,7 +49,7 @@ export const maskCpfCnpj = (v) => {
     }
 
     if(mes == 7){
-      return <Typography>Agosto  de {ano}</Typography>
+      return <Typography>Agosto  de {ano} {test}</Typography>
     }
 
     if(mes == 8){
