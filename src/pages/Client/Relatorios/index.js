@@ -60,7 +60,7 @@ const TABLE_HEAD = [
   { id: 'cnpf_cnpj', label: 'CPF/CNPJ', alignRight: false },
   { id: 'telefone1', label: 'Telefone', alignRight: false },
   { id: 'email', label: 'Email', alignRight: false },
-  { id: 'status', label: 'Pag pendentes', alignRight: false },
+  { id: 'status', label: 'Pag Aprovados', alignRight: false },
   { id: 'data_cobranca', label: 'Data de Renovação', alignRight: false }
 
 
