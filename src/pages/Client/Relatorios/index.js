@@ -36,7 +36,7 @@ import SearchNotFound from '../../../components/SearchNotFound';
 import { UserListHead, UserListToolbar,UserMoreMenu } from '../../../sections/@dashboard/user';
 // mock
 import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@mui/material';
-import {formatData, maskCpfCnpj} from '../../../utils/Functions'
+import {formatData,formDataPdf, maskCpfCnpj} from '../../../utils/Functions'
 import {users} from '../../../_mock/clientes';
 import api from '../../../utils/api';
 import {getAcessToken , getTenant_id} from '../../../utils/services/auth'
@@ -60,7 +60,7 @@ const TABLE_HEAD = [
   { id: 'cnpf_cnpj', label: 'CPF/CNPJ', alignRight: false },
   { id: 'telefone1', label: 'Telefone', alignRight: false },
   { id: 'email', label: 'Email', alignRight: false },
-  { id: 'status', label: 'Status Pagamento', alignRight: false },
+  { id: 'status', label: 'Pag pendentes', alignRight: false },
   { id: 'data_cobranca', label: 'Data de Renovação', alignRight: false }
 
 
@@ -122,10 +122,9 @@ export default function Relatorios() {
           'Authorization': `Bearer ${JSON.parse(getAcessToken())}`
         }
         })
-        
-    
+       
 
-        setRelatorio(data.data);
+        setRelatorio(data.data)
     };
     getData();
   }, []);
@@ -173,7 +172,7 @@ export default function Relatorios() {
   const handleFilterByName = (event) => {
     setFilterName(event.target.value);
   };
-  console.log(relatorios)
+  
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - relatorios[0].length) : 0;
 
@@ -182,7 +181,6 @@ export default function Relatorios() {
   const isUserNotFound = filteredAssociados.length === 0;
 
   
-
 
 
   let gridPDFExport;
@@ -202,13 +200,11 @@ export default function Relatorios() {
 
   
 
- 
-
 
   
    
    
-  const grid = <Grid data={filteredAssociados}   onClick={(e) => console.log("test")}  
+  const grid = <Grid data={filteredAssociados}    
   >
 
              

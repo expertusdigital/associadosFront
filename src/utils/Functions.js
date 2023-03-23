@@ -74,3 +74,54 @@ export const maskCpfCnpj = (v) => {
 
 
   }
+
+
+  
+  export const formDataPdf = (data) => {
+
+    var mes = data.split("/")[0]
+    var ano = data.split("/")[1]
+  
+    if(mes == 1){
+      return `Janeiro  de ${ano}`
+    }
+    if(mes == 2){
+      return "Feveiro  de ${ano}"
+
+    }
+
+    if(mes == 3){
+      return `Março  de ${ano} `
+    }
+    if(mes == 4){
+      return `Junho  de ${ano}`
+    }
+
+    if(mes == 5){
+      return  `Maio  de ${ano}`
+    }
+
+    if(mes == 6){
+      return `Julho  de ${ano}`
+    }
+
+    if(mes == 7){
+      return `Agosto  de ${ano} `
+    }
+
+    if(mes == 8){
+      return ` Setembro  de ${ano}`
+    }
+    if(mes == 9){
+      return `Outubro  de ${ano}`
+    }
+
+    if(mes == 10){
+      return `Novembro  de ${ano}`
+    }
+    if(mes == 11){
+      return  `Dezembro de ${ano}`
+    }
+
+  
+  }
